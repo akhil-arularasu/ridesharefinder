@@ -10,7 +10,7 @@ function Rides ({rides, setRides}) {
   const handleLeaveClick = (rideId) => {
     const token = localStorage.getItem('token'); // Retrieve the token
     console.log('Sending data:', { rideId }); // Assuming rideId is the variable being sent
-    fetch('/api/leave', {
+    fetch(process.env.REACT_APP_SERVER + '/api/leave', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -18,7 +18,7 @@ const LoginForm = () => {
         const userInfo = { 
             email: enteredUsername,
             password: enteredPassword };
-        fetch('http://localhost:3000/api/login', {
+        fetch(process.env.REACT_APP_SERVER + '/api/login', {
             method: 'POST',
             headers: {"Content-Type": "application/json" },
             body: JSON.stringify(userInfo)

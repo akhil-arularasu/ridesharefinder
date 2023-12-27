@@ -48,7 +48,7 @@ function MyRides() {
   const token = localStorage.getItem('token'); // Retrieve the token
   
   // Send the newRide data to the server
-  fetch('/api/create', {
+  fetch(process.env.REACT_APP_SERVER + '/api/create', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`, // Include the token in headers
@@ -93,7 +93,7 @@ const [rideSubmitted, setRideSubmitted] = useState(false);
 
 // Fetch rides from the server
 const fetchRides = () => {
-  fetch('/api/myRideSearch')
+  fetch(process.env.REACT_APP_SERVER + '/api/myRideSearch')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');

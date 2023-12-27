@@ -90,7 +90,7 @@ function RideSearch() {
   const [toValue, setToValue] = useState(null);
 
   useEffect(() => {
-    fetch('/api/locations')
+    fetch(process.env.REACT_APP_SERVER + '/api/locations')
       .then(response => response.json())
       .then(data => {
         const formattedOptions = data.map(location => ({
