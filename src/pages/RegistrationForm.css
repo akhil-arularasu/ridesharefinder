@@ -1,0 +1,17 @@
+.registration-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 87vh; /* Adjust height as needed */
+  }
+  
+  .registration-form-container .ui.form .field input,
+  .registration-form-container .ui.form .field select {
+    width: 80%; /* Adjust width as needed */
+  }
+  
+  .registration-form-container .ui.form {
+    width: 100%; /* Adjust form width as needed */
+    max-width: 500px; /* Set a max width for the form */
+    margin: auto; /* Center the form */
+  }
