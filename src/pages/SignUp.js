@@ -38,7 +38,7 @@ function RegisterForm() {
         telNumber: formValues.telephone
     };
       try {
-          const response = fetch(process.env.REACT_APP_SERVER + '/api/login', {
+          const response = fetch(process.env.REACT_APP_SERVER + '/api/register', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',

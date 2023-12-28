@@ -45,13 +45,13 @@ function MyRides() {
   };
 
   console.log('Sending data to the server:', newRide);
-  const token = localStorage.getItem('token'); // Retrieve the token
+  const userToken = localStorage.getItem('token'); // Retrieve the token
   
   // Send the newRide data to the server
   fetch(process.env.REACT_APP_SERVER + '/api/create', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${token}`, // Include the token in headers
+      'Authorization': `Bearer ${userToken}`, // Include the token in headers
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(newRide),
@@ -92,12 +92,19 @@ function MyRides() {
 const [rideSubmitted, setRideSubmitted] = useState(false);
 
 // Fetch rides from the server
-const fetchRides = () => {
-  fetch(process.env.REACT_APP_SERVER + '/api/myRideSearch')
+const fetchRides = (userToken) => {
+  fetch(process.env.REACT_APP_SERVER + '/api/myRideSearch',
+  {
+    headers: {
+      'Authorization': `Bearer ${userToken}`,
+    }
+  } 
+  )
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
+      console.log('response', response.json)
       return response.json();
     })
     .then(data => {
@@ -110,8 +117,31 @@ const fetchRides = () => {
 
 // Initial fetch when the component mounts
 useEffect(() => {
-  fetchRides();
+  const userToken = localStorage.getItem('token');
+  console.log(userToken)
+  fetch(process.env.REACT_APP_SERVER + '/api/myRideSearch',
+  {
+    headers: {
+      'Authorization': `Bearer ${userToken}`,
+    }
+  } 
+  )
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      console.log('response', response.json)
+      return response.json();
+    })
+    .then(data => {
+      setRides(data || []);
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
 }, []); // Empty dependency array for component mount
+
+
 
 // Fetch rides after submission
 useEffect(() => {

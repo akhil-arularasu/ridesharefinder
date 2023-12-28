@@ -5,6 +5,7 @@ import ReadOnlyRow from "./ReadOnlyRow";
 
 
 function Rides ({rides, setRides}) {
+  console.log('Rides props:', rides); // Check the received rides array
 
   //removes ride
   const handleLeaveClick = (rideId) => {

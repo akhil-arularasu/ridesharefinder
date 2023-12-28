@@ -10,12 +10,12 @@ function RideView ({rides}) {
   function handleJoinClick (rideId) {
     // Add your logic for handling a join click here
     console.log("Joining ride with ID:", rideId);
-    
+    const userToken = localStorage.getItem('token');
     fetch('/api/join', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-     //   'Authorization': 'Bearer ' + userToken, // Replace with actual token if authentication is required
+        'Authorization': 'Bearer ' + userToken, // Replace with actual token if authentication is required
       },
       body: JSON.stringify({ ride_id: rideId })
     })

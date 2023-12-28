@@ -34,9 +34,15 @@ function RideSearch() {
   });
 
   useEffect(() => {
+    const userToken = localStorage.getItem('token'); // Retrieve the token
     const { fromLocationId, toLocationId, rideDate, startTime, endTime } = searchParams;
     fetch(
-      `/api/search?fromLocationId=${fromLocationId}&toLocationId=${toLocationId}&rideDate=${rideDate}&startTime=${startTime}&endTime=${endTime}`
+      `/api/search?fromLocationId=${fromLocationId}&toLocationId=${toLocationId}&rideDate=${rideDate}&startTime=${startTime}&endTime=${endTime}`, {
+
+        headers: {
+          'Authorization': `Bearer ${userToken}`,
+        }
+      }
     ).then((res) =>
       res.json().then((data) => {
         console.log('Ride data:', data); // Add this line to log the response
@@ -90,7 +96,12 @@ function RideSearch() {
   const [toValue, setToValue] = useState(null);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_SERVER + '/api/locations')
+    const userToken = localStorage.getItem('token'); // Retrieve the token
+    fetch(process.env.REACT_APP_SERVER + '/api/locations', {
+      headers: {
+        'Authorization': `Bearer ${userToken}`,
+      }
+    })
       .then(response => response.json())
       .then(data => {
         const formattedOptions = data.map(location => ({

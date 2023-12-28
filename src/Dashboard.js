@@ -7,7 +7,6 @@ function Dashboard() {
     <MyRides/>
     <br/>
     <br/>
-    <RideSearch/>
   </div>;
 }
 
