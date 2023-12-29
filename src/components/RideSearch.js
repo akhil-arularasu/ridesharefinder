@@ -23,7 +23,7 @@ function sliderValueToTime(value) {
   return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 }
 
-function RideSearch() {
+function RideSearch({refreshKey, setRefreshKey}) {
   const [rides, setRides] = useState([{}]);
   const [searchParams, setSearchParams] = useState({
     fromLocationId: "2",
@@ -49,7 +49,7 @@ function RideSearch() {
         setRides(data.rides);
       })
     );
-  }, [searchParams]);
+  }, [searchParams, refreshKey]);
 
   const handleTimeSliderChange = (e) => {
     const { name, value } = e.target;
@@ -222,7 +222,7 @@ function RideSearch() {
           Start Time: {searchParams.startTime} - End Time: {searchParams.endTime}
         </div>
       </div>
-      <RideView rides={rides} />
+      <RideView rides={rides} setRides={setRides} setRefreshKey={setRefreshKey}/>
     </div>
   );  
   }

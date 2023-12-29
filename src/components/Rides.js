@@ -4,7 +4,7 @@ import { List, Header, Table } from "semantic-ui-react";
 import ReadOnlyRow from "./ReadOnlyRow";
 
 
-function Rides ({rides, setRides}) {
+function Rides ({rides, setRides, setRefreshKey}) {
   console.log('Rides props:', rides); // Check the received rides array
 
   //removes ride
@@ -28,9 +28,10 @@ function Rides ({rides, setRides}) {
     .then(() => {
       // Remove the ride from the frontend table
       console.log('Leaving ride ID:', rideId);
-      const newRides = rides.filter(ride => ride.ride_id !== rideId);
-      console.log('New rides after removal:', newRides);
-      setRides(newRides);
+      setRefreshKey(prevRefreshKey => prevRefreshKey + 1)
+      // const newRides = rides.filter(ride => ride.ride_id !== rideId);
+      // console.log('New rides after removal:', newRides);
+      // setRides(newRides);
     })
     .catch(error => {
       console.error('Error:', error);

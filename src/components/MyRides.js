@@ -2,10 +2,10 @@ import React,{useState, useEffect} from 'react'
 import Rides from "./Rides"
 import { nanoid } from 'nanoid'
 
-function MyRides() {
+function MyRides({refreshKey, setRefreshKey}) {
   const [rides, setRides]  = useState([])
   const [isEditing, setIsEditing] = useState(false);
-  
+
   const [addFormData, setAddFormData] = useState({
     fromLocationId: "",
     toLocationId: "",
@@ -66,9 +66,9 @@ function MyRides() {
     // Here you can handle the response data
     console.log('Success:', data);
     // Optionally update the rides state with the new ride
-    const newRides = [...rides, data];
-    setRides(newRides);
-    setRideSubmitted(true); // Indicate that a new ride has been submitted
+ //   const newRides = [...rides, newRide];
+ //   setRides(newRides);
+      setRefreshKey(prevRefreshKey => prevRefreshKey + 1)
   })
   .catch((error) => {
     console.error('Error:', error);
@@ -89,36 +89,10 @@ function MyRides() {
     setIsEditing(false);
 })};
 
-const [rideSubmitted, setRideSubmitted] = useState(false);
-
-// Fetch rides from the server
-const fetchRides = (userToken) => {
-  fetch(process.env.REACT_APP_SERVER + '/api/myRideSearch',
-  {
-    headers: {
-      'Authorization': `Bearer ${userToken}`,
-    }
-  } 
-  )
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      console.log('response', response.json)
-      return response.json();
-    })
-    .then(data => {
-      setRides(data || []);
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-    });
-};
-
 // Initial fetch when the component mounts
 useEffect(() => {
   const userToken = localStorage.getItem('token');
-  console.log(userToken)
+  console.log('toknnnn', userToken)
   fetch(process.env.REACT_APP_SERVER + '/api/myRideSearch',
   {
     headers: {
@@ -139,22 +113,12 @@ useEffect(() => {
     .catch(error => {
       console.error('Error fetching data:', error);
     });
-}, []); // Empty dependency array for component mount
-
-
-
-// Fetch rides after submission
-useEffect(() => {
-  if (rideSubmitted) {
-    fetchRides();
-    setRideSubmitted(false); // Reset the flag after fetching
-  }
-}, [rideSubmitted]); // Runs when `rideSubmitted` changes
+}, [refreshKey]); // Empty dependency array for component mount
 
   return (
     <div>
       <h2>My Rides</h2>
-      <Rides rides={rides} setRides={setRides} />
+      <Rides rides={rides} setRides={setRides} setRefreshKey={setRefreshKey} />
 
       {!isEditing && (
         <button onClick={startEditingHandler}>Add New Ride</button>

@@ -13,8 +13,9 @@ const RideItem = ({ rideId, fromLocationId, toLocationId, date, time, seatsLeft,
       <Table.Cell>{time}</Table.Cell>
       <Table.Cell>{seatsLeft}</Table.Cell>
       <Table.Cell>
-        <button type="button" onClick={handleJoinClick(rideId)}>
-          Join
+        <button type="button"
+        onClick={() => handleJoinClick(rideId)} // Passing ride.id to the function
+          >Join
         </button>
       </Table.Cell>
     </Table.Row>
