@@ -36,7 +36,7 @@ function RideSearch({refreshKey, setRefreshKey}) {
   useEffect(() => {
     const userToken = localStorage.getItem('token'); // Retrieve the token
     const { fromLocationId, toLocationId, rideDate, startTime, endTime } = searchParams;
-    fetch(
+    fetch(process.env.REACT_APP_SERVER +
       `/api/search?fromLocationId=${fromLocationId}&toLocationId=${toLocationId}&rideDate=${rideDate}&startTime=${startTime}&endTime=${endTime}`, {
 
         headers: {
