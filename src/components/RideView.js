@@ -12,7 +12,7 @@ function RideView ({rides, setRefreshKey}) {
     // Add your logic for handling a join click here
     console.log("Joining ride with ID:", rideId);
     const userToken = localStorage.getItem('token');
-    fetch('/api/join', {
+    fetch(process.env.REACT_APP_SERVER + '/api/join', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
