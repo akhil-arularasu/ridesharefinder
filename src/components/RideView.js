@@ -52,7 +52,7 @@ function RideView ({rides, setRefreshKey}) {
         </Table.Header>
         <Table.Body>
         {rides?.map(ride => (
-            <RideItem rideId={ride.rideId} fromLocationId={ride.fromLocationId} toLocationId={ride.toLocationId} date={ride.rideDate} time={ride.rideTime} seatsLeft={ride.seatsRemaining} handleJoinClick={handleJoinClick}/>
+            <RideItem rideId={ride.ride_id} fromLocationName = {ride.fromLocationName} toLocationName = {ride.toLocationName} fromLocationId={ride.fromLocationId} toLocationId={ride.toLocationId} date={ride.rideDate} time={ride.rideTime} seatsLeft={ride.seatsRemaining} handleJoinClick={handleJoinClick}/>
             ))}
 
         </Table.Body>            

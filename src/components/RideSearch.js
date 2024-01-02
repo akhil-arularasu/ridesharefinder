@@ -27,12 +27,13 @@ function RideSearch({refreshKey, setRefreshKey}) {
   const [rides, setRides] = useState([{}]);
   const [searchParams, setSearchParams] = useState({
     fromLocationId: "2",
+    fromLocationName: "Emory Atlanta Campus",
+    toLocationName: "ATL Hartsfield-Jackson Airport",
     toLocationId: "3",
     rideDate: "2023-12-27",
     startTime: "1:00",
     endTime: "23:00"
   });
-
   useEffect(() => {
     const userToken = localStorage.getItem('token'); // Retrieve the token
     const { fromLocationId, toLocationId, rideDate, startTime, endTime } = searchParams;
@@ -44,9 +45,9 @@ function RideSearch({refreshKey, setRefreshKey}) {
         }
       }
     ).then((res) =>
-      res.json().then((data) => {
-        console.log('Ride data:', data); // Add this line to log the response
-        setRides(data.rides);
+      res.json().then((rides) => {
+        console.log('Ride data:', rides); // Add this line to log the response
+        setRides(rides);
       })
     );
   }, [searchParams, refreshKey]);
@@ -88,7 +89,7 @@ function RideSearch({refreshKey, setRefreshKey}) {
       ...prevParams,
       [name]: value
     }));
-    console.log('search',searchParams)
+    console.log('search', searchParams)
   };
 
   const [locationOptions, setLocationOptions] = useState([]);
@@ -148,9 +149,9 @@ function RideSearch({refreshKey, setRefreshKey}) {
     
     setToValue(selectedOption);
   }
-    ;
-  
+
   return (
+    
     <div>
     <h2>Search Rides</h2>
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -216,8 +217,6 @@ function RideSearch({refreshKey, setRefreshKey}) {
             />
           </div>
         </div>
-  
-        {/* Displaying the selected times */}
         <div style={{ marginBottom: '20px' }}>
           Start Time: {searchParams.startTime} - End Time: {searchParams.endTime}
         </div>

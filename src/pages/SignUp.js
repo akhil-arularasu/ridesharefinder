@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import validator from 'validator' 
 import './RegistrationForm.css'; // Adjust the path based on your project structure
+import { FormField } from 'semantic-ui-react'
+import Navbar from "./Navbar"
+import { InView } from 'react-intersection-observer'
 
 function RegisterForm() {
   const collegeIdMapping = {
     "Emory University": 1,
     "Oxford College of Emory University": 2,
+    "University of Central Florida": 3
     // Add more mappings as needed
   };
   
@@ -76,37 +80,24 @@ function RegisterForm() {
   const validate = (values) => {
     const errors = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-    if (!values.name) {
-      errors.name = "Full Name is required!";
-    }
-    if (!values.college) {
-      errors.college = "Selecting a home institution is required";
-    }
-    if (!values.email) {
-      errors.email = "Email is required!";
-    }
-    else if ((values.college === "Oxford College of Emory University" || values.college === "Emory University") && !values.email.endsWith("@emory.edu")) {
+    if ((values.college === "Oxford College of Emory University" || values.college === "Emory University") && !values.email.endsWith("@emory.edu")) {
       errors.email = "Email must end with @emory.edu";
     } else if(values.college === "Georgia State University" && !values.email.endsWith("@student.gsu.edu")) {
       errors.email = "Email must end with @student.gsu.edu";
+    }  else if(values.college === "University of Central Florida" && !values.email.endsWith("@ucf.edu")) {
+        errors.email = "Email must end with @ucf.edu";
     } else if (!regex.test(values.email)) {
       errors.email = "This is not a valid email format!";
     }
-    if (!values.password) {
-      errors.password = "Password is required";
-    } else if (values.password.length < 4) {
+    if (values.password.length < 4) {
       errors.password = "Password must be more than 4 characters";
     } else if (values.password.length > 12) {
       errors.password = "Password cannot exceed 12 characters";
     }
-    if (!values.repeatPassword) {
-      errors.password = "Repeat Password is required";
-    } else if (values.password != values.repeatPassword) {
+    if (values.password != values.repeatPassword) {
       errors.password = "Passwords must Match!";
     }
-    if(!values.telephone) {
-      errors.telephone = "Telephone Number is Required";
-    } else if (validatePhoneNumber(values.telephone) == false) {
+    if (validatePhoneNumber(values.telephone) == false) {
       errors.telephone = "Enter a valid US (10 digit) Phone number";
     }
     if (!values.agreeToTerms) {
@@ -116,6 +107,8 @@ function RegisterForm() {
   };
 
   return (
+    <InView >
+      <Navbar/>
     <div className="container">
       {Object.keys(formErrors).length === 0 && isSubmit ? (
         <div className="ui message success">Signed Up successfully. Check your inbox for confirmation link</div>
@@ -129,6 +122,7 @@ function RegisterForm() {
         <div className="ui divider"></div>
         <div className="ui form">
           <div className="field">
+          <FormField required>
             <label>Name</label>
             <input
               type="text"
@@ -136,24 +130,32 @@ function RegisterForm() {
               placeholder="Full Name"
               value={formValues.name}
               onChange={handleChange}
+              required
             />
+           </FormField>
+           <p style={{ color: 'red' }}>{formErrors.name}</p>
           </div>
           <p>{formErrors.name}</p>
           <div className="field">
+          <FormField required>
           <label>College</label>
           <select
             name="college"
             value={formValues.college}
             onChange={handleChange}
+            required
           >
             <option value="">Select Home Institution</option>
             {Object.keys(collegeIdMapping).map((collegeName, index) => (
               <option key={index} value={collegeName}>{collegeName}</option>
             ))}
           </select>
+          </FormField>
+          <p style={{ color: 'red' }}>{formErrors.name}</p>
         </div>
         <p>{formErrors.college}</p>
           <div className="field">
+          <FormField required>
             <label>Email</label>
             <input
               type="text"
@@ -161,10 +163,14 @@ function RegisterForm() {
               placeholder=".edu Email Address"
               value={formValues.email}
               onChange={handleChange}
+              required
             />
+          </FormField>
+          <p style={{ color: 'red' }}>{formErrors.name}</p>
           </div>
           <p>{formErrors.email}</p>
           <div className="field">
+          <FormField required>
             <label>Password</label>
             <input
               type="password"
@@ -172,10 +178,14 @@ function RegisterForm() {
               placeholder="Password"
               value={formValues.password}
               onChange={handleChange}
+              required  
             />
+           </FormField>
+           <p style={{ color: 'red' }}>{formErrors.name}</p>
           </div>
           <p>{formErrors.password}</p>
           <div className="field">
+          <FormField required>
             <label>Repeat Password</label>
             <input
               type="password"
@@ -183,11 +193,15 @@ function RegisterForm() {
               placeholder="Repeat Password"
               value={formValues.repeatPassword}
               onChange={handleChange}
+              required
             />
+          </FormField>
+          <p style={{ color: 'red' }}>{formErrors.name}</p>
           </div>
           <p>{formErrors.repeatPassword}</p>
 
           <div className="field">
+          <FormField required>
             <label>Telephone Number</label>
             <input
               type="number"
@@ -196,9 +210,13 @@ function RegisterForm() {
               value={formValues.telephone}
               onChange={handleChange}
               id="telephone"  // Added ID for accessibility
+              required
             />
+            </FormField>
+            <p style={{ color: 'red' }}>{formErrors.name}</p>
           </div>
           <p>{formErrors.telephone}</p>
+          <FormField required>
           <div className="field">
           <div className="ui checkbox">
             <input
@@ -206,16 +224,20 @@ function RegisterForm() {
               name="agreeToTerms"
               checked={formValues.agreeToTerms}
               onChange={handleChange}
+              required
             />
             <label>I agree to the terms and conditions.</label>
           </div>
         </div>
+        </FormField>
+        <p style={{ color: 'red' }}>{formErrors.name}</p>
         <p>{formErrors.agreeToTerms}</p>
           <button className="fluid ui button blue">Submit</button>
         </div>
       </form>
       </div>
     </div>
+    </InView>
   );
 }
 

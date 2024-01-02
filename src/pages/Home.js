@@ -97,6 +97,9 @@ class DesktopContainer extends Component {
               size='large'
             >
               <Container>
+              <Menu.Item style={{top: '0.8em'}}>
+                <img alt='logo' src='RSF-Logo-Icon.png' />
+              </Menu.Item>
                 <Menu.Item as='a' active>
                   Home
                 </Menu.Item>
@@ -221,7 +224,7 @@ const Home = () => (
         <Grid.Row>
           <Grid.Column width={8}>
             <Header as='h3' style={{ fontSize: '2em' }}>
-              We Help Companies and Companions
+              RideSharing has never been easier.
             </Header>
             <p style={{ fontSize: '1.33em' }}>
               We can give your company superpowers to do things that they never thought possible.

@@ -1,7 +1,8 @@
 import React, {useState} from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import { useNavigate } from 'react-router-dom';
-
+import Navbar from "./Navbar"
+import { InView } from 'react-intersection-observer'
 
 const LoginForm = () => {
     const navigate = useNavigate();
@@ -43,16 +44,19 @@ const LoginForm = () => {
         });
     }
     return (
+    <InView >
+      <Navbar/>
         <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
     <Grid.Column style={{ maxWidth: 450 }}>
-      <Header as='h2' color='teal' textAlign='center'>
-        <Image src='/logo.png' /> Log In to your RSF account
+      <Header as='h2' primary textAlign='center'>
+      <Image src='/RSF-Logo-Icon.png' alt="RSF Logo" /> RideShareFinder
       </Header>
       <Form size='large' onSubmit={handleSubmit}>
         <Segment stacked>
-          <Form.Input fluid icon='user' iconPosition='left' placeholder='Emory Email'           
+          <Form.Input fluid icon='user' iconPosition='left' placeholder='.edu Email Address'           
           value = {enteredUsername}
           onChange={(e) => setUsername(e.target.value)}
+          required
           />
           <Form.Input
             fluid
@@ -62,10 +66,10 @@ const LoginForm = () => {
             type='password'
             value = {enteredPassword}
             onChange={(e) => setPassword(e.target.value)}
-
+            required
           />
 
-          <Button color='teal' fluid size='large'>
+          <Button primary fluid size='large'>
             Login
           </Button>
         </Segment>
@@ -76,6 +80,7 @@ const LoginForm = () => {
       </Message>
     </Grid.Column>
   </Grid>
+  </InView>
 );
     }
 
