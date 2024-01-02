@@ -4,7 +4,8 @@
 
 import { createMedia } from '@artsy/fresnel'
 import PropTypes from 'prop-types'
-import React, { NavLink,Component } from 'react'
+import React, { Component } from 'react'
+import { NavLink} from 'react-router-dom'
 import { InView } from 'react-intersection-observer'
 import {
   Button,
