@@ -65,18 +65,16 @@ class DesktopContainer extends Component {
               size='large'
             >
             <Container>
-              <Menu.Item style={{top: '0.8em'}}>
+              <Menu.Item style={{top: '0.55em'}}>
                 <img alt='logo' src='RSF-Logo-Icon.png' />
               </Menu.Item>
-                <Menu.Item as={NavLink} exact >
-                <a href="/home">
-                  Home
-                  </a>
+              <Menu.Item as={NavLink} to="/Home" exact activeClassName="active">
+                Home
                 </Menu.Item>
                 <Menu.Item as='a'>About</Menu.Item>
                 <Menu.Item as='a'>Careers</Menu.Item>
                 <Menu.Item position='right'>
-                <a href="/account">
+                <a href="/home">
                   <Button as='a' inverted={!fixed}>
                     Account
                   </Button>

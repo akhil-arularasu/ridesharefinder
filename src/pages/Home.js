@@ -158,8 +158,7 @@ class MobileContainer extends Component {
             <Menu.Item as='a' active>
               Home
             </Menu.Item>
-            <Menu.Item as='a'>Work</Menu.Item>
-            <Menu.Item as='a'>Company</Menu.Item>
+            <Menu.Item as='a'>About</Menu.Item>
             <Menu.Item as='a'>Careers</Menu.Item>
             <Menu.Item as='a'>Log in</Menu.Item>
             <Menu.Item as='a'>Sign Up</Menu.Item>
@@ -227,24 +226,21 @@ const Home = () => (
               RideSharing has never been easier.
             </Header>
             <p style={{ fontSize: '1.33em' }}>
-              We can give your company superpowers to do things that they never thought possible.
-              Let us delight your customers and empower your needs... through pure data analytics.
+            Here at RideShareFinder, our mission is to leverage the power of technology to connect college students efficiently, making ridesharing easy, safe, and accessible.
             </p>
             <Header as='h3' style={{ fontSize: '2em' }}>
-              We Make Bananas That Can Dance
+              A One-Stop-Shop for Campus-Based RideSharing.
             </Header>
             <p style={{ fontSize: '1.33em' }}>
-              Yes that's right, you thought it was the stuff of dreams, but even bananas can be
-              bioengineered.
-            </p>
+            We're committed to reducing the environmental impact of commuting and fostering a sense of community among students.            </p>
           </Grid.Column>
           <Grid.Column floated='right' width={6}>
-            <Image bordered rounded size='large' src='/images/wireframe/white-image.png' />
+            <Image size='medium' src='/RSF-Logo-full.png' />
           </Grid.Column>
         </Grid.Row>
         <Grid.Row>
           <Grid.Column textAlign='center'>
-            <Button size='huge'>Check Them Out</Button>
+            <Button size='huge'>Check Us Out</Button>
           </Grid.Column>
         </Grid.Row>
       </Grid>

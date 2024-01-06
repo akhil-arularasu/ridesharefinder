@@ -13,8 +13,13 @@ function Dashboard() {
     <MyRides refreshKey = {refreshKey} setRefreshKey={setRefreshKey}/>
     <br/>
     <br/>
-/   <RideSearch refreshKey = {refreshKey} setRefreshKey={setRefreshKey}/>
+   <RideSearch refreshKey = {refreshKey} setRefreshKey={setRefreshKey}/>
   </InView>
+  <br></br>
+  <br></br>
+  <br></br>
+
+  <br></br>
   </div>;
 
 }

@@ -67,10 +67,10 @@ const RideItem = ({ rideId, fromLocationName, toLocationName, fromLocationId, to
       <Table.Cell>{time}</Table.Cell>
       <Table.Cell>{seatsLeft}</Table.Cell>
       <Table.Cell>
-        <button type="button"
+        <Button type="button"
           onClick={handleOpen}
           >More Info
-        </button>
+        </Button>
           {/* Modal */}
           <Modal
             open={isModalOpen}
@@ -104,10 +104,10 @@ const RideItem = ({ rideId, fromLocationName, toLocationName, fromLocationId, to
           </Modal>
       </Table.Cell>
       <Table.Cell>
-        <button type="button"
+        <Button type="button"
         onClick={() => handleJoinClick(rideId)} // Passing ride.id to the function
           >Join
-        </button>
+        </Button>
       </Table.Cell>
     </Table.Row>
   );

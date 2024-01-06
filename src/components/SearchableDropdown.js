@@ -5,7 +5,8 @@ const SearchableDropdown = ({
   label,
   id,
   selectedVal,
-  handleChange
+  handleChange,
+  disabled
 }) => {
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -17,12 +18,14 @@ const SearchableDropdown = ({
   }, []);
 
   const selectOption = (option) => {
+    if (disabled) return; // Prevent selection if the dropdown is disabled
     setQuery(() => "");
     handleChange(option[label]);
     setIsOpen((isOpen) => !isOpen);
   };
 
   function toggle(e) {
+    if (disabled) return; // Prevent toggling if the dropdown is disabled
     setIsOpen(e && e.target === inputRef.current);
   }
 
@@ -53,9 +56,9 @@ const SearchableDropdown = ({
             name="searchTerm"
             onChange={(e) => {
               setQuery(e.target.value);
-              handleChange(null);
             }}
             onClick={toggle}
+            disabled={disabled} 
           />
         </div>
         <div className={`arrow ${isOpen ? "open" : ""}`}></div>

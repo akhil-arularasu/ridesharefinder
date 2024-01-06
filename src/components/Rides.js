@@ -41,7 +41,7 @@ function Rides ({rides, setRides, setRefreshKey}) {
 
   return (
     <form>
-      <Table celled>
+      <Table celled striped singleLine>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>From Location</Table.HeaderCell>

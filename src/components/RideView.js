@@ -3,7 +3,6 @@ import { List, Header, Table } from "semantic-ui-react";
 //import Card from './UI/Card';
 import RideItem from './RideItem';
 
-
 function RideView ({rides, setRefreshKey}) {
 
   console.log("Rides array:", rides);  // Check the structure and content of the rides array
@@ -47,7 +46,7 @@ function RideView ({rides, setRefreshKey}) {
             <Table.HeaderCell>To Location</Table.HeaderCell>
             <Table.HeaderCell>Ride Date</Table.HeaderCell>
             <Table.HeaderCell>Ride Time</Table.HeaderCell>
-            <Table.HeaderCell>Seats Lef</Table.HeaderCell>
+            <Table.HeaderCell>Seats Left</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
