@@ -1,17 +1,56 @@
 .registration-form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 87vh; /* Adjust height as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75vh; /* Keep the height as is */
+  padding: 20px; /* Add padding to avoid touching the edges */
+  box-sizing: border-box; /* Include padding in height calculation */
+}
+
+.registration-form-container .ui.form .field input,
+.registration-form-container .ui.form .field select {
+  width: 90%;
+  padding: 8px; /* Slightly reduce padding */
+  font-size: 1rem; /* Slightly reduce font size */
+}
+
+.registration-form-container .ui.form {
+  width: 100%;
+  max-width: 500px; /* Slightly reduce max width */
+  margin: auto; /* Center in the available vertical space */
+  font-size: 1rem; /* Slightly reduce font size */
+}
+
+.registration-form-container .ui.form .field label {
+  margin-bottom: 3px; /* Reduce space between label and input */
+  font-size: 1rem; /* Slightly reduce font size */
+}
+
+.registration-form-container .ui.button {
+  padding: 8px 15px; /* Slightly reduce button padding */
+  font-size: 1rem; /* Slightly reduce font size */
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px; /* Slightly reduce margin */
+}
+
+.form-row .field {
+  flex: 1;
+  margin-right: 5px; /* Slightly reduce space between fields */
+}
+
+.form-row .field:last-child {
+  margin-right: 0;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
   }
-  
-  .registration-form-container .ui.form .field input,
-  .registration-form-container .ui.form .field select {
-    width: 80%; /* Adjust width as needed */
+  .form-row .field {
+    margin-right: 0;
   }
-  
-  .registration-form-container .ui.form {
-    width: 100%; /* Adjust form width as needed */
-    max-width: 500px; /* Set a max width for the form */
-    margin: auto; /* Center the form */
-  }
+}

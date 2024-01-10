@@ -2,14 +2,15 @@ import React,{useState, useEffect} from 'react'
 import Rides from "./Rides"
 import { nanoid } from 'nanoid'
 import SearchableDropdown from './SearchableDropdown';
-import { Button } from 'semantic-ui-react';
+import { Button, Grid } from 'semantic-ui-react';
 
-function MyRides({refreshKey, setRefreshKey}) {
-  const [rides, setRides]  = useState([])
+
+function MyRides({ refreshKey, setRefreshKey, rides }) {
   const [isEditing, setIsEditing] = useState(false);
   const [locationOptions, setLocationOptions] = useState([]);
   const [fromLocation, setFromLocation] = useState(null);
   const [toLocation, setToLocation] = useState(null);
+
 
   useEffect(() => {
     const userToken = localStorage.getItem('token');
@@ -30,6 +31,7 @@ function MyRides({refreshKey, setRefreshKey}) {
       .catch(error => console.error('Error fetching locations:', error));
   }, []);
 
+
   const [addFormData, setAddFormData] = useState({
     fromLocationId: "",
     toLocationId: "",
@@ -37,6 +39,7 @@ function MyRides({refreshKey, setRefreshKey}) {
     rideTime:"",
     seatsLeft:""
   })
+
 
 const handleFromLocationChange = (selectedLabel) => {
   const fromLocationObj = locationOptions.find(option => option.label === selectedLabel);
@@ -50,6 +53,7 @@ const handleFromLocationChange = (selectedLabel) => {
   }
 };
 
+
 const handleToLocationChange = (selectedLabel) => {
   const toLocationObj = locationOptions.find(option => option.label === selectedLabel);
   if (toLocationObj) {
@@ -60,9 +64,11 @@ const handleToLocationChange = (selectedLabel) => {
     setIsEditing(true);
   };
 
+
   const stopEditingHandler = () => {
     setIsEditing(false);
   };
+
 
   const handleAddFormChange = (event) => {
     const fieldName = event.target.getAttribute('name');
@@ -78,19 +84,24 @@ const handleToLocationChange = (selectedLabel) => {
   return locationOptions.find(option => option.id === addFormData.fromLocationId);
 };
 
+
  const getToLocationOptions = () => {
   const fromLocation = getFromLocation();
 
+
   const isFromLocationCampus = fromLocation ? fromLocation.isCampus : false;
+
 
   return locationOptions.filter(option => {
     // Exclude the selected 'From Location'
     if (option.id === addFormData.fromLocationId) return false;
 
+
     // Filter based on campus status
     return isFromLocationCampus ? !option.isCampus : option.isCampus;
   });
 };
+
 
  const handleAddFormSubmit = (event) => {
   event.preventDefault();
@@ -103,7 +114,7 @@ const handleToLocationChange = (selectedLabel) => {
   };
   console.log('Sending data to the server:', newRide);
   const userToken = localStorage.getItem('token'); // Retrieve the token
-  
+ 
   // Send the newRide data to the server
   fetch(process.env.REACT_APP_SERVER + '/api/create', {
     method: 'POST',
@@ -122,9 +133,6 @@ const handleToLocationChange = (selectedLabel) => {
   .then(data => {
     // Here you can handle the response data
     console.log('Success:', data);
-    // Optionally update the rides state with the new ride
- //   const newRides = [...rides, newRide];
- //   setRides(newRides);
       setRefreshKey(prevRefreshKey => prevRefreshKey + 1)
   })
   .catch((error) => {
@@ -140,58 +148,42 @@ const handleToLocationChange = (selectedLabel) => {
       rideTime: "",
       seatsLeft: ""
     });
-  
+ 
     // If you're using a flag to show/hide the form (like isEditing),
     // you can also reset it here
     setIsEditing(false);
 })};
 
-// Initial fetch when the component mounts
-useEffect(() => {
-  const userToken = localStorage.getItem('token');
-  console.log('toknnnn', userToken)
-  fetch(process.env.REACT_APP_SERVER + '/api/myRideSearch',
-  {
-    headers: {
-      'Authorization': `Bearer ${userToken}`,
-    }
-  } 
-  )
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      console.log('response', response.json)
-      return response.json();
-    })
-    .then(data => {
-      setRides(data || []);
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-    });
-}, [refreshKey]); // Empty dependency array for component mount
-
 
 useEffect(() => {
 }, [locationOptions]);
 
+
 useEffect(() => {
 }, [addFormData.fromLocationId]);  
+
 
   return (
     <div>
       <h2>My Rides</h2>
-      <Rides rides={rides} setRides={setRides} setRefreshKey={setRefreshKey} />
+       {rides.length === 0 ? (
+        <div> You don't have any scheduled rides.</div>
+      ) : (
+      <Rides rides={rides} setRefreshKey={setRefreshKey} myRides={rides} />
+      )}
+      <br/>
 
       {!isEditing && (
       <Button onClick={startEditingHandler}>Add New Ride</Button>
     )}
 
+
       {isEditing && (
         <>
       <h2>Add a Ride</h2>
       <form onSubmit={handleAddFormSubmit}>
+      <Grid columns={5} stackable>
+      <Grid.Column>        
       <label htmlFor="fromLocationDropdown" className="dropdown-label">From Location:</label>
       <SearchableDropdown
         options={locationOptions}
@@ -200,6 +192,8 @@ useEffect(() => {
         selectedVal={fromLocation ? fromLocation.label : ""}
         handleChange={handleFromLocationChange}
       />
+      </Grid.Column>        
+      <Grid.Column>        
       <label htmlFor="fromLocationDropdown" className="dropdown-label">To Location:</label>
       <SearchableDropdown
         options={getToLocationOptions()} // You might need to filter this based on fromLocation
@@ -209,60 +203,81 @@ useEffect(() => {
         handleChange={handleToLocationChange}
         disabled={!fromLocation} // Disable if fromLocation is not selected
       />
+      </Grid.Column>      
+      <Grid.Row columns={8}>
+      <Grid.Column >
+      <label htmlFor="RideDate">
+        Ride Date:
+        </label>    
+        &nbsp;        
         <input
         type = "date"
         name = "rideDate"
         required="required"
         placeholder="Enter Ride Date ..."
         onChange={handleAddFormChange}
-        style={{ marginRight: '10px', marginBottom: '10px', marginLeft: '10px' }} // Added left margin
-        />   
-         <input
+        />  
+      </Grid.Column>            
+      <Grid.Column>  
+        <label htmlFor="RideTime">
+        Ride Time:
+        </label>
+        &nbsp;
+        <input
         type = "time"
         name = "rideTime"
         required="required"
         placeholder="Enter Ride Time ..."
         onChange={handleAddFormChange}
-        style={{ marginRight: '10px', marginBottom: '10px', marginLeft: '10px' }} // Added left margin
         />
-      <label htmlFor="seatsRemaining" style={{ display: 'block', marginLeft: '10px', marginBottom: '10px'}}>
-        Enter # of Seats Available (not including yourself):
+    </Grid.Column>          
+    <Grid.Column>  
+      <label htmlFor="seatsRemaining">
+        Seats Left:
       </label>
       <input
         type="number"
         name="seatsRemaining"
         id="seatsRemaining"
         required="required"
-        placeholder="1-10"
+        placeholder="1-9"
         onChange={handleAddFormChange}
         min="1"
-        max="10"
-        style={{ marginBottom: '10px', marginLeft: '10px' }} // Added left margin
+        max="9"
       />
-      <div style={{ marginTop: '20px' }}> {/* Container for buttons with top margin */}
-        <Button 
-          type="submit" 
+      </Grid.Column>  
+      </Grid.Row>  
+      <Grid.Row columns={2}>
+      <Grid.Column>        
+        <Button
+          type="submit"
           inverted={false} // Adjust based on your state or context
           primary
-          style={{ marginRight: '10px', marginLeft: '10px' }} // Right margin between buttons
         >
           Add Ride
         </Button>
-
-        <Button 
-          type="button" 
-          onClick={stopEditingHandler} 
+        &nbsp;&nbsp;&nbsp;
+        <Button
+          type="button"
+          onClick={stopEditingHandler}
           inverted={false} // Adjust based on your state or context
         >
           Cancel
-        </Button>
-      </div>
+        </Button>        
+      </Grid.Column>
+      <Grid.Column>
+
+
+      </Grid.Column>  
+      </Grid.Row>        
+      </Grid>    
         </form>
         </>
       )}
     </div>
-    
+   
   );
 }
+
 
 export default MyRides;

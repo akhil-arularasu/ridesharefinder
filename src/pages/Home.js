@@ -5,6 +5,11 @@ import { createMedia } from '@artsy/fresnel'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { InView } from 'react-intersection-observer'
+import LogoCarousel from './LogoCarousel'; // Adjust the path as needed
+import { NavLink } from 'react-router-dom';
+import TestimonialsCarousel from './TestimonialsCarousel'
+import ScrollMouse from './scrollMouse'; // Import ScrollMouse component
+
 import {
   Button,
   Container,
@@ -60,8 +65,37 @@ const HomepageHeading = ({ mobile }) => (
       <Icon name='right arrow' />
     </Button>
     </a>
+    <br></br>
+    <br></br>
+    <br></br>
+    <ScrollMouse /> {/* Add the ScrollMouse component here */}
   </Container>
 )
+
+const SocialFollow = () => (
+  <div style={{ position: 'absolute', bottom: 30, right: 20 }}>
+    {/* LinkedIn Button */}
+    <a href="https://www.linkedin.com/company/ridesharefinder" target="_blank" rel="noopener noreferrer" style={{ marginRight: 10 }}>
+      <Button icon circular color='linkedin'>
+        <Icon name='linkedin' />
+      </Button>
+    </a>
+
+    {/* Instagram Button */}
+    <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" style={{ marginRight: 10 }}>
+      <Button icon circular color='instagram'>
+        <Icon name='instagram' />
+      </Button>
+    </a>
+
+    {/* Email Button */}
+    <a href="mailto:team@ridesharefinder.net" target="_blank" rel="noopener noreferrer">
+      <Button icon circular color='blue'>
+        <Icon name='mail' />
+      </Button>
+    </a>
+  </div>
+);
 
 HomepageHeading.propTypes = {
   mobile: PropTypes.bool,
@@ -82,11 +116,10 @@ class DesktopContainer extends Component {
 
     return (
       <Media greaterThan='mobile'>
-        <InView onChange={this.toggleFixedMenu}>
           <Segment
             inverted
             textAlign='center'
-            style={{ minHeight: 700, padding: '1em 0em' }}
+            style={{ minHeight: 650, padding: '1em 0em' }}
             vertical
           >
             <Menu
@@ -96,32 +129,9 @@ class DesktopContainer extends Component {
               secondary={!fixed}
               size='large'
             >
-              <Container>
-              <Menu.Item style={{top: '0.8em'}}>
-                <img alt='logo' src='RSF-Logo-Icon.png' />
-              </Menu.Item>
-                <Menu.Item as='a' active>
-                  Home
-                </Menu.Item>
-                <Menu.Item as='a'>About</Menu.Item>
-                <Menu.Item as='a'>Careers</Menu.Item>
-                <Menu.Item position='right'>
-                <a href="/login">
-                  <Button as='a' inverted={!fixed}>
-                    Log in
-                  </Button>
-                  </a>
-                  <a href="/signUp">
-                  <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
-                    Sign Up
-                  </Button>
-                  </a>
-                </Menu.Item>
-              </Container>
             </Menu>
             <HomepageHeading />
           </Segment>
-        </InView>
 
         {children}
       </Media>
@@ -134,66 +144,17 @@ DesktopContainer.propTypes = {
 }
 
 class MobileContainer extends Component {
-  state = {}
-
-  handleSidebarHide = () => this.setState({ sidebarOpened: false })
-
-  handleToggle = () => this.setState({ sidebarOpened: true })
-
   render() {
-    const { children } = this.props
-    const { sidebarOpened } = this.state
+    const { children } = this.props;
 
     return (
       <Media as={Sidebar.Pushable} at='mobile'>
-        <Sidebar.Pushable>
-          <Sidebar
-            as={Menu}
-            animation='overlay'
-            inverted
-            onHide={this.handleSidebarHide}
-            vertical
-            visible={sidebarOpened}
-          >
-            <Menu.Item as='a' active>
-              Home
-            </Menu.Item>
-            <Menu.Item as='a'>About</Menu.Item>
-            <Menu.Item as='a'>Careers</Menu.Item>
-            <Menu.Item as='a'>Log in</Menu.Item>
-            <Menu.Item as='a'>Sign Up</Menu.Item>
-          </Sidebar>
-
-          <Sidebar.Pusher dimmed={sidebarOpened}>
-            <Segment
-              inverted
-              textAlign='center'
-              style={{ minHeight: 350, padding: '1em 0em' }}
-              vertical
-            >
-              <Container>
-                <Menu inverted pointing secondary size='large'>
-                  <Menu.Item onClick={this.handleToggle}>
-                    <Icon name='sidebar' />
-                  </Menu.Item>
-                  <Menu.Item position='right'>
-                    <Button as='a' inverted>
-                      Log in
-                    </Button>
-                    <Button as='a' inverted style={{ marginLeft: '0.5em' }}>
-                      Sign Up
-                    </Button>
-                  </Menu.Item>
-                </Menu>
-              </Container>
-              <HomepageHeading mobile />
-            </Segment>
-
-            {children}
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
+        <Segment inverted textAlign='center' style={{ minHeight: 350, padding: '1em 0em' }} vertical>
+          <HomepageHeading mobile /> {/* Pass the mobile prop to adjust styling for mobile screens */}
+        </Segment>
+        {children}
       </Media>
-    )
+    );
   }
 }
 
@@ -240,46 +201,24 @@ const Home = () => (
         </Grid.Row>
         <Grid.Row>
           <Grid.Column textAlign='center'>
-            <Button size='huge'>Check Us Out</Button>
+          <a href="/About">
+            <Button size='huge'>About Us</Button>
+          </a>
           </Grid.Column>
         </Grid.Row>
       </Grid>
     </Segment>
 
-    <Segment style={{ padding: '0em' }} vertical>
-      <Grid celled='internally' columns='equal' stackable>
-        <Grid.Row textAlign='center'>
-          <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
-            <Header as='h3' style={{ fontSize: '2em' }}>
-              "What a Company"
-            </Header>
-            <p style={{ fontSize: '1.33em' }}>That is what they all say about us</p>
-          </Grid.Column>
-          <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
-            <Header as='h3' style={{ fontSize: '2em' }}>
-              "I shouldn't have gone with their competitor."
-            </Header>
-            <p style={{ fontSize: '1.33em' }}>
-              <Image avatar src='/images/avatar/large/nan.jpg' />
-              <b>Nan</b> Chief Fun Officer Acme Toys
-            </p>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </Segment>
-
-    <Segment style={{ padding: '8em 0em' }} vertical>
+    <Segment style={{ padding: '6em 0em' }} vertical>
       <Container text>
         <Header as='h3' style={{ fontSize: '2em' }}>
-          Breaking The Grid, Grabs Your Attention
+          Join our Team.
         </Header>
         <p style={{ fontSize: '1.33em' }}>
-          Instead of focusing on content creation and hard work, we have learned how to master the
-          art of doing nothing by providing massive amounts of whitespace and generic content that
-          can seem massive, monolithic and worth your attention.
+          As RideShareFinder expands to other colleges and universities throughout the United States, we are on the lookout for exceptional talent to join our versatile team. Interested areas of expertise include Web & Mobile Development, Social Media, Marketing and more.
         </p>
         <Button as='a' size='large'>
-          Read More
+          Jobs & Internships
         </Button>
 
         <Divider
@@ -288,56 +227,61 @@ const Home = () => (
           horizontal
           style={{ margin: '3em 0em', textTransform: 'uppercase' }}
         >
-          <a href='#'>Case Studies</a>
+          <a href='#'>Student Testimonials</a>
         </Divider>
 
         <Header as='h3' style={{ fontSize: '2em' }}>
-          Did We Tell You About Our Bananas?
-        </Header>
-        <p style={{ fontSize: '1.33em' }}>
-          Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but
-          it's really true. It took years of gene splicing and combinatory DNA research, but our
-          bananas can really dance.
-        </p>
-        <Button as='a' size='large'>
-          I'm Still Quite Interested
-        </Button>
+          What They're Saying About Us:
+        </Header>       
+        <TestimonialsCarousel />
       </Container>
+
+      {/* Logo Carousel Section with Partners Divider */}
+      <Segment style={{ padding: '4em 0em' }} vertical>
+        <Container>
+        <Divider
+          as='h4'
+          className='header'
+          horizontal
+          style={{ margin: '3em 0em', textTransform: 'uppercase' }}
+        >
+          <a href='#'>Supported Institutions</a>
+          </Divider>
+          <LogoCarousel />
+        </Container>
+      </Segment>
     </Segment>
 
-    <Segment inverted vertical style={{ padding: '5em 0em' }}>
+    <Segment inverted vertical style={{ padding: '3em 0em' }}>
       <Container>
         <Grid divided inverted stackable>
           <Grid.Row>
             <Grid.Column width={3}>
               <Header inverted as='h4' content='About' />
               <List link inverted>
-                <List.Item as='a'>Sitemap</List.Item>
                 <List.Item as='a'>Contact Us</List.Item>
                 <List.Item as='a'>Religious Ceremonies</List.Item>
-                <List.Item as='a'>Gazebo Plans</List.Item>
               </List>
             </Grid.Column>
             <Grid.Column width={3}>
               <Header inverted as='h4' content='Services' />
               <List link inverted>
-                <List.Item as='a'>Banana Pre-Order</List.Item>
                 <List.Item as='a'>DNA FAQ</List.Item>
                 <List.Item as='a'>How To Access</List.Item>
-                <List.Item as='a'>Favorite X-Men</List.Item>
               </List>
             </Grid.Column>
             <Grid.Column width={7}>
               <Header as='h4' inverted>
-                Footer Header
+                RideShareFinder
               </Header>
               <p>
-                Extra space for a call to action inside the footer that could help re-engage users.
+              © Copyright 2024 RideShareFinder, LLC. All Rights Reserved.
               </p>
             </Grid.Column>
           </Grid.Row>
         </Grid>
       </Container>
+      <SocialFollow /> {/* Add this line inside the segment */}
     </Segment>
   </ResponsiveContainer>
 )

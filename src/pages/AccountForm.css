@@ -1,0 +1,30 @@
+.account-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh; /* Increased height */
+}
+
+.account-form-container .ui.form .field input,
+.account-form-container .ui.form .field select {
+    width: 90%; /* Increased width */
+    padding: 10px; /* Added padding for larger input fields */
+    font-size: 1.1rem; /* Larger font size for inputs */
+}
+
+.account-form-container .ui.form {
+    width: 100%;
+    max-width: 600px; /* Increased max width */
+    margin: 20px auto; /* Increased margin for more space */
+    font-size: 1.2rem; /* Larger font size for form texts */
+}
+
+.account-form-container .ui.form .field label {
+    margin-bottom: 5px; /* Space between label and input */
+    font-size: 1.1rem; /* Larger font size for labels */
+}
+
+.account-form-container .ui.button {
+    padding: 10px 20px; /* Larger buttons */
+    font-size: 1.1rem; /* Larger font size for button text */
+}

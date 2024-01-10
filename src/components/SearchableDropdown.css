@@ -2,13 +2,12 @@
   font-family: sans-serif;
 }
 
+
 .dropdown {
   position: relative;
   color: #333;
   cursor: default;
-  width: 25%; /* Adjust the width of the dropdown container */
-  margin-bottom: 20px; /* Adjust the value as needed */
-
+ 
 }
 .dropdown-container {
   display: flex;
@@ -17,6 +16,7 @@
   align-items: center;
 }
 
+
 .dropdown input[disabled] {
   background-color: #ffcccc; /* Light red background for a strong visual indication */
   color: #666666; /* Dimmed text color */
@@ -24,6 +24,7 @@
   cursor: not-allowed; /* Cursor indicating the field is not interactive */
   opacity: 0.6; /* Slightly transparent to indicate being disabled */
 }
+
 
 .dropdown .arrow {
   border-color: #999 transparent transparent;
@@ -39,10 +40,12 @@
   width: 0;
 }
 
+
 .dropdown .arrow.open {
   border-color: transparent transparent #999;
   border-width: 0 5px 5px;
 }
+
 
 .dropdown .selected-value input {
   line-height: 1.5;
@@ -57,6 +60,7 @@
   transition: all 200ms ease;
   width: 100%;
 }
+
 
 .dropdown .options {
   display: none;
@@ -74,9 +78,11 @@
   -webkit-overflow-scrolling: touch;
 }
 
+
 .dropdown .options.open {
   display: block;
 }
+
 
 .dropdown .option {
   box-sizing: border-box;
@@ -85,6 +91,7 @@
   display: block;
   padding: 8px 10px;
 }
+
 
 .dropdown .option.selected,
 .dropdown .option:hover {

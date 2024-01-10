@@ -1,27 +1,16 @@
-/* eslint-disable max-classes-per-file */
-/* eslint-disable react/no-multi-comp */
-
-
-import { createMedia } from '@artsy/fresnel'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import { NavLink} from 'react-router-dom'
-import { InView } from 'react-intersection-observer'
+import React, { useState } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { createMedia } from '@artsy/fresnel';
+import PropTypes from 'prop-types';
+import { InView } from 'react-intersection-observer';
 import {
   Button,
   Container,
-  Divider,
-  Grid,
-  Header,
-  Icon,
-  Image,
-  List,
   Menu,
-  MenuItem,
   Segment,
   Sidebar,
-} from 'semantic-ui-react'
-
+  Icon,
+} from 'semantic-ui-react';
 
 const { MediaContextProvider, Media } = createMedia({
   breakpoints: {
@@ -29,172 +18,187 @@ const { MediaContextProvider, Media } = createMedia({
     tablet: 768,
     computer: 1024,
   },
-})
+});
+
+const DesktopContainer = ({ children }) => {
+  const [fixed, setFixed] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const isHomePage = location.pathname === '/Home';
+  const isAboutPage = location.pathname === '/About';
+  const isAccountPage = location.pathname === '/Account';
+  const isDashboardPage = location.pathname === '/Dashboard';
+  const isLoginPage = location.pathname === '/Login';
+  const isSignUpPage = location.pathname === '/SignUp';
 
 
-/* Heads up!
- * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
- * It can be more complicated, but you can create really flexible markup.
- */
-class DesktopContainer extends Component {
-  state = {}
+  const toggleFixedMenu = (inView) => setFixed(!inView);
 
+  const logout = () => {
+    localStorage.removeItem('token');
+    navigate('/Login');
+  };
 
-  toggleFixedMenu = (inView) => this.setState({ fixed: !inView })
-
-
-  render() {
-    const { children } = this.props
-    const { fixed } = this.state
-
-
-    return (
-      <Media greaterThan='mobile'>
-        <InView onChange={this.toggleFixedMenu}>
-          <Segment
-            inverted
-            textAlign='center'
-            style={{ minHeight: 100, padding: '1em 0em' }}
-            vertical
-          >
-            <Menu
-              fixed={fixed ? 'top' : null}
-              inverted={!fixed}
-              pointing={!fixed}
-              secondary={!fixed}
-              size='large'
-            >
+  return (
+    <Media greaterThan="mobile">
+      <InView onChange={toggleFixedMenu}>
+        <Segment inverted textAlign="center" style={{ minHeight: 100, padding: '1em 0em' }} vertical>
+          <Menu fixed={fixed ? 'top' : null} inverted={!fixed} pointing={!fixed} secondary={!fixed} size="large">
             <Container>
-              <Menu.Item style={{top: '1.0em'}}>
-                <img alt='logo' src='RSF-Logo-Icon.png' />
+              <Menu.Item style={{ top: '0.55em' }}>
+                <img alt="logo" src="RSF-Logo-Icon.png" />
               </Menu.Item>
-                <Menu.Item as={NavLink} to="/home" >
-                  Home
-                </Menu.Item>
-                <Menu.Item as='a'>About</Menu.Item>
-                <Menu.Item as='a'>Careers</Menu.Item>
-                <Menu.Item position='right'>
-                <a href="/login">
-                  <Button as='a' inverted={!fixed}>
-                    Log in
-                  </Button>
-                  </a>
-                  <a href="/signUp">
-                  <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
-                    Sign Up
-                  </Button>
-                  </a>
-                </Menu.Item>
-              </Container>
-            </Menu>
-          </Segment>
-        </InView>
-      </Media>
-    )
-  }
-}
-
+              <Menu.Item as={NavLink} to="/Home" exact activeClassName="active">
+                Home
+              </Menu.Item>
+              <Menu.Item as={NavLink} to="/About" activeClassName="active">
+                About
+              </Menu.Item>
+              <Menu.Item as="a">Careers</Menu.Item>
+              <Menu.Item position="right">
+                {(isHomePage || isAboutPage) && (
+                  <>
+                    <NavLink to="/Login">
+                      <Button as="a" inverted={!fixed}>Log in</Button>
+                    </NavLink>
+                    <NavLink to="/SignUp">
+                      <Button as="a" inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
+                        Sign Up
+                      </Button>
+                    </NavLink>
+                  </>
+                )}
+                {(isAccountPage || isDashboardPage) && (
+                  <>
+                    {isAccountPage && (
+                      <NavLink to="/Dashboard">
+                        <Button as="a" inverted={!fixed}>Dashboard</Button>
+                      </NavLink>
+                    )}
+                    {isDashboardPage && (
+                      <NavLink to="/Account">
+                        <Button as="a" inverted={!fixed}>Account</Button>
+                      </NavLink>
+                    )}
+                    <Button as="a" inverted={!fixed} onClick={logout} style={{ marginLeft: '0.5em' }}>
+                      Log Out
+                    </Button>
+                  </>
+                )}
+              {isLoginPage && (
+                <NavLink to="/SignUp">
+                  <Button as="a" inverted={!fixed}>Sign Up</Button>
+                </NavLink>
+              )}
+              {isSignUpPage && (
+                <NavLink to="/Login">
+                  <Button as="a" inverted={!fixed}>Log In</Button>
+                </NavLink>
+              )}
+              </Menu.Item>
+            </Container>
+          </Menu>
+        </Segment>
+      </InView>
+      {children}
+    </Media>
+  );
+};
 
 DesktopContainer.propTypes = {
   children: PropTypes.node,
-}
+};
 
+const MobileContainer = ({ children }) => {
+  const [sidebarOpened, setSidebarOpened] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-class MobileContainer extends Component {
-  state = {}
+  const isHomePage = location.pathname === '/Home';
+  const isAboutPage = location.pathname === '/About';
+  const isAccountPage = location.pathname === '/Account';
+  const isDashboardPage = location.pathname === '/Dashboard';
+  const isLoginPage = location.pathname === '/Login';
+  const isSignUpPage = location.pathname === '/SignUp';
 
+  const handleSidebarHide = () => setSidebarOpened(false);
+  const handleToggle = () => setSidebarOpened(true);
 
-  handleSidebarHide = () => this.setState({ sidebarOpened: false })
+  const logout = () => {
+    localStorage.removeItem('token');
+    navigate('/Login');
+  };
 
+  return (
+    <Media as={Sidebar.Pushable} at="mobile">
+      <Sidebar.Pushable>
+        <Sidebar as={Menu} animation="overlay" onHide={handleSidebarHide} vertical visible={sidebarOpened}>
+          <Menu.Item as={NavLink} to="/Home" exact activeClassName="active">
+            Home
+          </Menu.Item>
+          <Menu.Item as={NavLink} to="/About" activeClassName="active">
+            About
+          </Menu.Item>
+          <Menu.Item as="a">Careers</Menu.Item>
+          {(isHomePage || isAboutPage) && (
+            <>
+              <Menu.Item as={NavLink} to="/Login">Log in</Menu.Item>
+              <Menu.Item as={NavLink} to="/SignUp">Sign Up</Menu.Item>
+            </>
+          )}
+          {(isAccountPage || isDashboardPage) && (
+            <>
+              {isAccountPage && (
+                <Menu.Item as={NavLink} to="/Dashboard">Dashboard</Menu.Item>
+              )}
+              {isDashboardPage && (
+                <Menu.Item as={NavLink} to="/Account">Account</Menu.Item>
+              )}
+              <Menu.Item onClick={logout}>Log Out</Menu.Item>
+            </>
+          )}
+          {isLoginPage && (
+          <NavLink to="/SignUp">
+            <Button as="a" inverted>Sign Up</Button>
+          </NavLink>
+          )}
+          {isSignUpPage && (
+            <NavLink to="/Login">
+              <Button as="a" inverted>Log In</Button>
+            </NavLink>
+          )}
+        </Sidebar>
 
-  handleToggle = () => this.setState({ sidebarOpened: true })
-
-
-  render() {
-    const { children } = this.props
-    const { sidebarOpened } = this.state
-
-
-    return (
-      <Media as={Sidebar.Pushable} at='mobile'>
-        <Sidebar.Pushable>
-          <Sidebar
-            as={Menu}
-            animation='overlay'
-           
-            onHide={this.handleSidebarHide}
-            vertical
-            visible={sidebarOpened}
-          >
-            <Menu.Item as='a' active>
-              Home
-            </Menu.Item>
-            <Menu.Item as='a'>About</Menu.Item>
-            <Menu.Item as='a'>Careers</Menu.Item>
-            <Menu.Item as='a'>Log in</Menu.Item>
-            <Menu.Item as='a'>Sign Up</Menu.Item>
-          </Sidebar>
-
-
-          <Sidebar.Pusher dimmed={sidebarOpened}>
-            <Segment
-              inverted
-              textAlign='center'
-              style={{ minHeight: 350, padding: '1em 0em' }}
-              vertical
-            >
-              <Container>
-                <Menu inverted pointing secondary size='large'>
-                  <Menu.Item onClick={this.handleToggle}>
-                    <Icon name='sidebar' />
-                  </Menu.Item>
-                  <Menu.Item position='right'>
-                    <Button as='a' inverted>
-                      Log in
-                    </Button>
-                    <Button as='a' inverted style={{ marginLeft: '0.5em' }}>
-                      Sign Up
-                    </Button>
-                  </Menu.Item>
-                </Menu>
-              </Container>
-            </Segment>
-
-
-            {children}
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
-      </Media>
-    )
-  }
-}
-
+        <Sidebar.Pusher dimmed={sidebarOpened}>
+          <Segment inverted textAlign="center" style={{ minHeight: 150, padding: '1em 0em' }} vertical>
+            <Container>
+              <Menu inverted pointing secondary size="large">
+                <Menu.Item onClick={handleToggle}>
+                  <Icon name="sidebar" />
+                </Menu.Item>
+                <Menu.Item position="right">
+                  {/* You can add additional items here if necessary */}
+                </Menu.Item>
+              </Menu>
+            </Container>
+          </Segment>
+          {children}
+        </Sidebar.Pusher>
+      </Sidebar.Pushable>
+    </Media>
+  );
+};
 
 MobileContainer.propTypes = {
   children: PropTypes.node,
-}
-
-
-const ResponsiveContainer = ({ children }) => (
-  /* Heads up!
-   * For large applications it may not be best option to put all page into these containers at
-   * they will be rendered twice for SSR.
-   */
-  <MediaContextProvider>
-    <DesktopContainer>{children}</DesktopContainer>
-    <MobileContainer>{children}</MobileContainer>
-  </MediaContextProvider>
-)
-
-
-ResponsiveContainer.propTypes = {
-  children: PropTypes.node,
-}
-
+};
 
 const Navbar = () => (
-    <ResponsiveContainer/>
-    )
+  <MediaContextProvider>
+    <DesktopContainer />
+    <MobileContainer />
+  </MediaContextProvider>
+);
 
-
-export default Navbar
+export default Navbar;

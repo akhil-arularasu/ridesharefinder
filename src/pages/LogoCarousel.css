@@ -1,0 +1,61 @@
+/* LogoCarousel.css */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .logos {
+    overflow: hidden;
+    padding: 10px 0;
+    background: white;
+    white-space: nowrap;
+    position: relative;
+  }
+  
+  .logos:before,
+  .logos:after {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    content: "";
+    z-index: 2;
+  }
+  
+  .logos:before {
+    left: 0;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0), white);
+  }
+  
+  .logos:after {
+    right: 0;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), white);
+  }
+  
+  .logos:hover .logos-slide {
+    animation-play-state: play;
+  }
+  
+  .logos-slide {
+    display: inline-flex;
+    animation: slide 35s infinite linear;
+  }
+  
+  @keyframes slide {
+    0% {
+      transform: translateX(0); /* Start with the first logo at the beginning */
+    }
+    50% {
+      transform: translateX(-50%); /* Move to the middle of the logos (end of the first set) */
+    }
+    100% {
+      transform: translateX(-100%); /* Move to the end (this should be the start of the first set again) */
+    }
+  }
+  
+  .logos-slide img {
+    height: 50px;
+    margin: 0 40px;
+  }
