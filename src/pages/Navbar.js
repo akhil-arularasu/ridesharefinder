@@ -26,11 +26,14 @@ const DesktopContainer = ({ children }) => {
   const navigate = useNavigate();
 
   const isHomePage = location.pathname === '/Home';
+  const isHomePageLower = location.pathname === '/home';
   const isAboutPage = location.pathname === '/About';
   const isAccountPage = location.pathname === '/Account';
   const isDashboardPage = location.pathname === '/Dashboard';
   const isLoginPage = location.pathname === '/Login';
   const isSignUpPage = location.pathname === '/SignUp';
+  const isPasswordResetPage = location.pathname === '/PasswordReset';
+  const isPasswordResetFinalPage = location.pathname === '/Reset_Password/:token';
 
 
   const toggleFixedMenu = (inView) => setFixed(!inView);
@@ -57,7 +60,7 @@ const DesktopContainer = ({ children }) => {
               </Menu.Item>
               <Menu.Item as="a">Careers</Menu.Item>
               <Menu.Item position="right">
-                {(isHomePage || isAboutPage) && (
+                {(isHomePage || isAboutPage || isPasswordResetPage || isHomePageLower || isPasswordResetFinalPage) && (
                   <>
                     <NavLink to="/Login">
                       <Button as="a" inverted={!fixed}>Log in</Button>

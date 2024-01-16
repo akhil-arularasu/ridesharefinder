@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Rides from './Rides';
 import SearchableDropdown from './SearchableDropdown';
 import "./SearchableDropdown.css"
-import { Grid } from 'semantic-ui-react';
+import { Grid, Container, Label } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -232,12 +232,14 @@ const handleToLocationChange = (selectedOption) => {
     
   return (
     
-    <div>
-    <h2>Search Rides</h2>
+    <Container fluid>
+    <Label as='a' color='blue' ribbon>
+    Search Rides
+    </Label>
     <Grid stackable>
     <Grid.Row columns={5}>
     <Grid.Column>        
-      <label htmlFor="fromLocationDropdown" className="dropdown-label">From Location</label>
+      <Label htmlFor="fromLocationDropdown">From Location</Label>
       <div className="RideSearch">
       <SearchableDropdown
         options={locationOptions}
@@ -250,7 +252,7 @@ const handleToLocationChange = (selectedOption) => {
     </Grid.Column>        
       <Grid.Column>        
     {/* Dropdown for To Location */}
-    <label htmlFor="toLocationDropdown" className="dropdown-label">To Location</label>
+    <Label htmlFor="toLocationDropdown">To Location</Label>
       <div className="RideSearch">
         <SearchableDropdown
           options={getToLocationOptions()}
@@ -267,7 +269,7 @@ const handleToLocationChange = (selectedOption) => {
         <Grid.Row columns={5}>
           <Grid.Column>
         {/* Row for Date and Time Range Selectors */}
-            <label htmlFor="rideDate">Ride Date: </label>
+            <Label htmlFor="rideDate">Ride Date </Label>
             <input
               id="rideDate"
               type="date"
@@ -277,7 +279,7 @@ const handleToLocationChange = (selectedOption) => {
             />
           </Grid.Column>            
           <Grid.Column>  
-            <label htmlFor="startTime">Start Time: {searchParams.startTime}</label>
+            <Label htmlFor="startTime">Start Time: {searchParams.startTime}</Label>
             <input
               id="startTime"
               type="range"
@@ -289,7 +291,7 @@ const handleToLocationChange = (selectedOption) => {
             />
           </Grid.Column>
           <Grid.Column>
-            <label htmlFor="endTime">End Time: {searchParams.endTime}</label>
+            <Label htmlFor="endTime">End Time: {searchParams.endTime}</Label>
             <input
               id="endTime"
               type="range"
@@ -308,7 +310,7 @@ const handleToLocationChange = (selectedOption) => {
         ) : (
       <Rides rides={rides} setRefreshKey={setRefreshKey} myRides={myRides}/>
       )}
-      </div> 
+      </Container> 
   )}
 
 export default RideSearch;

@@ -90,6 +90,10 @@ const LoginForm = () => {
           <Message>
             New to us? <a href='SignUp'>Sign Up</a>
           </Message>
+          <Message>
+            Forgot Password? <a href='PasswordReset'>Reset Here</a>
+          </Message>
+
         </Grid.Column>
       </Grid>
     </InView>

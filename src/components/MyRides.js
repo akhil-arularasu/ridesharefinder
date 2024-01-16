@@ -1,8 +1,7 @@
 import React,{useState, useEffect} from 'react'
 import Rides from "./Rides"
-import { nanoid } from 'nanoid'
 import SearchableDropdown from './SearchableDropdown';
-import { Button, Grid } from 'semantic-ui-react';
+import { Button, Container, Grid, Label, Icon, ButtonGroup, ButtonOr } from 'semantic-ui-react';
 
 
 function MyRides({ refreshKey, setRefreshKey, rides }) {
@@ -164,9 +163,11 @@ useEffect(() => {
 
 
   return (
-    <div>
-      <h2>My Rides</h2>
-       {rides.length === 0 ? (
+    <Container fluid>
+    <Label as='a' color='blue' ribbon>
+      My Rides
+    </Label>
+   {rides.length === 0 ? (
         <div> You don't have any scheduled rides.</div>
       ) : (
       <Rides rides={rides} setRefreshKey={setRefreshKey} myRides={rides} />
@@ -174,17 +175,16 @@ useEffect(() => {
       <br/>
 
       {!isEditing && (
-      <Button onClick={startEditingHandler}>Add New Ride</Button>
-    )}
+      <Button onClick={startEditingHandler} primary><Icon name='add circle' />Add New Ride</Button>
+      )}
 
 
       {isEditing && (
         <>
-      <h2>Add a Ride</h2>
-      <form onSubmit={handleAddFormSubmit}>
+      <Button onClick={startEditingHandler} primary><Icon name='add circle' />Add New Ride</Button>      <form onSubmit={handleAddFormSubmit}>
       <Grid columns={5} stackable>
       <Grid.Column>        
-      <label htmlFor="fromLocationDropdown" className="dropdown-label">From Location:</label>
+      <Label htmlFor="fromLocationDropdown">From Location</Label>
       <SearchableDropdown
         options={locationOptions}
         label="label"
@@ -194,7 +194,7 @@ useEffect(() => {
       />
       </Grid.Column>        
       <Grid.Column>        
-      <label htmlFor="fromLocationDropdown" className="dropdown-label">To Location:</label>
+      <Label htmlFor="fromLocationDropdown" >To Location</Label>
       <SearchableDropdown
         options={getToLocationOptions()} // You might need to filter this based on fromLocation
         label="label"
@@ -203,13 +203,13 @@ useEffect(() => {
         handleChange={handleToLocationChange}
         disabled={!fromLocation} // Disable if fromLocation is not selected
       />
+      {!fromLocation && <p>Please select 'From Location' first.</p>}
       </Grid.Column>      
       <Grid.Row columns={8}>
       <Grid.Column >
-      <label htmlFor="RideDate">
-        Ride Date:
-        </label>    
-        &nbsp;        
+      <Label htmlFor="RideDate">
+        Ride Date
+        </Label>    
         <input
         type = "date"
         name = "rideDate"
@@ -219,9 +219,9 @@ useEffect(() => {
         />  
       </Grid.Column>            
       <Grid.Column>  
-        <label htmlFor="RideTime">
-        Ride Time:
-        </label>
+        <Label htmlFor="rideTime">
+        Ride Time
+        </Label>
         &nbsp;
         <input
         type = "time"
@@ -232,9 +232,9 @@ useEffect(() => {
         />
     </Grid.Column>          
     <Grid.Column>  
-      <label htmlFor="seatsRemaining">
-        Seats Left:
-      </label>
+      <Label htmlFor="seatsRemaining">
+        Seats Left
+      </Label>
       <input
         type="number"
         name="seatsRemaining"
@@ -249,32 +249,19 @@ useEffect(() => {
       </Grid.Row>  
       <Grid.Row columns={2}>
       <Grid.Column>        
-        <Button
-          type="submit"
-          inverted={false} // Adjust based on your state or context
-          primary
-        >
-          Add Ride
-        </Button>
-        &nbsp;&nbsp;&nbsp;
-        <Button
-          type="button"
-          onClick={stopEditingHandler}
-          inverted={false} // Adjust based on your state or context
-        >
-          Cancel
-        </Button>        
-      </Grid.Column>
+      <ButtonGroup>
+        <Button inverted={false} onClick={stopEditingHandler}>Cancel</Button>
+        <ButtonOr />
+        <Button inverted={false} primary >Save</Button>
+      </ButtonGroup>        </Grid.Column>
       <Grid.Column>
-
-
       </Grid.Column>  
       </Grid.Row>        
       </Grid>    
         </form>
         </>
       )}
-    </div>
+    </Container>
    
   );
 }

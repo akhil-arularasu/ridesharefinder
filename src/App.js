@@ -9,6 +9,8 @@ import NoPage from './pages/NoPage'
 import SignUp from './pages/SignUp'
 import Account from './pages/Account'
 import Navbar from './pages/Navbar'; // Adjust the import path as needed
+import PasswordReset from './pages/PasswordReset'
+import PasswordResetFinal from './pages/PasswordResetFinal'
 import { Navigate } from 'react-router-dom';
 
 
@@ -24,6 +26,8 @@ function App() {
       <Route path="/Login" element={<Login />} />
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/Account" element={<Account />} />
+      <Route path="/PasswordReset" element={<PasswordReset />} />
+      <Route path="/Reset_Password/:token" element={<PasswordResetFinal />} />
       <Route path="*" element={<NoPage />} />
     </Routes>
     </BrowserRouter>

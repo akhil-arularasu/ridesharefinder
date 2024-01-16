@@ -260,14 +260,12 @@ const Home = () => (
               <Header inverted as='h4' content='About' />
               <List link inverted>
                 <List.Item as='a'>Contact Us</List.Item>
-                <List.Item as='a'>Religious Ceremonies</List.Item>
               </List>
             </Grid.Column>
             <Grid.Column width={3}>
               <Header inverted as='h4' content='Services' />
               <List link inverted>
-                <List.Item as='a'>DNA FAQ</List.Item>
-                <List.Item as='a'>How To Access</List.Item>
+                <List.Item as='a'>FAQ</List.Item>
               </List>
             </Grid.Column>
             <Grid.Column width={7}>
