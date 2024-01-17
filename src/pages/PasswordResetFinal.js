@@ -21,7 +21,7 @@ const PasswordResetFinal = () => {
         }
 
         try {
-            const response = await fetch(`/api/reset_password/${token}`, {
+            const response = await fetch(process.env.REACT_APP_SERVER + `/api/reset_password/${token}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

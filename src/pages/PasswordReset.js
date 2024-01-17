@@ -10,7 +10,7 @@ const PasswordReset = () => {
       setMessage(''); // Clear previous message
   
       try {
-        const response = await fetch('/api/reset_password', {
+        const response = await fetch(process.env.REACT_APP_SERVER + '/api/reset_password', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
