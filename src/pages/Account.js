@@ -5,9 +5,15 @@ import { FormField } from 'semantic-ui-react';
 import { InView } from 'react-intersection-observer';
 import { Dropdown } from 'semantic-ui-react'; // Import Dropdown from Semantic UI React
 import { useNavigate } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 function AccountForm() {
   const initialValues = { name: "", collegeId: "", telNumber: "", collegeName: "" };
+  const [showAlert, setShowAlert] = useState(false)
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [alertSeverity, setAlertSeverity] = useState('success');
   const [formValues, setFormValues] = useState(initialValues);
   const [collegeOptions, setCollegeOptions] = useState([]);
   const [formErrors, setFormErrors] = useState({});
@@ -60,12 +66,13 @@ function AccountForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-  
+
     // Clear previous errors
     setFormErrors({});
 
-    // Validate phone number
-    if (!validatePhoneNumber(formValues.telNumber)) {
+    // Convert telNumber to a string and validate phone number
+    const telNumberStr = String(formValues.telNumber);
+    if (!validatePhoneNumber(telNumberStr)) {
       setFormErrors({ ...formErrors, telNumber: "Invalid US phone number format." });
       return; // Stop the form submission
     }
@@ -87,14 +94,18 @@ function AccountForm() {
     .then(response => response.json())
     .then(data => {
       if (data.message) {
-        alert("Account info updated successfully");
+        setAlertMessage("Account info updated successfully");
+        setAlertSeverity("success");
+        setAlertOpen(true);
       }
     })
     .catch(error => {
       console.error('Error updating account:', error);
-      alert("Error updating name");
+      setAlertMessage("Error updating account");
+      setAlertSeverity("error");
+      setAlertOpen(true);
     });
-  };
+      };
 
     // Fetch college options
     useEffect(() => {
@@ -180,6 +191,11 @@ function AccountForm() {
           </form>
         </div>
       </div>
+      <Snackbar open={alertOpen} autoHideDuration={6000} onClose={() => setAlertOpen(false)}>
+      <Alert onClose={() => setAlertOpen(false)} severity={alertSeverity} sx={{ width: '100%' }}>
+        {alertMessage}
+      </Alert>
+    </Snackbar>
     </InView>
   );
 }

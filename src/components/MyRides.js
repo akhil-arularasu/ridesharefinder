@@ -1,7 +1,7 @@
 import React,{useState, useEffect} from 'react'
 import Rides from "./Rides"
 import SearchableDropdown from './SearchableDropdown';
-import { Button, Container, Grid, Label, Icon, ButtonGroup, ButtonOr } from 'semantic-ui-react';
+import { Button, Container, Grid, Select, Label, Icon, ButtonGroup, ButtonOr } from 'semantic-ui-react';
 
 
 function MyRides({ refreshKey, setRefreshKey, rides }) {
@@ -205,7 +205,7 @@ useEffect(() => {
       />
       {!fromLocation && <p>Please select 'From Location' first.</p>}
       </Grid.Column>      
-      <Grid.Row columns={8}>
+      <Grid.Row columns={6}>
       <Grid.Column >
       <Label htmlFor="RideDate">
         Ride Date
@@ -235,16 +235,17 @@ useEffect(() => {
       <Label htmlFor="seatsRemaining">
         Seats Left
       </Label>
-      <input
-        type="number"
-        name="seatsRemaining"
-        id="seatsRemaining"
-        required="required"
-        placeholder="1-9"
-        onChange={handleAddFormChange}
-        min="1"
-        max="9"
-      />
+      <Select
+  name="seatsRemaining"
+  id="seatsRemaining"
+  required="required"
+  onChange={handleAddFormChange}
+  options={[...Array(9)].map((_, index) => ({
+    key: index + 1,
+    text: index + 1,
+    value: index + 1
+  }))}
+/>
       </Grid.Column>  
       </Grid.Row>  
       <Grid.Row columns={2}>
