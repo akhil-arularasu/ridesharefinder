@@ -59,7 +59,7 @@ const HomepageHeading = ({ mobile }) => (
         marginTop: mobile ? '0.5em' : '1.5em',
       }}
     />
-    <a href="/login">
+    <a href="/Login">
     <Button primary size='huge'>
       Get Started
       <Icon name='right arrow' />

@@ -16,7 +16,7 @@ function Dashboard() {
 
     // Redirect to login page if token is not found
     if (!userToken) {
-      navigate('/login'); // Redirect using react-router v6 useNavigate hook
+      navigate('/Login'); // Redirect using react-router v6 useNavigate hook
       return; // Exit the useEffect hook early
     }
 
