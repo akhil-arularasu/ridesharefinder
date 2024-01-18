@@ -131,7 +131,7 @@ function RideCard({ride, handleLeaveClick, handleJoinClick, isMyRide}) {
             <Button primary type="button"
             onClick={() => handleJoinClick(ride.ride_id)}
             aria-label={`Joining ride from ${ride.fromLocationName} to ${ride.toLocationName}`}
-            disabled={ride.seatsRemaining === 0} // Disable button if no seats are left
+            disabled={ride.seatsLeft === 0} // Disable button if no seats are left
             >
             Join
             </Button>

@@ -68,23 +68,29 @@ const handleToLocationChange = (selectedLabel) => {
     setIsEditing(false);
   };
 
-
-  const handleAddFormChange = (event) => {
-    const fieldName = event.target.getAttribute('name');
-    const fieldValue = event.target.value;
-    console.log(fieldValue)
-   // console.log(addFormData)
+  const getFromLocation = () => {
+    return locationOptions.find(option => option.id === addFormData.fromLocationId);
+  };
+  
+  const handleAddFormChange = (event, data) => {
+    let fieldName, fieldValue;
+  
+    // Check if the event is from a Semantic UI Select
+    if (data) {
+      fieldName = data.name;
+      fieldValue = data.value;
+    } else {
+      fieldName = event.target.name;
+      fieldValue = event.target.value;
+    }
+  
     setAddFormData(prevFormData => ({
       ...prevFormData,
       [fieldName]: fieldValue
     }));
- };
- const getFromLocation = () => {
-  return locationOptions.find(option => option.id === addFormData.fromLocationId);
-};
+  };  
 
-
- const getToLocationOptions = () => {
+  const getToLocationOptions = () => {
   const fromLocation = getFromLocation();
 
 
@@ -205,7 +211,7 @@ useEffect(() => {
       />
       {!fromLocation && <p>Please select 'From Location' first.</p>}
       </Grid.Column>      
-      <Grid.Row columns={6}>
+      <Grid.Row columns={6.5}>
       <Grid.Column >
       <Label htmlFor="RideDate">
         Ride Date
@@ -235,18 +241,16 @@ useEffect(() => {
       <Label htmlFor="seatsRemaining">
         Seats Left
       </Label>
-      <Select
-  name="seatsRemaining"
-  id="seatsRemaining"
-  required="required"
-  onChange={handleAddFormChange}
-  options={[...Array(9)].map((_, index) => ({
-    key: index + 1,
-    text: index + 1,
-    value: index + 1
-  }))}
-/>
-      </Grid.Column>  
+      <input
+        type="number"
+        name="seatsRemaining"
+        id="seatsRemaining"
+        min="1"
+        max="9"
+        required
+        onChange={handleAddFormChange}
+      />
+    </Grid.Column>
       </Grid.Row>  
       <Grid.Row columns={2}>
       <Grid.Column>        
