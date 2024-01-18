@@ -211,7 +211,7 @@ useEffect(() => {
       />
       {!fromLocation && <p>Please select 'From Location' first.</p>}
       </Grid.Column>      
-      <Grid.Row columns={6.5}>
+      <Grid.Row columns={6}>
       <Grid.Column >
       <Label htmlFor="RideDate">
         Ride Date
@@ -241,14 +241,16 @@ useEffect(() => {
       <Label htmlFor="seatsRemaining">
         Seats Left
       </Label>
-      <input
-        type="number"
+      <Select
         name="seatsRemaining"
         id="seatsRemaining"
-        min="1"
-        max="9"
         required
-        onChange={handleAddFormChange}
+        onChange={(event, data) => handleAddFormChange(event, data)}
+        options={[...Array(9)].map((_, index) => ({
+          key: index + 1,
+          text: index + 1,
+          value: index + 1
+        }))}
       />
     </Grid.Column>
       </Grid.Row>  
