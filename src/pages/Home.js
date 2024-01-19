@@ -3,12 +3,13 @@
 
 import { createMedia } from '@artsy/fresnel'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { InView } from 'react-intersection-observer'
 import LogoCarousel from './LogoCarousel'; // Adjust the path as needed
 import { NavLink } from 'react-router-dom';
 import TestimonialsCarousel from './TestimonialsCarousel'
 import ScrollMouse from './scrollMouse'; // Import ScrollMouse component
+import LoomVideoModal from './LoomVideoModal.js'; // Adjust the path as needed
 
 import {
   Button,
@@ -22,6 +23,7 @@ import {
   Menu,
   Segment,
   Sidebar,
+  Modal
 } from 'semantic-ui-react'
 
 const { MediaContextProvider, Media } = createMedia({
@@ -36,7 +38,14 @@ const { MediaContextProvider, Media } = createMedia({
  * HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled
  * components for such things.
  */
-const HomepageHeading = ({ mobile }) => (
+const HomepageHeading = ({ mobile }) => {
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+return (
   <Container text>
     <Header
       as='h1'
@@ -59,18 +68,29 @@ const HomepageHeading = ({ mobile }) => (
         marginTop: mobile ? '0.5em' : '1.5em',
       }}
     />
-    <a href="/Login">
+  <a href="/Login">
     <Button primary size='huge'>
       Get Started
       <Icon name='right arrow' />
     </Button>
-    </a>
+  </a>
+  <br />
+  <br />
+
+  <Button primary size='medium' onClick={openModal}> {/* Adjust the size to 'medium' */}
+  Demo <span style={{ marginRight: '10px' }}></span><Icon name='video' />
+  </Button>
+    <LoomVideoModal
+        isOpen={isModalOpen}
+        close={closeModal}
+      />
     <br></br>
     <br></br>
     <br></br>
     <ScrollMouse /> {/* Add the ScrollMouse component here */}
   </Container>
 )
+    }
 
 const SocialFollow = () => (
   <div style={{ position: 'absolute', bottom: 30, right: 20 }}>
