@@ -210,7 +210,7 @@ const Home = () => (
             Here at RideShareFinder, our mission is to leverage the power of technology to connect college students efficiently, making ridesharing easy, safe, and accessible.
             </p>
             <Header as='h3' style={{ fontSize: '2em' }}>
-              A One-Stop-Shop for Campus-Based RideSharing.
+              The One-Stop-Shop for Campus-Based RideSharing.
             </Header>
             <p style={{ fontSize: '1.33em' }}>
             We're committed to reducing the environmental impact of commuting and fostering a sense of community among students.            </p>
@@ -237,9 +237,11 @@ const Home = () => (
         <p style={{ fontSize: '1.33em' }}>
           As RideShareFinder expands to other colleges and universities throughout the United States, we are on the lookout for exceptional talent to join our versatile team. Interested areas of expertise include Web & Mobile Development, Social Media, Marketing and more.
         </p>
+        <a href="/Careers">
         <Button as='a' size='large'>
           Jobs & Internships
         </Button>
+        </a>
 
         <Divider
           as='h4'

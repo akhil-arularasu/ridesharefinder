@@ -34,6 +34,7 @@ const DesktopContainer = ({ children }) => {
   const isSignUpPage = location.pathname === '/SignUp';
   const isPasswordResetPage = location.pathname === '/PasswordReset';
   const isPasswordResetFinalPage = location.pathname === '/Reset_Password/:token';
+  const isCareersPage = location.pathname === '/Careers';
 
 
   const toggleFixedMenu = (inView) => setFixed(!inView);
@@ -58,9 +59,11 @@ const DesktopContainer = ({ children }) => {
               <Menu.Item as={NavLink} to="/About" activeClassName="active">
                 About
               </Menu.Item>
-              <Menu.Item as="a">Careers</Menu.Item>
+              <Menu.Item as={NavLink} to="/Careers" activeClassName="active">
+                Careers
+              </Menu.Item>
               <Menu.Item position="right">
-                {(isHomePage || isAboutPage || isPasswordResetPage || isHomePageLower || isPasswordResetFinalPage) && (
+                {(isCareersPage || isHomePage || isAboutPage || isPasswordResetPage || isHomePageLower || isPasswordResetFinalPage) && (
                   <>
                     <NavLink to="/Login">
                       <Button as="a" inverted={!fixed}>Log in</Button>
@@ -124,6 +127,7 @@ const MobileContainer = ({ children }) => {
   const isDashboardPage = location.pathname === '/Dashboard';
   const isLoginPage = location.pathname === '/Login';
   const isSignUpPage = location.pathname === '/SignUp';
+  const isCareersPage = location.pathname === '/Careers';
 
   const handleSidebarHide = () => setSidebarOpened(false);
   const handleToggle = () => setSidebarOpened(true);
@@ -143,8 +147,10 @@ const MobileContainer = ({ children }) => {
           <Menu.Item as={NavLink} to="/About" activeClassName="active">
             About
           </Menu.Item>
-          <Menu.Item as="a">Careers</Menu.Item>
-          {(isHomePage || isAboutPage) && (
+          <Menu.Item as={NavLink} to="/Careers" activeClassName="active">
+            Careers
+          </Menu.Item>
+          {(isCareersPage || isHomePage || isAboutPage) && (
             <>
               <Menu.Item as={NavLink} to="/Login">Log in</Menu.Item>
               <Menu.Item as={NavLink} to="/SignUp">Sign Up</Menu.Item>
