@@ -174,35 +174,26 @@ ResponsiveContainer.propTypes = {
 
 const Careers = () => {
     useEffect(() => {
-      // Load the Typeform embed script
-      const script = document.createElement('script');
-      script.src = "//embed.typeform.com/next/embed.js";
-      script.async = true;
-      document.body.appendChild(script);
-  
-      return () => {
-        // Cleanup the script when the component unmounts
-        document.body.removeChild(script);
-      };
+        // Dynamically load the Typeform embed script
+        const script = document.createElement('script');
+        script.src = "//embed.typeform.com/next/embed.js";
+        script.async = true;
+        document.body.appendChild(script);
+
+        return () => {
+            // Remove the script when the component unmounts
+            document.body.removeChild(script);
+        };
     }, []);
-  
+
     return (
-      <ResponsiveContainer>
-        <Segment style={{ padding: '6em 0em' }} vertical>
-          <Grid container stackable verticalAlign='middle'>
-            <Grid.Row>
-              <Grid.Column width={16}>
-                {/* Typeform Embed */}
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <div data-tf-live="01HMPGK0ASWXVFAF59RFBVGFBB" style={{ width: '100%', maxWidth: '600px' }}></div>
-                </div>
-              </Grid.Column>
-            </Grid.Row>
-            {/* Additional rows or content as needed */}
-          </Grid>
-        </Segment>
-      </ResponsiveContainer>
+        <div style={{ width: '100%', overflow: 'hidden' }}>
+            {/* Adjust the height as needed, or make it responsive */}
+            <div style={{ position: 'relative', height: '500px', maxWidth: '100%' }}>
+                <div data-tf-live="01HMPGK0ASWXVFAF59RFBVGFBB" style={{ position: 'absolute', top: '0', left: '50%', transform: 'translateX(-50%)', width: '100%', height: '100%' }}></div>
+            </div>
+        </div>
     );
 };
-  
-export default Careers
+
+export default Careers;
