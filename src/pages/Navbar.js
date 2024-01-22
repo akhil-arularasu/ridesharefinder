@@ -44,15 +44,24 @@ const DesktopContainer = ({ children }) => {
     navigate('/Login');
   };
 
+  // Function to check if the current page is NOT Dashboard or Account
+  const isNotDashboardOrAccountPage = () => {
+    return location.pathname !== '/Dashboard' && location.pathname !== '/Account';
+  };
+
+
   return (
     <Media greaterThan="mobile">
       <InView onChange={toggleFixedMenu}>
         <Segment inverted textAlign="center" style={{ minHeight: 100, padding: '1em 0em' }} vertical>
           <Menu fixed={fixed ? 'top' : null} inverted={!fixed} pointing={!fixed} secondary={!fixed} size="large">
             <Container>
-              <Menu.Item style={{ top: '0.55em' }}>
+            <Menu.Item style={{ top: '0.55em' }}>
                 <img alt="logo" src="RSF-Logo-Icon.png" />
-              </Menu.Item>
+            </Menu.Item>
+
+            { isNotDashboardOrAccountPage() && (
+              <>
               <Menu.Item as={NavLink} to="/Home" exact activeClassName="active">
                 Home
               </Menu.Item>
@@ -62,6 +71,8 @@ const DesktopContainer = ({ children }) => {
               <Menu.Item as={NavLink} to="/Careers" activeClassName="active">
                 Careers
               </Menu.Item>
+              </>
+            )}
               <Menu.Item position="right">
                 {(isCareersPage || isHomePage || isAboutPage || isPasswordResetPage || isHomePageLower || isPasswordResetFinalPage) && (
                   <>
