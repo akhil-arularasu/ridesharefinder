@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Rides from './Rides';
 import SearchableDropdown from './SearchableDropdown';
 import "./SearchableDropdown.css"
-import { Grid, Container, Label } from 'semantic-ui-react';
+import { Grid, Icon, Container, Label } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -239,7 +239,11 @@ const handleToLocationChange = (selectedOption) => {
     <Grid stackable>
     <Grid.Row columns={5}>
     <Grid.Column>        
-      <Label htmlFor="fromLocationDropdown">From Location</Label>
+      <Label htmlFor="fromLocationDropdown">
+      <>
+      Location <span style={{ marginRight: '1em' }}></span><Icon name="location arrow" />
+      </>
+      </Label>
       <div className="RideSearch">
       <SearchableDropdown
         options={locationOptions}
@@ -252,7 +256,11 @@ const handleToLocationChange = (selectedOption) => {
     </Grid.Column>        
       <Grid.Column>        
     {/* Dropdown for To Location */}
-    <Label htmlFor="toLocationDropdown">To Location</Label>
+    <Label htmlFor="toLocationDropdown">
+    <>
+      Destination <span style={{ marginRight: '1em' }}></span><Icon name="map marker alternate" />
+    </>
+    </Label>
       <div className="RideSearch">
         <SearchableDropdown
           options={getToLocationOptions()}

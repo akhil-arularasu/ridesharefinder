@@ -8,7 +8,7 @@ import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 //import { red } from '@mui/material/colors';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Button, Grid } from 'semantic-ui-react';
+import { Button, Grid, Icon } from 'semantic-ui-react';
 import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -98,23 +98,23 @@ function RideCard({ride, handleLeaveClick, handleJoinClick, isMyRide}) {
       <Grid stackable>
       <Grid.Column>      
       <Typography>
-      <b>From: </b>        
+      <Icon name="location arrow" />
             { ride.fromLocationName}
           </Typography>
       <Typography>
-          <b>To: </b>        
+      <Icon name="map marker" />
           { ride.toLocationName}
       </Typography>
       <Typography>
-          <b>Ride Date: </b>        
-          { ride.rideDate}
-      </Typography>      
+          <Icon name="calendar alternate outline" />
+          {ride.rideDate}
+        </Typography>
+        <Typography>
+          <Icon name="clock outline" />
+          {convertTo12HourFormat(ride.rideTime)}
+        </Typography>
       <Typography>
-          <b>Ride Time: </b>        
-         {convertTo12HourFormat(ride.rideTime)}
-      </Typography>      
-      <Typography>
-          <b>Seats Left: </b>        
+          <Icon name="users"/>
           { ride.seatsRemaining}
       </Typography>                
       </Grid.Column>  

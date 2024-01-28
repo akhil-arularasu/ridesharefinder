@@ -190,7 +190,11 @@ useEffect(() => {
       <Button onClick={startEditingHandler} primary><Icon name='add circle' />Add New Ride</Button>      <form onSubmit={handleAddFormSubmit}>
       <Grid columns={5} stackable>
       <Grid.Column>        
-      <Label htmlFor="fromLocationDropdown">From Location</Label>
+      <Label htmlFor="fromLocationDropdown">Location
+      <>
+      <span style={{ marginRight: '1em' }}></span><Icon name="location arrow" />
+      </>
+      </Label>
       <SearchableDropdown
         options={locationOptions}
         label="label"
@@ -200,7 +204,11 @@ useEffect(() => {
       />
       </Grid.Column>        
       <Grid.Column>        
-      <Label htmlFor="fromLocationDropdown" >To Location</Label>
+      <Label htmlFor="fromLocationDropdown" >Destination
+      <>
+      <span style={{ marginRight: '1em' }}></span><Icon name="map marker alternate" />
+      </>
+      </Label>
       <SearchableDropdown
         options={getToLocationOptions()} // You might need to filter this based on fromLocation
         label="label"
@@ -240,6 +248,9 @@ useEffect(() => {
     <Grid.Column>  
       <Label htmlFor="seatsRemaining">
         Seats Left
+        <>
+        <span style={{ marginRight: '1em' }}></span><Icon name="users" />
+        </>
       </Label>
       <Select
         name="seatsRemaining"

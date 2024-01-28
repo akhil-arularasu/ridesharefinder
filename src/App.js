@@ -24,6 +24,8 @@ function App() {
       <Route path="/Dashboard" element={<Dashboard />} />
       <Route path="/dashboard" element={<Navigate replace to="/Dashboard" />} />
       <Route path="/Login" element={<Login />} />
+      <Route path="/login" element={<Navigate replace to="/Login" />} />
+      <Route path="/Login" element={<Login />} />
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/Account" element={<Account />} />
       <Route path="/Careers" element={<Careers />} />
