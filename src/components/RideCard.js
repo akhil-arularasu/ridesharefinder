@@ -102,7 +102,7 @@ function RideCard({ride, handleLeaveClick, handleJoinClick, isMyRide}) {
             { ride.fromLocationName}
           </Typography>
       <Typography>
-      <Icon name="map marker" />
+      <Icon name="map marker alternate" />
           { ride.toLocationName}
       </Typography>
       <Typography>
