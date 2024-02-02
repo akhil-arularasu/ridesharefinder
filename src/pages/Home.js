@@ -49,7 +49,7 @@ return (
   <Container text>
     <Header
       as='h1'
-      content='RideShareFinder'
+      content='TrypSync'
       inverted
       style={{
         fontSize: mobile ? '2em' : '4em',
@@ -95,7 +95,7 @@ return (
 const SocialFollow = () => (
   <div style={{ position: 'absolute', bottom: 30, right: 20 }}>
     {/* LinkedIn Button */}
-    <a href="https://www.linkedin.com/company/ridesharefinder" target="_blank" rel="noopener noreferrer" style={{ marginRight: 10 }}>
+    <a href="https://www.linkedin.com/company/trypsync" target="_blank" rel="noopener noreferrer" style={{ marginRight: 10 }}>
       <Button icon circular color='linkedin'>
         <Icon name='linkedin' />
       </Button>
@@ -109,7 +109,7 @@ const SocialFollow = () => (
     </a>
 
     {/* Email Button */}
-    <a href="mailto:team@ridesharefinder.net" target="_blank" rel="noopener noreferrer">
+    <a href="mailto:team@trypsync.com" target="_blank" rel="noopener noreferrer">
       <Button icon circular color='blue'>
         <Icon name='mail' />
       </Button>
@@ -207,7 +207,7 @@ const Home = () => (
               RideSharing has never been easier.
             </Header>
             <p style={{ fontSize: '1.33em' }}>
-            Here at RideShareFinder, our mission is to leverage the power of technology to connect college students efficiently, making ridesharing easy, safe, and accessible.
+            Here at TrypSync, our mission is to leverage the power of technology to connect college students efficiently, making ridesharing easy, safe, and accessible.
             </p>
             <Header as='h3' style={{ fontSize: '2em' }}>
               The One-Stop-Shop for Campus-Based RideSharing.
@@ -235,7 +235,7 @@ const Home = () => (
           Join our Team.
         </Header>
         <p style={{ fontSize: '1.33em' }}>
-          As RideShareFinder expands to other colleges and universities throughout the United States, we are on the lookout for exceptional talent to join our versatile team. Interested areas of expertise include Web & Mobile Development, Social Media, Marketing and more.
+          As TrypSync expands to other colleges and universities throughout the United States, we are on the lookout for exceptional talent to join our versatile team. Interested areas of expertise include Web & Mobile Development, Social Media, Marketing and more.
         </p>
         <a href="/Careers">
         <Button as='a' size='large'>
@@ -292,10 +292,10 @@ const Home = () => (
             </Grid.Column>
             <Grid.Column width={7}>
               <Header as='h4' inverted>
-                RideShareFinder
+                TrypSync
               </Header>
               <p>
-              © Copyright 2024 RideShareFinder, LLC. All Rights Reserved.
+              © Copyright 2024 RideShareFinder LLC. All Rights Reserved.
               </p>
             </Grid.Column>
           </Grid.Row>

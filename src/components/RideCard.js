@@ -150,10 +150,10 @@ function RideCard({ride, handleLeaveClick, handleJoinClick, isMyRide}) {
             {hostDetails ? (
               <Typography>
                 <Box>
-                Ride Host: {hostDetails.name}
+                <Icon name="user" /> Host: {hostDetails.name}
                 </Box>
                 <Box>
-                Host Phone Number: {hostDetails.telNumber}
+                <Icon name="phone" /> {hostDetails.telNumber}
                 </Box>
               </Typography>
             ) : (
@@ -162,8 +162,12 @@ function RideCard({ride, handleLeaveClick, handleJoinClick, isMyRide}) {
             {otherRiders.map((rider, index) => (
               <Typography>
               <div key={index}>
-              <div>Rider {index + 1} Name: {rider.name}</div>
-              <div>Rider {index + 1} Phone Number: {rider.telNumber}</div>
+              <div>
+                <Icon name="user" />{index + 1}: {rider.name}
+              </div>
+              <div>
+                <Icon name="phone" />{index + 1}: {rider.telNumber}
+              </div>
               </div>
               </Typography>
             ))}

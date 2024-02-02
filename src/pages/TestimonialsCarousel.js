@@ -22,7 +22,7 @@ export default function TestimonialsCarousel() {
                 <p>Student</p>
                 <p className="text-muted">
                   <MDBIcon fas icon="quote-left" className="pe-2" />
-                  The cost savings with RideShareFinder are remarkable. I've significantly cut down on my Uber expenses, and it's so simple to use. It is both economical and efficient to use.
+                  The cost savings with TrypSync are remarkable. I've significantly cut down on my Uber expenses, and it's so simple to use. It is both economical and efficient to use.
                 </p>
               </MDBCol>
             </MDBRow>
@@ -52,7 +52,7 @@ export default function TestimonialsCarousel() {
                 <p>Student</p>
                 <p className="text-muted">
                   <MDBIcon fas icon="quote-left" className="pe-2" />
-                  I love the RideShareFinder service! It has made my traveling much more convenient and cost-effective. The website is user-friendly, and I've had great experiences sharing rides with friendly people. Highly recommend it!
+                  I love the TrypSync service! It has made my traveling much more convenient and cost-effective. The website is user-friendly, and I've had great experiences sharing rides with friendly people. Highly recommend it!
                 </p>
               </MDBCol>
             </MDBRow>

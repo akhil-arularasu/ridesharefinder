@@ -171,7 +171,7 @@ useEffect(() => {
   return (
     <Container fluid>
     <Label as='a' color='blue' ribbon>
-      My Rides
+      My Tryps
     </Label>
    {rides.length === 0 ? (
         <div> You don't have any scheduled rides.</div>
@@ -181,7 +181,7 @@ useEffect(() => {
       <br/>
 
       {!isEditing && (
-      <Button onClick={startEditingHandler} primary><Icon name='add circle' />Add New Ride</Button>
+      <Button onClick={startEditingHandler} primary><Icon name='add circle' />Add New Tryp</Button>
       )}
 
 

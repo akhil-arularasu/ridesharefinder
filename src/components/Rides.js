@@ -79,12 +79,12 @@ function Rides ({rides, setRefreshKey, myRides}) {
   return (
     <form>
       <Grid stackable>
-      <Grid.Row columns={3}>
+      <Grid.Row columns={5}>
       {rides.length === 0 ? (
         <div> No rides found.</div>
       ) : (
         Array.isArray(rides) && rides.map((ride, index) => (
-          <Grid.Row columns={3} key={index} style={{ marginBottom: '20px' }}> {/* Adjust marginBottom as needed */}
+          <Grid.Row columns={5} key={index} style={{ marginBottom: '20px' }}> {/* Adjust marginBottom as needed */}
             <Grid.Column>    
               <RideCard
                 ride={ride}

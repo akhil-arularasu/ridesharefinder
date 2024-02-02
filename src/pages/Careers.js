@@ -35,7 +35,7 @@ const { MediaContextProvider, Media } = createMedia({
 const SocialFollow = () => (
   <div style={{ position: 'absolute', bottom: 30, right: 20 }}>
     {/* LinkedIn Button */}
-    <a href="https://www.linkedin.com/company/ridesharefinder" target="_blank" rel="noopener noreferrer" style={{ marginRight: 10 }}>
+    <a href="https://www.linkedin.com/company/trypsync" target="_blank" rel="noopener noreferrer" style={{ marginRight: 10 }}>
       <Button icon circular color='linkedin'>
         <Icon name='linkedin' />
       </Button>
@@ -49,7 +49,7 @@ const SocialFollow = () => (
     </a>
 
     {/* Email Button */}
-    <a href="mailto:team@ridesharefinder.net" target="_blank" rel="noopener noreferrer">
+    <a href="mailto:team@trypsync.com" target="_blank" rel="noopener noreferrer">
       <Button icon circular color='blue'>
         <Icon name='mail' />
       </Button>

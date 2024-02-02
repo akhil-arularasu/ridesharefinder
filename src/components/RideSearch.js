@@ -234,7 +234,7 @@ const handleToLocationChange = (selectedOption) => {
     
     <Container fluid>
     <Label as='a' color='blue' ribbon>
-    Search Rides
+    Search Tryps
     </Label>
     <Grid stackable>
     <Grid.Row columns={5}>

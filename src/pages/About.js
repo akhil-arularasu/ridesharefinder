@@ -37,7 +37,7 @@ const { MediaContextProvider, Media } = createMedia({
 const SocialFollow = () => (
   <div style={{ position: 'absolute', bottom: 30, right: 20 }}>
     {/* LinkedIn Button */}
-    <a href="https://www.linkedin.com/company/ridesharefinder" target="_blank" rel="noopener noreferrer" style={{ marginRight: 10 }}>
+    <a href="https://www.linkedin.com/company/trypsync" target="_blank" rel="noopener noreferrer" style={{ marginRight: 10 }}>
       <Button icon circular color='linkedin'>
         <Icon name='linkedin' />
       </Button>
@@ -51,7 +51,7 @@ const SocialFollow = () => (
     </a>
 
     {/* Email Button */}
-    <a href="mailto:team@ridesharefinder.net" target="_blank" rel="noopener noreferrer">
+    <a href="mailto:team@trypsync.com" target="_blank" rel="noopener noreferrer">
       <Button icon circular color='blue'>
         <Icon name='mail' />
       </Button>
@@ -184,22 +184,22 @@ const About = () => (
               Humble Beginnings.
             </Header>
             <p style={{ fontSize: '1.33em' }}>
-            RideShareFinder began in January 2023 as a small project I created to address the flood of rideshare requests in the Oxford College chat. I never imagined it would gain so much widespread support and usage by Oxford and Emory students! 
-            Today, RideShareFinder has grown into a small organization with a single goal of leveraging technology for hassle-free, cost-effective, and sustainable transportation for college students nationwide.
+            TrypSync (Formerly RideShareFinder) began in January 2023 as a small project I created to address the flood of rideshare requests in the Oxford College chat. I never imagined it would gain so much widespread support and usage by Oxford and Emory students! 
+            Today, TrypSync has grown into a small organization with a single goal of leveraging technology for hassle-free, cost-effective, and sustainable transportation for college students nationwide.
             <br></br>
             <br></br>
 
-            - Akhil Arularasu, Founder of RideShareFinder
+            - Akhil Arularasu, Founder of TrypSync
             <br></br>
             (Oxford College Class of 2024 | Emory University Class of 2026)
 
             </p>
 
             <Header as='h3' style={{ fontSize: '2em' }}>
-              What is RideShareFinder?
+              What is TrypSync?
             </Header>
             <p style={{ fontSize: '1.33em' }}>
-            RideShareFinder is a web service specifically designed to facilitate campus-based ridesharing within college communities. Students can either 'Create' or 'Join' Ride Groups to rideshare from or to their desired destinations, promoting safe carpooling among students.         </p>
+            TrypSync is a web service specifically designed to facilitate campus-based ridesharing within college communities. Students can either 'Create' or 'Join' Ride Groups to rideshare from or to their desired destinations, promoting safe carpooling among students.         </p>
           </Grid.Column>
           <Grid.Column floated='right' width={6}>
             <Image size='medium' src='/RSF-Logo-full.png' />
@@ -218,7 +218,7 @@ const About = () => (
       horizontal
       style={{ margin: '3em 0em', textTransform: 'uppercase' }}
     >
-      <a href='#'>Why RideShareFinder</a>
+      <a href='#'>Why TrypSync</a>
     </Divider>
 
     <Header as='h3' style={{ fontSize: '2em', textAlign: 'center' }}>
@@ -249,18 +249,43 @@ const About = () => (
   </Container>
 
   <Container text>
-    <Divider
-      as='h4'
-      className='header'
-      horizontal
-      style={{ margin: '3em 0em', textTransform: 'uppercase' }}
-    >
-      <a href='#'>What's Next</a>
-    </Divider>
-    <p style={{ fontSize: '1.33em', textAlign: 'center' }}>
+  <Divider
+    as='h4'
+    className='header'
+    horizontal
+    style={{ margin: '3em 0em', textTransform: 'uppercase' }}
+  >
+    <a href='#'>In the Media</a>
+  </Divider>
+  
+  <ul style={{ fontSize: '1.1em', textAlign: 'left' }}>
+    <li><a href="https://emorywheel.com/need-an-uber-emorys-new-rideshare-website-has-you-covered/">“Need an Uber? Emory’s new rideshare website has you covered”</a> - <em>The Emory Wheel</em>, January 2023</li>
+  </ul>
+
+  <Divider
+    as='h4'
+    className='header'
+    horizontal
+    style={{ margin: '3em 0em', textTransform: 'uppercase' }}
+  >
+    <a href='#'>Awards</a>
+  </Divider>
+  <ul style={{ fontSize: '1.1em', textAlign: 'left' }}>
+    <li>2024 Global Student Entrepreneur Awards (GSEA) Competition Atlanta Chapter Runner Up - <em>Entreprenurs' Organization (EO) Atlanta Chapter</em>, February 2024</li>
+  </ul>
+
+  <Divider
+    as='h4'
+    className='header'
+    horizontal
+    style={{ margin: '3em 0em', textTransform: 'uppercase' }}
+  >
+    <a href='#'>What's Next</a>
+  </Divider>
+  <p style={{ fontSize: '1.33em', textAlign: 'center' }}>
     Improvement and Expansion. 🌎🚀
-    </p>
-  </Container>
+  </p>
+</Container>
 </Segment>
 
     {/* Segment for Cards */}
@@ -314,10 +339,10 @@ const About = () => (
             </Grid.Column>
             <Grid.Column width={7}>
               <Header as='h4' inverted>
-                RideShareFinder
+              TrypSync
               </Header>
               <p>
-              © Copyright 2024 RideShareFinder, LLC. All Rights Reserved.
+              © Copyright 2024 RideShareFinder LLC. All Rights Reserved.
               </p>
             </Grid.Column>
           </Grid.Row>

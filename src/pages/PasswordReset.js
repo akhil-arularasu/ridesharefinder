@@ -34,7 +34,7 @@ const PasswordReset = () => {
       <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as='h2' primary textAlign='center'>
-            <Image src='/RSF-Logo-Icon.png' alt="RSF Logo" /> RideShareFinder
+            <Image src='/RSF-Logo-Icon.png' alt="RSF Logo" /> TrypSync
           </Header>
           <Form size='large' onSubmit={handleSubmit}>
             <Segment stacked>
