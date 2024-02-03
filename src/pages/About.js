@@ -344,6 +344,8 @@ const About = () => (
               <p>
               © Copyright 2024 RideShareFinder LLC. All Rights Reserved.
               </p>
+              <p>An Akhil Arularasu Production :p
+              </p>
             </Grid.Column>
           </Grid.Row>
         </Grid>
