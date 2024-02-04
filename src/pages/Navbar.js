@@ -30,9 +30,9 @@ const DesktopContainer = ({ children }) => {
   const isAccountPage = location.pathname === '/account';
   const isDashboardPage = location.pathname === '/dashboard';
   const isLoginPage = location.pathname === '/login';
-  const isSignUpPage = location.pathname === '/signUp';
-  const isPasswordResetPage = location.pathname === '/passwordReset';
-  const isPasswordResetFinalPage = location.pathname === '/reset_Password/:token';
+  const isSignUpPage = location.pathname === '/signup';
+  const isPasswordResetPage = location.pathname === '/passwordreset';
+  const isPasswordResetFinalPage = location.pathname === '/reset_password/:token';
   const isCareersPage = location.pathname === '/careers';
 
 
@@ -45,7 +45,7 @@ const DesktopContainer = ({ children }) => {
 
   // Function to check if the current page is NOT Dashboard or Account
   const isNotDashboardOrAccountPage = () => {
-    return location.pathname !== '/Dashboard' && location.pathname !== '/Account';
+    return location.pathname !== '/dashboard' && location.pathname !== '/account';
   };
 
 
@@ -78,7 +78,7 @@ const DesktopContainer = ({ children }) => {
                     <NavLink to="/login">
                       <Button as="a" inverted={!fixed}>Log in</Button>
                     </NavLink>
-                    <NavLink to="/signUp">
+                    <NavLink to="/signup">
                       <Button as="a" inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
                         Sign Up
                       </Button>
@@ -103,7 +103,7 @@ const DesktopContainer = ({ children }) => {
                   </>
                 )}
               {isLoginPage && (
-                <NavLink to="/signUp">
+                <NavLink to="/signup">
                   <Button as="a" inverted={!fixed}>Sign Up</Button>
                 </NavLink>
               )}
@@ -136,7 +136,7 @@ const MobileContainer = ({ children }) => {
   const isAccountPage = location.pathname === '/account';
   const isDashboardPage = location.pathname === '/dashboard';
   const isLoginPage = location.pathname === '/login';
-  const isSignUpPage = location.pathname === '/signUp';
+  const isSignUpPage = location.pathname === '/signup';
   const isCareersPage = location.pathname === '/careers';
 
   const handleSidebarHide = () => setSidebarOpened(false);
@@ -163,7 +163,7 @@ const MobileContainer = ({ children }) => {
           {(isCareersPage || isHomePage || isAboutPage) && (
             <>
               <Menu.Item as={NavLink} to="/login">Log in</Menu.Item>
-              <Menu.Item as={NavLink} to="/signUp">Sign Up</Menu.Item>
+              <Menu.Item as={NavLink} to="/signup">Sign Up</Menu.Item>
             </>
           )}
           {(isAccountPage || isDashboardPage) && (
@@ -178,7 +178,7 @@ const MobileContainer = ({ children }) => {
             </>
           )}
           {isLoginPage && (
-          <NavLink to="/signUp">
+          <NavLink to="/signup">
             <Button as="a" inverted>Sign Up</Button>
           </NavLink>
           )}

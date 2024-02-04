@@ -88,10 +88,10 @@ const LoginForm = () => {
             {error && <Message error content={error} />} 
           </Form>
           <Message>
-            New to us? <a href='signUp'>Sign Up</a>
+            New to us? <a href='signup'>Sign Up</a>
           </Message>
           <Message>
-            Forgot Password? <a href='passwordReset'>Reset Here</a>
+            Forgot Password? <a href='passwordreset'>Reset Here</a>
           </Message>
 
         </Grid.Column>
