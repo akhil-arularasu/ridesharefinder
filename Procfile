@@ -1,0 +1,1 @@
+web: bin/start-nginx serve -s build

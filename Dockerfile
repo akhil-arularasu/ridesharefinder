@@ -16,9 +16,9 @@ RUN npm run build
 #CMD ["npm","start"]
 #CMD ["serve", "-s", "build", "-l", "3000" ]
 # Build step #2: build an nginx container
-#FROM nginx:stable-alpine
-#COPY --from=build /app/build /usr/share/nginx/html
-#COPY nginx.conf /etc/nginx/conf.d/default.conf
+FROM nginx:stable-alpine
+COPY --from=build /app/build /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 #CMD /bin/bash -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'
 #COPY /nginx/default.conf /etc/nginx/conf.d/default.conf
 #CMD ["nginx", "-g", "daemon off;"]
