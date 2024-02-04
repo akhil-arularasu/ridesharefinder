@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import validator from 'validator' 
 import './RegistrationForm.css'; // Adjust the path based on your project structure
 import { FormField } from 'semantic-ui-react'
 import { InView } from 'react-intersection-observer'
 import Alert from '@mui/material/Alert'; // Import Alert from Material-UI
+import { Grid, Form, Checkbox, Divider, Message } from "semantic-ui-react"; // Import Semantic UI React components
 
 
 function RegisterForm() {
@@ -14,6 +15,7 @@ function RegisterForm() {
   const [isSubmit, setIsSubmit] = useState(false);
   const [submissionError, setSubmissionError] = useState("");
   const [colleges, setColleges] = useState([]);
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
 
   useEffect(() => {
     fetchColleges();
@@ -111,147 +113,148 @@ function RegisterForm() {
     } else if (values.password.length > 12) {
       errors.password = "Password cannot exceed 12 characters";
     }
-    if (values.password != values.repeatPassword) {
+    if (values.password !== values.repeatPassword) {
       errors.password = "Passwords must Match!";
     }
     if (validatePhoneNumber(values.telephone) == false) {
       errors.telephone = "Enter a valid US (10 digit) Phone number";
     }
-    if (!values.agreeToTerms) {
-      errors.agreeToTerms = "You must agree to the RSF terms and conditions";
+    if (!agreeToTerms) {
+      errors.agreeToTerms = "You must agree to the TrypSync terms and conditions";
     }
     console.log('errors final', errors)
     return errors;
   };
 
   return (
-    <InView >
     <div className="container">
-      {submissionError && (
-        <Alert severity="error">{submissionError}</Alert>
-      )}
+      {submissionError && <Alert severity="error">{submissionError}</Alert>}
       {Object.keys(formErrors).length === 0 && isSubmit ? (
-        <div className="ui message success">Signed Up successfully. Check your inbox for confirmation link</div>
+        <Message success>
+          <Message.Header>Signed Up successfully</Message.Header>
+          <p>Check your inbox for a confirmation link</p>
+        </Message>
       ) : (
         <pre></pre>
       )}
 
-    <div className="registration-form-container">
-      <form onSubmit={handleSubmit}>
-        <div className="ui divider"></div>
-        <div className="ui form">
-        <div className="field form-row">
-          <FormField required>
-            <label>Name</label>
-            <input
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              value={formValues.name}
-              onChange={handleChange}
-              required
-            />
-           </FormField>
-           <p style={{ color: 'red' }}>{formErrors.name}</p>
-          </div>
-          <p>{formErrors.name}</p>
-          <div className="field">
-          <FormField required>
-          <label>College</label>
-            <select
-              name="college"
-              value={formValues.college}
-              onChange={handleCollegeChange}
-              required
-            >
-              <option value="">Select Home Institution</option>
-              {colleges.map((college) => (
-                <option key={college.id} value={college.name}>{college.name}</option>
-              ))}
-            </select>
-          </FormField>
-          <p style={{ color: 'red' }}>{formErrors.name}</p>
-        </div>
-        <p>{formErrors.college}</p>
-          <div className="field">
-          <FormField required>
-            <label>Email</label>
-            <input
-              type="text"
-              name="email"
-              placeholder=".edu Email Address"
-              value={formValues.email}
-              onChange={handleChange}
-              required
-            />
-          </FormField>
-          <p style={{ color: 'red' }}>{formErrors.email}</p>
-          </div>
-          <p>{formErrors.email}</p>
-          <div className="field">
-          <FormField required>
-            <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={formValues.password}
-              onChange={handleChange}
-              required  
-            />
-           </FormField>
-           <p style={{ color: 'red' }}>{formErrors.password}</p>
-          </div>
-          <div className="field">
-          <FormField required>
-            <label>Repeat Password</label>
-            <input
-              type="password"
-              name="repeatPassword"
-              placeholder="Repeat Password"
-              value={formValues.repeatPassword}
-              onChange={handleChange}
-              required
-            />
-          </FormField>
-          </div>
-          <div className="field">
-          <FormField required>
-            <label>Telephone Number</label>
-            <input
-              type="number"
-              name="telephone"
-              placeholder="Telephone Number"
-              value={formValues.telephone}
-              onChange={handleChange}
-              id="telephone"  // Added ID for accessibility
-              required
-            />
-            </FormField>
-            <p style={{ color: 'red' }}>{formErrors.telephone}</p>
-          </div>
-          <FormField required>
-          <div className="field">
-          <div className="ui checkbox">
-            <input
-              type="checkbox"
+      <div className="registration-form-container">
+        <Form onSubmit={handleSubmit}>
+          <Divider />
+          <Grid stackable columns={2}>
+            <Grid.Row>
+              <Grid.Column>
+                <Form.Field required>
+                  <label>Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Full Name"
+                    value={formValues.name}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Field>
+                <p style={{ color: "red" }}>{formErrors.name}</p>
+              </Grid.Column>
+              <Grid.Column>
+                <Form.Field required>
+                  <label>College</label>
+                  <select
+                    name="collegeId"
+                    value={formValues.collegeId}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">Select Home Institution</option>
+                    {colleges.map((college) => (
+                      <option key={college.id} value={college.id}>
+                        {college.name}
+                      </option>
+                    ))}
+                  </select>
+                </Form.Field>
+                <p style={{ color: "red" }}>{formErrors.collegeId}</p>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column>
+                <Form.Field required>
+                  <label>Email</label>
+                  <input
+                    type="text"
+                    name="email"
+                    placeholder=".edu Email Address"
+                    value={formValues.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Field>
+                <p style={{ color: "red" }}>{formErrors.email}</p>
+              </Grid.Column>
+              <Grid.Column>
+                <Form.Field required>
+                  <label>Password</label>
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    value={formValues.password}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Field>
+                <p style={{ color: "red" }}>{formErrors.password}</p>
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row>
+              <Grid.Column>
+                <Form.Field required>
+                  <label>Repeat Password</label>
+                  <input
+                    type="password"
+                    name="repeatPassword"
+                    placeholder="Repeat Password"
+                    value={formValues.repeatPassword}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Field>
+              </Grid.Column>
+              <Grid.Column>
+                <Form.Field required>
+                  <label>Telephone Number</label>
+                  <input
+                    type="number"
+                    name="telephone"
+                    placeholder="Telephone Number"
+                    value={formValues.telephone}
+                    onChange={handleChange}
+                    id="telephone" // Added ID for accessibility
+                    required
+                  />
+                </Form.Field>
+                <p style={{ color: "red" }}>{formErrors.telephone}</p>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+          <Form.Field required>
+            <Checkbox
               name="agreeToTerms"
-              checked={formValues.agreeToTerms}
-              onChange={handleChange}
+              label="I agree to the TrypSync terms and conditions."
+              checked={agreeToTerms}
+              onChange={() => setAgreeToTerms(!agreeToTerms)}
               required
             />
-            <label>I agree to the terms and conditions.</label>
-          </div>
-        </div>
-        </FormField>
-        <p style={{ color: 'red' }}>{formErrors.name}</p>
-        <p>{formErrors.agreeToTerms}</p>
-          <button className="fluid ui button blue">Submit</button>
-        </div>
-      </form>
+          </Form.Field>
+          <p style={{ color: "red" }}>{formErrors.agreeToTerms}</p>
+
+          <Form.Button fluid primary>
+            Submit
+          </Form.Button>
+        </Form>
       </div>
     </div>
-    </InView>
   );
 }
 
