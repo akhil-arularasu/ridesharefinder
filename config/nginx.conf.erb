@@ -29,14 +29,11 @@ http {
 	client_body_timeout 5;
 
 	server {
-		listen process.env.PORT;
+		listen <%= ENV["PORT"] %>;
 		server_name _;
 		keepalive_timeout 5;
 		server_name trypsync-staging-f6526f56b9b8.herokuapp.com;
 		
-		index index.html;
-		root build/;
-
 		location / {
 
 			if ($http_x_forwarded_proto != "https") {
