@@ -29,7 +29,7 @@ http {
 	client_body_timeout 5;
 
 	server {
-		listen 8443;
+		listen process.env.PORT;
 		server_name _;
 		keepalive_timeout 5;
 		server_name trypsync-staging-f6526f56b9b8.herokuapp.com;
