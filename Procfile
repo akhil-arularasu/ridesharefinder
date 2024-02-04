@@ -1,0 +1,1 @@
+web: bin/start-nginx react-scripts start
