@@ -86,7 +86,7 @@ const HomepageHeading = ({ mobile }) => (
         marginTop: mobile ? '0.5em' : '1.5em',
       }}
     />
-    <a href="/Login">
+    <a href="/login">
     </a>
     <br></br>
     <br></br>

@@ -88,7 +88,7 @@ const LoginForm = () => {
             {error && <Message error content={error} />} 
           </Form>
           <Message>
-            New to us? <a href='SignUp'>Sign Up</a>
+            New to us? <a href='signUp'>Sign Up</a>
           </Message>
           <Message>
             Forgot Password? <a href='PasswordReset'>Reset Here</a>

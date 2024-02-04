@@ -18,19 +18,16 @@ function App() {
     <BrowserRouter>
     <Navbar />
     <Routes>
-      <Route path="/" element={<Navigate replace to="/Home" />} />
-      <Route path="/Home" element={<Home />} />
-      <Route path="/About" element={<About />} />
-      <Route path="/Dashboard" element={<Dashboard />} />
-      <Route path="/dashboard" element={<Navigate replace to="/Dashboard" />} />
-      <Route path="/Login" element={<Login />} />
-      <Route path="/login" element={<Navigate replace to="/Login" />} />
-      <Route path="/Login" element={<Login />} />
-      <Route path="/SignUp" element={<SignUp />} />
-      <Route path="/Account" element={<Account />} />
-      <Route path="/Careers" element={<Careers />} />
-      <Route path="/PasswordReset" element={<PasswordReset />} />
-      <Route path="/Reset_Password/:token" element={<PasswordResetFinal />} />
+      <Route path="/" element={<Navigate replace to="/home" />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/signUp" element={<SignUp />} />
+      <Route path="/account" element={<Account />} />
+      <Route path="/careers" element={<Careers />} />
+      <Route path="/passwordReset" element={<PasswordReset />} />
+      <Route path="/reset_Password/:token" element={<PasswordResetFinal />} />
       <Route path="*" element={<NoPage />} />
     </Routes>
     </BrowserRouter>

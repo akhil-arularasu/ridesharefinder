@@ -25,23 +25,22 @@ const DesktopContainer = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isHomePage = location.pathname === '/Home';
-  const isHomePageLower = location.pathname === '/home';
-  const isAboutPage = location.pathname === '/About';
-  const isAccountPage = location.pathname === '/Account';
-  const isDashboardPage = location.pathname === '/Dashboard';
-  const isLoginPage = location.pathname === '/Login';
-  const isSignUpPage = location.pathname === '/SignUp';
-  const isPasswordResetPage = location.pathname === '/PasswordReset';
-  const isPasswordResetFinalPage = location.pathname === '/Reset_Password/:token';
-  const isCareersPage = location.pathname === '/Careers';
+  const isHomePage = location.pathname === '/home';
+  const isAboutPage = location.pathname === '/about';
+  const isAccountPage = location.pathname === '/account';
+  const isDashboardPage = location.pathname === '/dashboard';
+  const isLoginPage = location.pathname === '/login';
+  const isSignUpPage = location.pathname === '/signUp';
+  const isPasswordResetPage = location.pathname === '/passwordReset';
+  const isPasswordResetFinalPage = location.pathname === '/reset_Password/:token';
+  const isCareersPage = location.pathname === '/careers';
 
 
   const toggleFixedMenu = (inView) => setFixed(!inView);
 
   const logout = () => {
     localStorage.removeItem('token');
-    navigate('/Login');
+    navigate('/login');
   };
 
   // Function to check if the current page is NOT Dashboard or Account
@@ -62,24 +61,24 @@ const DesktopContainer = ({ children }) => {
 
             { isNotDashboardOrAccountPage() && (
               <>
-              <Menu.Item as={NavLink} to="/Home" exact activeClassName="active">
+              <Menu.Item as={NavLink} to="/home" exact activeClassName="active">
                 Home
               </Menu.Item>
-              <Menu.Item as={NavLink} to="/About" activeClassName="active">
+              <Menu.Item as={NavLink} to="/about" activeClassName="active">
                 About
               </Menu.Item>
-              <Menu.Item as={NavLink} to="/Careers" activeClassName="active">
+              <Menu.Item as={NavLink} to="/careers" activeClassName="active">
                 Careers
               </Menu.Item>
               </>
             )}
               <Menu.Item position="right">
-                {(isCareersPage || isHomePage || isAboutPage || isPasswordResetPage || isHomePageLower || isPasswordResetFinalPage) && (
+                {(isCareersPage || isHomePage || isAboutPage || isPasswordResetPage || isPasswordResetFinalPage) && (
                   <>
-                    <NavLink to="/Login">
+                    <NavLink to="/login">
                       <Button as="a" inverted={!fixed}>Log in</Button>
                     </NavLink>
-                    <NavLink to="/SignUp">
+                    <NavLink to="/signUp">
                       <Button as="a" inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
                         Sign Up
                       </Button>
@@ -89,12 +88,12 @@ const DesktopContainer = ({ children }) => {
                 {(isAccountPage || isDashboardPage) && (
                   <>
                     {isAccountPage && (
-                      <NavLink to="/Dashboard">
+                      <NavLink to="/dashboard">
                         <Button as="a" inverted={!fixed}>Dashboard</Button>
                       </NavLink>
                     )}
                     {isDashboardPage && (
-                      <NavLink to="/Account">
+                      <NavLink to="/account">
                         <Button as="a" inverted={!fixed}>Account</Button>
                       </NavLink>
                     )}
@@ -104,12 +103,12 @@ const DesktopContainer = ({ children }) => {
                   </>
                 )}
               {isLoginPage && (
-                <NavLink to="/SignUp">
+                <NavLink to="/signUp">
                   <Button as="a" inverted={!fixed}>Sign Up</Button>
                 </NavLink>
               )}
               {isSignUpPage && (
-                <NavLink to="/Login">
+                <NavLink to="/login">
                   <Button as="a" inverted={!fixed}>Log In</Button>
                 </NavLink>
               )}
@@ -132,59 +131,59 @@ const MobileContainer = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isHomePage = location.pathname === '/Home';
-  const isAboutPage = location.pathname === '/About';
-  const isAccountPage = location.pathname === '/Account';
-  const isDashboardPage = location.pathname === '/Dashboard';
-  const isLoginPage = location.pathname === '/Login';
-  const isSignUpPage = location.pathname === '/SignUp';
-  const isCareersPage = location.pathname === '/Careers';
+  const isHomePage = location.pathname === '/home';
+  const isAboutPage = location.pathname === '/about';
+  const isAccountPage = location.pathname === '/account';
+  const isDashboardPage = location.pathname === '/dashboard';
+  const isLoginPage = location.pathname === '/login';
+  const isSignUpPage = location.pathname === '/signUp';
+  const isCareersPage = location.pathname === '/careers';
 
   const handleSidebarHide = () => setSidebarOpened(false);
   const handleToggle = () => setSidebarOpened(true);
 
   const logout = () => {
     localStorage.removeItem('token');
-    navigate('/Login');
+    navigate('/login');
   };
 
   return (
     <Media as={Sidebar.Pushable} at="mobile">
       <Sidebar.Pushable>
         <Sidebar as={Menu} animation="overlay" onHide={handleSidebarHide} vertical visible={sidebarOpened}>
-          <Menu.Item as={NavLink} to="/Home" exact activeClassName="active">
+          <Menu.Item as={NavLink} to="/home" exact activeClassName="active">
             Home
           </Menu.Item>
-          <Menu.Item as={NavLink} to="/About" activeClassName="active">
+          <Menu.Item as={NavLink} to="/about" activeClassName="active">
             About
           </Menu.Item>
-          <Menu.Item as={NavLink} to="/Careers" activeClassName="active">
+          <Menu.Item as={NavLink} to="/careers" activeClassName="active">
             Careers
           </Menu.Item>
           {(isCareersPage || isHomePage || isAboutPage) && (
             <>
-              <Menu.Item as={NavLink} to="/Login">Log in</Menu.Item>
-              <Menu.Item as={NavLink} to="/SignUp">Sign Up</Menu.Item>
+              <Menu.Item as={NavLink} to="/login">Log in</Menu.Item>
+              <Menu.Item as={NavLink} to="/signUp">Sign Up</Menu.Item>
             </>
           )}
           {(isAccountPage || isDashboardPage) && (
             <>
               {isAccountPage && (
-                <Menu.Item as={NavLink} to="/Dashboard">Dashboard</Menu.Item>
+                <Menu.Item as={NavLink} to="/dashboard">Dashboard</Menu.Item>
               )}
               {isDashboardPage && (
-                <Menu.Item as={NavLink} to="/Account">Account</Menu.Item>
+                <Menu.Item as={NavLink} to="/account">Account</Menu.Item>
               )}
               <Menu.Item onClick={logout}>Log Out</Menu.Item>
             </>
           )}
           {isLoginPage && (
-          <NavLink to="/SignUp">
+          <NavLink to="/signUp">
             <Button as="a" inverted>Sign Up</Button>
           </NavLink>
           )}
           {isSignUpPage && (
-            <NavLink to="/Login">
+            <NavLink to="/login">
               <Button as="a" inverted>Log In</Button>
             </NavLink>
           )}

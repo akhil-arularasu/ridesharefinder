@@ -69,7 +69,7 @@ function RideCard({ride, handleLeaveClick, handleJoinClick, isMyRide}) {
       if (!response.ok) {
         if (response.status === 401) {
           // Handle unauthorized access
-          navigate('/Login');
+          navigate('/login');
           return;
         }
         // Handle other HTTP errors

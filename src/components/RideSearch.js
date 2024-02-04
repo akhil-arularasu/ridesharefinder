@@ -75,7 +75,7 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
     .then(response => {
       if (response.status === 401) {
         // If unauthorized, redirect to the login page
-        navigate('/Login');
+        navigate('/login');
         return;
       }
       return response.json();
@@ -145,7 +145,7 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
     .then(response => {
       if (response.status === 401) {
         // If unauthorized, redirect to the home page
-        navigate('/Login');
+        navigate('/login');
         return;
       }
       if (!response.ok) {

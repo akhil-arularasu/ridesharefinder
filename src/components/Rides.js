@@ -31,7 +31,7 @@ function Rides ({rides, setRefreshKey, myRides}) {
     .then(response => {
       if (!response.ok) {
         if (response.status === 401) {
-          navigate('/Login');
+          navigate('/login');
           return;
         }
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -60,7 +60,7 @@ function Rides ({rides, setRefreshKey, myRides}) {
     .then(response => {
       if (!response.ok) {
         if (response.status === 401) {
-          navigate('/Login');
+          navigate('/login');
           return;
         }
         throw new Error(`HTTP error! status: ${response.status}`);

@@ -60,7 +60,7 @@ return (
     />
     <Header
       as='h2'
-      content='Connecting Students, One Ride at a Time.'
+      content='Connecting Students, One Tryp at a Time.'
       inverted
       style={{
         fontSize: mobile ? '1.5em' : '1.7em',
@@ -68,7 +68,7 @@ return (
         marginTop: mobile ? '0.5em' : '1.5em',
       }}
     />
-  <a href="/Login">
+  <a href="/login">
     <Button primary size='huge'>
       Get Started
       <Icon name='right arrow' />
@@ -221,7 +221,7 @@ const Home = () => (
         </Grid.Row>
         <Grid.Row>
           <Grid.Column textAlign='center'>
-          <a href="/About">
+          <a href="/about">
             <Button size='huge'>About Us</Button>
           </a>
           </Grid.Column>
@@ -237,7 +237,7 @@ const Home = () => (
         <p style={{ fontSize: '1.33em' }}>
           As TrypSync expands to other colleges and universities throughout the United States, we are on the lookout for exceptional talent to join our versatile team. Interested areas of expertise include Web & Mobile Development, Social Media, Marketing and more.
         </p>
-        <a href="/Careers">
+        <a href="/careers">
         <Button as='a' size='large'>
           Jobs & Internships
         </Button>

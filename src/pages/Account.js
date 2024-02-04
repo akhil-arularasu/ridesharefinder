@@ -120,7 +120,7 @@ function AccountForm() {
         .then(response => {
           if (response.status === 401) {
             // If unauthorized, redirect to the home page
-            navigate('/Login');
+            navigate('/login');
             return;
           }
           if (!response.ok) {
