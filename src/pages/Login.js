@@ -91,7 +91,7 @@ const LoginForm = () => {
             New to us? <a href='signUp'>Sign Up</a>
           </Message>
           <Message>
-            Forgot Password? <a href='PasswordReset'>Reset Here</a>
+            Forgot Password? <a href='passwordReset'>Reset Here</a>
           </Message>
 
         </Grid.Column>
