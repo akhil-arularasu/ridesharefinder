@@ -34,7 +34,7 @@ const PasswordResetFinal = () => {
             }
 
             setSuccess('Password reset successfully. Redirecting to login...');
-            setTimeout(() => navigate('/Login'), 3000); // Redirect to login page after 3 seconds
+            setTimeout(() => navigate('/login'), 3000); // Redirect to login page after 3 seconds
         } catch (error) {
             setError(error.message);
         }
