@@ -35,11 +35,9 @@ http {
 		server_name trypsync-staging-f6526f56b9b8.herokuapp.com;
 		
 		index index.html;
-		root app/build/;
+		root build/;
 
 		location / {
-
-			try_files $uri;
 
 			if ($http_x_forwarded_proto != "https") {
 				return 301 https://$host$request_uri;
