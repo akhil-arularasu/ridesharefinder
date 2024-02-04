@@ -1,1 +1,1 @@
-web: bin/start-nginx react-scripts start
+web: bin/start-nginx serve -s build
