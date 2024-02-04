@@ -33,7 +33,7 @@ const LoginForm = () => {
             if (data.access_token) {
                 localStorage.setItem('token', data.access_token); // Store the token
                 console.log('Login successful');
-                navigate('/Dashboard'); // Redirect to Dashboard
+                navigate('/dashboard'); // Redirect to Dashboard
             } else if (data.error) {
                 console.error('Error:', data.error);
                 setError('Invalid login credentials'); // Set error message
