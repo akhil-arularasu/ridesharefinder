@@ -48,7 +48,7 @@ const LoginForm = () => {
       });
   }
   return (
-    <InView>
+    <Container>
       <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as='h2' primary textAlign='center'>
@@ -96,7 +96,7 @@ const LoginForm = () => {
 
         </Grid.Column>
       </Grid>
-    </InView>
+    </Container>
   );
       }
 
