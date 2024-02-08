@@ -3,7 +3,7 @@ import MyRides from "./components/MyRides"
 import RideSearch from "./components/RideSearch"
 import { InView } from 'react-intersection-observer'
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
-import { SegmentGroup, Segment } from 'semantic-ui-react';
+import { SegmentGroup, Segment, Container } from 'semantic-ui-react';
 
 
 function Dashboard() {
@@ -39,14 +39,17 @@ function Dashboard() {
     });
   }, [refreshKey, navigate]); // Add 'history' to the dependency array
   
-  return <SegmentGroup>
+  return 
+    <Container>
+    <SegmentGroup>
     <Segment>
     <MyRides refreshKey = {refreshKey} setRefreshKey={setRefreshKey} rides={myRides} />
     </Segment>
     <Segment>
    <RideSearch refreshKey = {refreshKey} setRefreshKey={setRefreshKey} myRides={myRides}/>
    </Segment>
-   </SegmentGroup>;
+   </SegmentGroup>
+   </Container>;
 
 }
 
