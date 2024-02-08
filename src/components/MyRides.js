@@ -187,7 +187,10 @@ useEffect(() => {
 
       {isEditing && (
         <>
-      <Button onClick={startEditingHandler} primary><Icon name='add circle' />Add New Ride</Button>      <form onSubmit={handleAddFormSubmit}>
+      <Label  color='blue' ribbon>
+          Add New Tryp
+      </Label>        
+      <form onSubmit={handleAddFormSubmit}>
       <Grid columns={5} stackable>
       <Grid.Column>        
       <Label htmlFor="fromLocationDropdown">Location

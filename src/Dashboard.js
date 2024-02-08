@@ -40,10 +40,10 @@ function Dashboard() {
   }, [refreshKey, navigate]); // Add 'history' to the dependency array
   
   return <SegmentGroup>
-    <Segment>
+    <Segment compact>
     <MyRides refreshKey = {refreshKey} setRefreshKey={setRefreshKey} rides={myRides} />
     </Segment>
-    <Segment>
+    <Segment compact>
    <RideSearch refreshKey = {refreshKey} setRefreshKey={setRefreshKey} myRides={myRides}/>
    </Segment>
    </SegmentGroup>;
