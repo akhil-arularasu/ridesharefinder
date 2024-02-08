@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Image, Message, Segment, Container } from 'semantic-ui-react'
 import { useNavigate } from 'react-router-dom';
 import { InView } from 'react-intersection-observer'
 import { Alert, AlertTitle } from '@material-ui/lab'; // Import Alert components
