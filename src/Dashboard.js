@@ -39,17 +39,14 @@ function Dashboard() {
     });
   }, [refreshKey, navigate]); // Add 'history' to the dependency array
   
-  return 
-    <Container>
-    <SegmentGroup>
+  return <SegmentGroup>
     <Segment>
     <MyRides refreshKey = {refreshKey} setRefreshKey={setRefreshKey} rides={myRides} />
     </Segment>
     <Segment>
    <RideSearch refreshKey = {refreshKey} setRefreshKey={setRefreshKey} myRides={myRides}/>
    </Segment>
-   </SegmentGroup>
-   </Container>;
+   </SegmentGroup>;
 
 }
 
