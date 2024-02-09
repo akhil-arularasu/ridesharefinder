@@ -1,7 +1,7 @@
 import React,{useState, useEffect} from 'react'
 import Rides from "./Rides"
 import SearchableDropdown from './SearchableDropdown';
-import { Button, Container, Grid, Select, Label, Icon, ButtonGroup, ButtonOr } from 'semantic-ui-react';
+import { Button, Container, Grid, Select, Label, Icon, ButtonGroup, ButtonOr, Input } from 'semantic-ui-react';
 
 
 function MyRides({ refreshKey, setRefreshKey, rides }) {
@@ -191,7 +191,7 @@ useEffect(() => {
           Add New Tryp
       </Label>        
       <form onSubmit={handleAddFormSubmit}>
-      <Grid columns={5} stackable>
+      <Grid columns={5} stackable >
       <Grid.Column>        
       <Label htmlFor="fromLocationDropdown">Location
       <>
@@ -222,13 +222,13 @@ useEffect(() => {
       />
       {!fromLocation && <p>Please select 'From Location' first.</p>}
       </Grid.Column>      
-      <Grid.Row columns={6}>
+      <Grid.Row columns={7} stackable>
       <Grid.Column >
-      <Label htmlFor="RideDate">
+      <Label htmlFor="RideDate" padded>
         Ride Date
         </Label>    
-        <input
-        type = "date"
+        &nbsp;
+        <input type = "date"
         name = "rideDate"
         required="required"
         placeholder="Enter Ride Date ..."
@@ -240,7 +240,7 @@ useEffect(() => {
         Ride Time
         </Label>
         &nbsp;
-        <input
+        <input 
         type = "time"
         name = "rideTime"
         required="required"
@@ -255,6 +255,7 @@ useEffect(() => {
         <span style={{ marginRight: '1em' }}></span><Icon name="users" />
         </>
       </Label>
+      &nbsp;
       <Select
         name="seatsRemaining"
         id="seatsRemaining"
