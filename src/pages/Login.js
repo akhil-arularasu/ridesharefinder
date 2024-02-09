@@ -49,8 +49,8 @@ const LoginForm = () => {
   }
   return (
     <Container>
-      <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
-        <Grid.Column style={{ maxWidth: 450 }}>
+      <Grid textAlign='center' style={{ height: '70vh', paddingTop: '5vh' }} verticalAlign='middle'> {/* Reduce the vertical space */}
+          <Grid.Column style={{ maxWidth: 550 }}>
           <Header as='h2' primary textAlign='center'>
             <Image src='/RSF-Logo-Icon.png' alt="RSF Logo" /> TrypSync
           </Header>
