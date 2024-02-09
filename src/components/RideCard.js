@@ -113,10 +113,10 @@ function RideCard({ride, handleLeaveClick, handleJoinClick, isMyRide}) {
           <Icon name="clock outline" />
           {convertTo12HourFormat(ride.rideTime)}
         </Typography>
-      <Typography>
-          <Icon name="users"/>
-          { ride.seatsRemaining}
-      </Typography>                
+        <Typography>
+          <Icon name="users" /> {/* Assuming you're using a compatible Icon component */}
+          Seats Left: {ride.seatsRemaining}
+        </Typography>
       </Grid.Column>  
       </Grid>
       <CardActions disableSpacing>
@@ -131,7 +131,7 @@ function RideCard({ride, handleLeaveClick, handleJoinClick, isMyRide}) {
             <Button primary type="button"
             onClick={() => handleJoinClick(ride.ride_id)}
             aria-label={`Joining ride from ${ride.fromLocationName} to ${ride.toLocationName}`}
-            disabled={ride.seatsLeft === 0} // Disable button if no seats are left
+            disabled={ride.seatsRemaining === 0} // Disable button if no seats are left
             >
             Join
             </Button>

@@ -190,7 +190,7 @@ useEffect(() => {
           Add New Tryp
       </Label>        
       <form onSubmit={handleAddFormSubmit}>
-      <Grid columns={2} stackable >
+      <Grid columns={5} stackable >
       <Grid.Column>        
       <Label htmlFor="fromLocationDropdown">Location
       <>
