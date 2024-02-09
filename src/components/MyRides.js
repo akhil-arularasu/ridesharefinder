@@ -178,7 +178,6 @@ useEffect(() => {
       ) : (
       <Rides rides={rides} setRefreshKey={setRefreshKey} myRides={rides} />
       )}
-      <br/>
 
       {!isEditing && (
       <Button onClick={startEditingHandler} primary><Icon name='add circle' />Add New Tryp</Button>
@@ -191,7 +190,7 @@ useEffect(() => {
           Add New Tryp
       </Label>        
       <form onSubmit={handleAddFormSubmit}>
-      <Grid columns={5} stackable >
+      <Grid columns={2} stackable >
       <Grid.Column>        
       <Label htmlFor="fromLocationDropdown">Location
       <>
@@ -207,7 +206,8 @@ useEffect(() => {
       />
       </Grid.Column>        
       <Grid.Column>        
-      <Label htmlFor="fromLocationDropdown" >Destination
+      <Label htmlFor="to
+      LocationDropdown" >Destination
       <>
       <span style={{ marginRight: '1em' }}></span><Icon name="map marker alternate" />
       </>
