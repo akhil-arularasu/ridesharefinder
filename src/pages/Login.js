@@ -56,22 +56,27 @@ const LoginForm = () => {
           </Header>
           <Form size='large' onSubmit={handleSubmit}>
             <Segment stacked>
-              <Form.Input fluid icon='user' iconPosition='left' placeholder='.edu Email Address'
-                value={enteredUsername}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
-              <Form.Input
-                fluid
-                icon='lock'
-                iconPosition='left'
-                placeholder='Password'
-                type='password'
-                value={enteredPassword}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-  
+            <Form.Input
+              fluid
+              icon='user'
+              iconPosition='left'
+              placeholder='.edu Email Address'
+              value={enteredUsername}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              style={{ fontSize: '16px' }} // Add this line
+            />
+            <Form.Input
+              fluid
+              icon='lock'
+              iconPosition='left'
+              placeholder='Password'
+              type='password'
+              value={enteredPassword}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              style={{ fontSize: '16px' }} // Add this line
+            />
               <Button primary fluid size='large'>
                 Login
               </Button>

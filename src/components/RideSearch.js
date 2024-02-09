@@ -271,6 +271,8 @@ const handleToLocationChange = (selectedOption) => {
           disabled={!fromValue} // Disable if fromValue is null or empty
         />
         {!fromValue && <p>Please select 'From Location' first.</p>}
+         
+        Want a location added? <a href="https://forms.gle/CwUt69t7fJHqK2PJ6" target="_blank">Click Here</a>
       </div>
       </Grid.Column>
         </Grid.Row>

@@ -221,6 +221,8 @@ useEffect(() => {
         disabled={!fromLocation} // Disable if fromLocation is not selected
       />
       {!fromLocation && <p>Please select 'From Location' first.</p>}
+
+      Want a location added? <a href="https://forms.gle/CwUt69t7fJHqK2PJ6" target="_blank">Click Here</a>
       </Grid.Column>      
       <Grid.Row columns={7} stackable>
       <Grid.Column >
