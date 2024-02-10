@@ -136,7 +136,6 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
 
   useEffect(() => {
     const userToken = localStorage.getItem('token'); // Retrieve the token
-    console.log('userToken', userToken)
     fetch(process.env.REACT_APP_SERVER + '/api/locations', {
       headers: {
         'Authorization': `Bearer ${userToken}`,

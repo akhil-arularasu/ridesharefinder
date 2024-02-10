@@ -11,6 +11,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Button, Grid, Icon } from 'semantic-ui-react';
 import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
 
 
 const ExpandMore = styled((props) => {
@@ -23,7 +24,6 @@ const ExpandMore = styled((props) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
-
 
 const convertTo12HourFormat = (time) => {
     if (!time) return ''; // Return an empty string if time is not provided
@@ -38,17 +38,71 @@ const convertTo12HourFormat = (time) => {
   };
   
 
-function RideCard({ride, handleLeaveClick, handleJoinClick, isMyRide}) {
-  const [expanded, setExpanded] = React.useState(false);
-  const [otherRiders, setOtherRiders] = useState([]);
-  const [hostDetails, setHostDetails] = useState(null);
-  const navigate = useNavigate();
+  function RideCard({ ride, handleLeaveClick, handleJoinClick, isMyRide }) {
+    const [expanded, setExpanded] = useState(false);
+    const [otherRiders, setOtherRiders] = useState([]);
+    const [hostDetails, setHostDetails] = useState(null);
+    const [seatsRemaining, setSeatsRemaining] = useState(ride.seatsRemaining); // Local state to manage seats remaining input
+    const [editMode, setEditMode] = useState(false); // State to toggle edit mode
+    const navigate = useNavigate();
 
+    const handleSaveSeats = (e) => {
+      e.preventDefault();
+      
+      const userToken = localStorage.getItem('token');
+      const updatedSeats = parseInt(seatsRemaining, 10); // Parse it once and use this variable
 
+    
+      console.log("ride_id:", ride.ride_id);
+      console.log("seatsRemaining before parseInt:", updatedSeats);
+      
+      fetch(process.env.REACT_APP_SERVER + '/api/updateSeats', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${userToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          rideId: ride.ride_id,
+          seatsRemaining: parseInt(seatsRemaining, 10), // Ensure conversion to integer
+        }),
+      })
+      .then(response => {
+        if (!response.ok) {
+          if (response.status === 401) {
+            // Handle unauthorized access
+            navigate('/login');
+            return;
+          }
+          // Handle other HTTP errors
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        setSeatsRemaining(updatedSeats);
+        console.log('Success:', data);
+
+        // Update component state here if necessary
+        // For instance, you might want to update a state variable that tracks the number of seats
+        // Or you could trigger a re-fetch or update of the ride's details to reflect the new seats remaining
+    
+        // Example: setRideDetails((prevDetails) => ({ ...prevDetails, seatsRemaining: parseInt(seatsRemaining, 10) }));
+        // This is just an example. Adjust based on your actual state management logic.
+      })
+      .catch(error => {
+        console.error('Error updating seats:', error.message || error);
+        alert(`Error updating seats: ${error.message || 'Please try again.'}`);
+      })      
+      .finally(() => {
+        setEditMode(false); // Exit edit mode
+      });
+    };
+    
   const handleExpandClick = (rideId) => {
       if (!expanded)
       {
-        console.log("fet the details now", rideId);
+        console.log("fetch the details now", rideId);
         fetchRideDetails(rideId)
         setExpanded(!expanded);
       }
@@ -115,7 +169,32 @@ function RideCard({ride, handleLeaveClick, handleJoinClick, isMyRide}) {
         </Typography>
         <Typography>
           <Icon name="users" /> {/* Assuming you're using a compatible Icon component */}
-          Seats Left: {ride.seatsRemaining}
+            Seats Left:
+            {isMyRide && editMode ? (
+              <TextField
+                size="small"
+                type="number"
+                value={seatsRemaining}
+                onChange={(e) => setSeatsRemaining(e.target.value)}
+                sx={{ width: 60 }} // Adjust width as needed
+                inputProps={{ 
+                  min: 0,  // Minimum value
+                  max: 9,  // Maximum value
+                }}
+                />
+            ) : (
+              ` ${seatsRemaining}`
+            )}
+            {isMyRide && !editMode && (
+            <Button onClick={() => setEditMode(true)} size="small" style={{ marginLeft: 8 }}>
+              Edit
+            </Button>
+          )}
+            {isMyRide && editMode && (
+              <Button onClick={handleSaveSeats} size="small">
+                Save
+              </Button>
+            )}
         </Typography>
       </Grid.Column>  
       </Grid>

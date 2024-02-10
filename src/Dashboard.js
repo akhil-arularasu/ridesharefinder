@@ -43,9 +43,7 @@ function Dashboard() {
     <Container fluid >
     <Grid>
     <GridColumn>
-    <Segment raised>
     <MyRides refreshKey = {refreshKey} setRefreshKey={setRefreshKey} rides={myRides} />
-    </Segment>
     </GridColumn>
     </Grid>
     </Container>
