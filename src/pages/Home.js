@@ -297,7 +297,7 @@ const Home = () => (
               <p>
               © Copyright 2024 RideShareFinder LLC. All Rights Reserved.
               </p>
-              <p>An Akhil Arularasu Production :p
+              <p>An Akhil Arularasu Production :P
               </p>
             </Grid.Column>
           </Grid.Row>

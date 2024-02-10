@@ -173,6 +173,18 @@ ResponsiveContainer.propTypes = {
 }
 
 const Careers = () => {
+  return (
+    <iframe
+      id="JotFormIFrame-240389046929164"
+      title="TrypSync Application Form"
+      allowtransparency="true"
+      allowfullscreen="true"
+      allow="geolocation; microphone; camera"
+      src="https://form.jotform.com/240389046929164"
+      frameborder="0"
+      style={{ minWidth: '100%', maxWidth: '100%', height: '878px', border: 'none' }}
+    ></iframe>
+  );
 };
 
 export default Careers;

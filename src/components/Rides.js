@@ -15,6 +15,7 @@ function Rides ({rides, setRefreshKey, myRides}) {
     console.log("myride - ", isMyRide)
     return isMyRide;
   };
+
   const navigate = useNavigate();
 
   const handleLeaveClick = (rideId) => {

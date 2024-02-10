@@ -45,7 +45,7 @@ const convertTo12HourFormat = (time) => {
     const [seatsRemaining, setSeatsRemaining] = useState(ride.seatsRemaining); // Local state to manage seats remaining input
     const [editMode, setEditMode] = useState(false); // State to toggle edit mode
     const navigate = useNavigate();
-
+    
     const handleSaveSeats = (e) => {
       e.preventDefault();
       
@@ -134,7 +134,6 @@ const convertTo12HourFormat = (time) => {
     .then(data => {
       if (data.rides && data.rides.length > 0) {
         setHostDetails(data.rides[0]); // Assuming the first entry is the host
-        console.log("test");
         // Process other riders
         const otherRidersData = data.rides.slice(1); // Get all entries except the first
         setOtherRiders(otherRidersData); // Update state with other riders' details
@@ -170,7 +169,7 @@ const convertTo12HourFormat = (time) => {
         <Typography>
           <Icon name="users" /> {/* Assuming you're using a compatible Icon component */}
             Seats Left:
-            {isMyRide && editMode ? (
+            {editMode ? (
               <TextField
                 size="small"
                 type="number"
@@ -179,18 +178,18 @@ const convertTo12HourFormat = (time) => {
                 sx={{ width: 60 }} // Adjust width as needed
                 inputProps={{ 
                   min: 0,  // Minimum value
-                  max: 9,  // Maximum value
+                  max: 7,  // Maximum value
                 }}
-                />
+              />
             ) : (
               ` ${seatsRemaining}`
             )}
-            {isMyRide && !editMode && (
-            <Button onClick={() => setEditMode(true)} size="small" style={{ marginLeft: 8 }}>
-              Edit
-            </Button>
-          )}
-            {isMyRide && editMode && (
+            {ride.isHost && !editMode && (
+              <Button onClick={() => setEditMode(true)} size="small" sx={{ ml: 1 }}>
+                Edit
+              </Button>
+            )}
+            {ride.isHost && editMode && (
               <Button onClick={handleSaveSeats} size="small">
                 Save
               </Button>
