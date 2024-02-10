@@ -40,22 +40,16 @@ function Dashboard() {
   }, [refreshKey, navigate]); // Add 'history' to the dependency array
   
   return <>
-    <Container fluid >
-    <Grid>
-    <GridColumn>
-    <MyRides refreshKey = {refreshKey} setRefreshKey={setRefreshKey} rides={myRides} />
-    </GridColumn>
-    </Grid>
-    </Container>
-    <Container fluid>
-    <Grid>
-    <GridColumn>
+    <SegmentGroup>
+      <Segment>
+      <MyRides refreshKey = {refreshKey} setRefreshKey={setRefreshKey} rides={myRides} />
+      </Segment>
+      <Segment>
       <RideSearch refreshKey = {refreshKey} setRefreshKey={setRefreshKey} myRides={myRides}/>
-    </GridColumn>      
-   </Grid>      
-   </Container>
-   </>;
+      </Segment>
 
+    </SegmentGroup>
+    </>;
 }
 
 export default Dashboard
