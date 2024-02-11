@@ -14,17 +14,18 @@ import PasswordResetFinal from './pages/PasswordResetFinal'
 import Careers from './pages/Careers'
 
 
-
 function LowerCaseRedirect() {
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const lowercasePath = location.pathname.toLowerCase();
+    if (!location.pathname.includes('reset')) {
+      const lowercasePath = location.pathname.toLowerCase();
 
-    if (location.pathname !== lowercasePath) {
+    if (location.pathname !== lowercasePath && !location.pathname.match(/^\/reset_password\/[^/]+$/)) {
       navigate(lowercasePath, { replace: true });
     }
+  }
   }, [location, navigate]);
 
   return null;
