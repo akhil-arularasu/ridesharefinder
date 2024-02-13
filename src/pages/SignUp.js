@@ -241,7 +241,7 @@ function RegisterForm() {
           <Form.Field required>
             <Checkbox
               name="agreeToTerms"
-              label="I agree to the TrypSync terms and conditions."
+              label="I agree to the TrypSync.com terms and conditions and Mobile Opt-In Term and conditions. Mobile Opt-In Term and conditions: By submitting my information above I consent to receive notifications through SMS and email from TrypSnyc.com. TrypSnyc.com(RideShareFinde LLC) will send text messages in regards to your Ride confirmation requests, and any updates to the Ride. I also acknowledge and agree to be included in TrypSync mailing list to receive future updates."
               checked={agreeToTerms}
               onChange={() => setAgreeToTerms(!agreeToTerms)}
               required
