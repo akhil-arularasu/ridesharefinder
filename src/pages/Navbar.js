@@ -70,6 +70,10 @@ const DesktopContainer = ({ children }) => {
               <Menu.Item as={NavLink} to="/careers" activeClassName="active">
                 Careers
               </Menu.Item>
+              <Menu.Item as={NavLink} to="/faq" activeClassName="active">
+                FAQs
+              </Menu.Item>
+
               </>
             )}
               <Menu.Item position="right">

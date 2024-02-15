@@ -5,16 +5,23 @@ const FaqItem = ({ faq, toggleFAQ }) => {
     return (
         <div className={`faq ${faq.open ? 'open' : ''}`} onClick={toggleFAQ}>
             <div className="faq-question">{faq.question}</div>
-            <div className="faq-answer">{faq.answer}</div>
+            <div className="faq-answer">
+                {faq.answer} {faq.link && <a href={faq.link} target="_blank" rel="noopener noreferrer">Click here</a>}
+            </div>
         </div>
     );
 };
 
 const Faq = () => {
-    const [faqs, setFaqs] = useState([
+const [faqs, setFaqs] = useState([
         {
             question: "I'm new here and need a crash course on TrypSync, where can I find one?",
-            answer: "Go to our homepage and click the 'Demo' button for the basics, it's right under the 'Get Started' Button.",
+            answer: "Here's a demo with the basics, the video is also right under the 'Get Started' Button:",
+            link: "http://tinyurl.com/2pjpdbtr", // Separate URL
+        },
+        {
+            question: "is TrypSync Free?",
+            answer: "Yes! TrypSync is a free service created for students by students Host. It is 100% free to use.",
             open: false
         },
         {
@@ -34,11 +41,11 @@ const Faq = () => {
         },
         {
             question: "What happens when I Leave a Tryp?",
-            answer: "When you leave a Tryp, the number of seats remaining is incremented by one and all other riders will be notified that someone left the Tryp. If you were the Tryp Host, another rider will randomly be assigned new Host. If you were the last rider in the Tryp, the Tryp is deleted.",
+            answer: "When you leave a Tryp, the number of seats remaining is incremented by one and all other riders will be notified that someone left the Tryp. If you were the Tryp Host, the first rider who joined will be assigned new Host. If you were the only rider in the Tryp, the Tryp will be deleted.",
             open: false
         },
         {
-            question: "Who can edit number of seats available in a Tryp?",
+            question: "Who can edit the number of seats available in a Tryp?",
             answer: "Only the Tryp Host can increase or decrease the seats available in any particular Tryp.",
             open: false
         }

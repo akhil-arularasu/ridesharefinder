@@ -180,7 +180,7 @@ useEffect(() => {
       )}
 
       {!isEditing && (
-      <Button onClick={startEditingHandler} primary><Icon name='add circle' />Add New Tryp</Button>
+      <Button onClick={startEditingHandler} primary><Icon name='add circle' />Create New Tryp</Button>
       )}
 
 
