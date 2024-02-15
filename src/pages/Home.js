@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import React, { Component, useState } from 'react'
 import { InView } from 'react-intersection-observer'
 import LogoCarousel from './LogoCarousel'; // Adjust the path as needed
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import TestimonialsCarousel from './TestimonialsCarousel'
 import ScrollMouse from './scrollMouse'; // Import ScrollMouse component
 import LoomVideoModal from './LoomVideoModal.js'; // Adjust the path as needed
@@ -258,7 +258,9 @@ const Home = () => (
         <TestimonialsCarousel />
       </Container>
 
-      {/* Logo Carousel Section with Partners Divider */}
+    
+      {
+        /*
       <Segment style={{ padding: '4em 0em' }} vertical>
         <Container>
         <Divider
@@ -271,9 +273,10 @@ const Home = () => (
           </Divider>
           <LogoCarousel />
         </Container>
-      </Segment>
+      </Segment> */
+      }
     </Segment>
-
+    
     <Segment inverted vertical style={{ padding: '3em 0em' }}>
       <Container>
         <Grid divided inverted stackable>
@@ -287,7 +290,7 @@ const Home = () => (
             <Grid.Column width={3}>
               <Header inverted as='h4' content='Services' />
               <List link inverted>
-                <List.Item as='a'>FAQ</List.Item>
+                <List.Item as={Link} to="/faq">FAQ</List.Item>
               </List>
             </Grid.Column>
             <Grid.Column width={7}>

@@ -5,7 +5,7 @@ import { createMedia } from '@artsy/fresnel'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import LogoCarousel from './LogoCarousel'; // Adjust the path as needed
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AkhilCard from './AkhilCard'; // Adjust the import path
 import AreebCard from './AreebCard'; // Adjust the import path
 import AlanCard from './AlanCard'; // Adjust the import path
@@ -334,7 +334,7 @@ const About = () => (
             <Grid.Column width={3}>
               <Header inverted as='h4' content='Services' />
               <List link inverted>
-                <List.Item as='a'>FAQ</List.Item>
+                <List.Item as={Link} to="/faq">FAQ</List.Item>
               </List>
             </Grid.Column>
             <Grid.Column width={7}>

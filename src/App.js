@@ -7,6 +7,7 @@ import About from './pages/About'
 import Login from './pages/Login'
 import NoPage from './pages/NoPage'
 import SignUp from './pages/SignUp'
+import Faq from './pages/Faq'
 import Account from './pages/Account'
 import Navbar from './pages/Navbar'; // Adjust the import path as needed
 import PasswordReset from './pages/PasswordReset'
@@ -46,6 +47,7 @@ function App() {
       <Route path="/account" element={<Account />} />
       <Route path="/careers" element={<Careers />} />
       <Route path="/passwordreset" element={<PasswordReset />} />
+      <Route path="/faq" element={<Faq />} />
       <Route path="/reset_password/:token" element={<PasswordResetFinal />} />
       <Route path="*" element={<NoPage />} />
     </Routes>
