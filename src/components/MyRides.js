@@ -187,7 +187,7 @@ useEffect(() => {
       {isEditing && (
         <>
       <Label  color='blue' ribbon>
-          Add New Tryp
+          Create New Tryp
       </Label>        
       <form onSubmit={handleAddFormSubmit}>
       <Grid columns={5} stackable >

@@ -176,7 +176,7 @@ ResponsiveContainer.propTypes = {
 
 const About = () => (
     <ResponsiveContainer>
-    <Segment style={{ padding: '6em 0em' }} vertical>
+    <Segment style={{ padding: '5em 0em' }} vertical>
       <Grid container stackable verticalAlign='middle'>
         <Grid.Row>
           <Grid.Column width={8}>
@@ -202,8 +202,19 @@ const About = () => (
             TrypSync is a web service specifically designed to facilitate campus-based ridesharing within college communities. Students can either 'Create' or 'Join' Ride Groups to rideshare from or to their desired destinations, promoting safe carpooling among students.         </p>
           </Grid.Column>
           <Grid.Column floated='right' width={6}>
-            <Image size='medium' src='/RSF-Logo-full.png' />
-          </Grid.Column>
+              <Image size='medium' src='/RSF-Logo-full.png' />
+              <br></br>
+              <p style={{ fontSize: '1.33em' }}>
+              Have More Questions?  
+              </p>
+              <div style={{ marginTop: '10px' }}> {/* Add this div with style for spacing */}
+              <a href="/faq">
+                <Button as='a' size='large'>
+                  FAQs
+                </Button>
+              </a>
+              </div>
+          </Grid.Column>          
         </Grid.Row>
         <Grid.Row>
         </Grid.Row>

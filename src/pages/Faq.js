@@ -14,17 +14,32 @@ const Faq = () => {
     const [faqs, setFaqs] = useState([
         {
             question: "I'm new here and need a crash course on TrypSync, where can I find one?",
-            answer: "Go to our Home page and click the 'Demo' button for the basics, its right under the 'Get Started' Button.",
+            answer: "Go to our homepage and click the 'Demo' button for the basics, it's right under the 'Get Started' Button.",
             open: false
         },
         {
-            question: "What happens if I leave a Tryp?",
-            answer: "If you leave a tryp, the number of seats remaining goes up by one and another rider is assigned to become the new host. If you were the last rider in the Tryp, the Tryp is deleted.",
+            question: "How do I ride with TrypSync?",
+            answer: "The first step is to enter your search information (location, destination, ride date, ride times) in the 'Search Tryps' section to see if any other student(s) have already created a Tryp that you can join. If not, click 'Create New Tryp' and enter your Tryp information. If your Tryp creation was successful, you should be able to see it in the 'My Tryps' section. If someone joins your Tryp, you will be notified through text message.",
+            open: false
+        },
+        {
+            question: "How does TrypSync ensure that my personal information (my name and telephone number) is not available to the public?",
+            answer: "Because of our robust @.edu email authentication system, we ensure that only students from your college or university will be able to create an account or login to our platform.",
+            open: false
+        },
+        {
+            question: "What happens when I Join a Tryp?",
+            answer: "When you Join a Tryp after searching and finding a Tryp with your desired date, time, and destination, the host and any other riders will be notified through text that someone has joined the Tryp.",
+            open: false
+        },
+        {
+            question: "What happens when I Leave a Tryp?",
+            answer: "When you leave a Tryp, the number of seats remaining is incremented by one and all other riders will be notified that someone left the Tryp. If you were the Tryp Host, another rider will randomly be assigned new Host. If you were the last rider in the Tryp, the Tryp is deleted.",
             open: false
         },
         {
             question: "Who can edit number of seats available in a Tryp?",
-            answer: "Only the host has the ability to increase or decrease the seats available in a particular tryp.",
+            answer: "Only the Tryp Host can increase or decrease the seats available in any particular Tryp.",
             open: false
         }
     ]);
