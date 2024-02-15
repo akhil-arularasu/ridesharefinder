@@ -21,7 +21,7 @@ const [faqs, setFaqs] = useState([
         },
         {
             question: "is TrypSync Free?",
-            answer: "Yes! TrypSync is a free service created for students by students Host. It is 100% free to use.",
+            answer: "Yes! TrypSync is a free service created for students by students. It is 100% free to use.",
             open: false
         },
         {
