@@ -210,7 +210,7 @@ const About = () => (
               <div style={{ marginTop: '10px' }}> {/* Add this div with style for spacing */}
               <a href="/faq">
                 <Button as='a' size='large'>
-                  FAQs
+                  FAQ
                 </Button>
               </a>
               </div>

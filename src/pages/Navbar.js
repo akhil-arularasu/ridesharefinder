@@ -142,6 +142,7 @@ const MobileContainer = ({ children }) => {
   const isLoginPage = location.pathname === '/login';
   const isSignUpPage = location.pathname === '/signup';
   const isCareersPage = location.pathname === '/careers';
+  const isFaqPage = location.pathname === '/faq';
 
   const handleSidebarHide = () => setSidebarOpened(false);
   const handleToggle = () => setSidebarOpened(true);
@@ -164,7 +165,10 @@ const MobileContainer = ({ children }) => {
           <Menu.Item as={NavLink} to="/careers" activeClassName="active">
             Careers
           </Menu.Item>
-          {(isCareersPage || isHomePage || isAboutPage) && (
+          <Menu.Item as={NavLink} to="/faq" activeClassName="active">
+            FAQ
+          </Menu.Item>
+          {(isCareersPage || isHomePage || isAboutPage || isFaqPage) && (
             <>
               <Menu.Item as={NavLink} to="/login">Log in</Menu.Item>
               <Menu.Item as={NavLink} to="/signup">Sign Up</Menu.Item>
