@@ -250,7 +250,7 @@ function RegisterForm() {
               required
             />
             <label htmlFor="agreeToTerms">
-            <span style={{ paddingLeft: '10px' }}>I agree to the TrypSync <a href="https://docs.google.com/document/d/10ZH5rfS65eo2bkeCOoBpqe6op51wR-dmm9_Cyzs2aXk/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Terms and Conditions</a>. </span>
+            <span style={{ paddingLeft: '10px' }}>I agree to the TrypSync <a href="/trypsyncdisclaimer.pdf" target="_blank" rel="noopener noreferrer">Terms and Conditions</a> including Liability Disclaimer + SMS and Email Consent. </span>
             </label>
           </div>
         </Form.Field>

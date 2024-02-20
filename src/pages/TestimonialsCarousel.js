@@ -82,7 +82,7 @@ export default function TestimonialsCarousel() {
                 <p>Student</p>
                 <p className="text-muted">
                   <MDBIcon fas icon="quote-left" className="pe-2" />
-                  When I was coming back from New York, I needed a ride quickly. I hopped on RSF and I was connected with someone in less than 10 minutes and shared an Uber back to campus. Thanks to RSF, I was able to save 30+ dollars!
+                  When I was coming back from New York, I needed a ride quickly. I hopped on TrypSync and I was connected with someone in less than 10 minutes and shared an Uber back to campus. Thanks to TrypSync, I was able to save 30+ dollars!
                 </p>
               </MDBCol>
             </MDBRow>
