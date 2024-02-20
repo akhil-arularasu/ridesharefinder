@@ -142,6 +142,7 @@ const MobileContainer = ({ children }) => {
   const isLoginPage = location.pathname === '/login';
   const isSignUpPage = location.pathname === '/signup';
   const isCareersPage = location.pathname === '/careers';
+  const isPasswordResetPage = location.pathname === '//passwordreset'
   const isFaqPage = location.pathname === '/faq';
 
   const handleSidebarHide = () => setSidebarOpened(false);
@@ -168,7 +169,7 @@ const MobileContainer = ({ children }) => {
           <Menu.Item as={NavLink} to="/faq" activeClassName="active">
             FAQ
           </Menu.Item>
-          {(isCareersPage || isHomePage || isAboutPage || isFaqPage) && (
+          {(isCareersPage || isHomePage || isAboutPage || isFaqPage || isPasswordResetPage) && (
             <>
               <Menu.Item as={NavLink} to="/login">Log in</Menu.Item>
               <Menu.Item as={NavLink} to="/signup">Sign Up</Menu.Item>
@@ -186,15 +187,11 @@ const MobileContainer = ({ children }) => {
             </>
           )}
           {isLoginPage && (
-          <NavLink to="/signup">
-            <Button as="a" inverted>Sign Up</Button>
-          </NavLink>
+                <Menu.Item as={NavLink} to="/signup">Sign Up</Menu.Item>
           )}
           {isSignUpPage && (
-            <NavLink to="/login">
-              <Button as="a" inverted>Log In</Button>
-            </NavLink>
-          )}
+                <Menu.Item as={NavLink} to="/login">Log In</Menu.Item>
+                )}
         </Sidebar>
 
         <Sidebar.Pusher dimmed={sidebarOpened}>
