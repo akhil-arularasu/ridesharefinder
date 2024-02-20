@@ -76,7 +76,7 @@ function RegisterForm() {
           
           if (!response.ok) {
             // Use the error message from the response
-            console.log('erorr', data)
+            console.log('error', data)
             throw new Error(data.error);
           }
     
@@ -104,6 +104,9 @@ function RegisterForm() {
   const validate = (values) => {
     const errors = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    if (!values.email.endsWith('.edu')) {
+        errors.email = 'Email address must end with .edu';
+    }    
     if (!regex.test(values.email)) {
       errors.email = "This is not a valid email format!";
     }
@@ -239,15 +242,19 @@ function RegisterForm() {
             </Grid.Row>
           </Grid>
           <Form.Field required>
+          <div>
             <Checkbox
               name="agreeToTerms"
-              label="I agree to the TrypSync.com terms and conditions and Mobile Opt-In Term and conditions. Mobile Opt-In Term and conditions: By submitting my information above I consent to receive notifications through SMS and email from TrypSnyc.com. TrypSnyc.com(RideShareFinde LLC) will send text messages in regards to your Ride confirmation requests, and any updates to the Ride. I also acknowledge and agree to be included in TrypSync mailing list to receive future updates."
               checked={agreeToTerms}
               onChange={() => setAgreeToTerms(!agreeToTerms)}
               required
             />
-          </Form.Field>
-          <p style={{ color: "red" }}>{formErrors.agreeToTerms}</p>
+            <label htmlFor="agreeToTerms">
+            <span style={{ paddingLeft: '10px' }}>I agree to the TrypSync <a href="https://docs.google.com/document/d/10ZH5rfS65eo2bkeCOoBpqe6op51wR-dmm9_Cyzs2aXk/edit?usp=sharing" target="_blank" rel="noopener noreferrer">Terms and Conditions</a>. </span>
+            </label>
+          </div>
+        </Form.Field>
+        <p style={{ color: "red" }}>{formErrors.agreeToTerms}</p>
 
           <Form.Button fluid primary>
             Submit
