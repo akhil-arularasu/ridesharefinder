@@ -134,8 +134,8 @@ function RegisterForm() {
       {submissionError && <Alert severity="error">{submissionError}</Alert>}
       {Object.keys(formErrors).length === 0 && isSubmit ? (
         <Message success>
-          <Message.Header>Signed Up successfully</Message.Header>
-          <p>Check your inbox for a confirmation link</p>
+          <Message.Header>Signed Up Successfully</Message.Header>
+          <p>Check your inbox for a confirmation link. If you do not see the link, be sure to check your spam inbox!</p>
         </Message>
       ) : (
         <pre></pre>

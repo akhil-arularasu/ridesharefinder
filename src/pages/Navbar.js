@@ -33,7 +33,6 @@ const DesktopContainer = ({ children }) => {
   const isSignUpPage = location.pathname === '/signup';
   const isPasswordResetPage = location.pathname === '/passwordreset';
   const isPasswordResetFinalPage = location.pathname === '/reset_password/:token';
-  const isCareersPage = location.pathname === '/careers';
   const isFaqPage = location.pathname === '/faq';
 
   const toggleFixedMenu = (inView) => setFixed(!inView);
@@ -67,7 +66,7 @@ const DesktopContainer = ({ children }) => {
               <Menu.Item as={NavLink} to="/about" activeClassName="active">
                 About
               </Menu.Item>
-              <Menu.Item as={NavLink} to="/careers" activeClassName="active">
+              <Menu.Item as='a' href="https://fringe-base-ad9.notion.site/TrypSync-Careers-22c549c6b5a549d18fcc0c3cd26ebd7d?pvs=25" target="_blank" rel="noopener noreferrer">
                 Careers
               </Menu.Item>
               <Menu.Item as={NavLink} to="/faq" activeClassName="active">
@@ -77,7 +76,7 @@ const DesktopContainer = ({ children }) => {
               </>
             )}
               <Menu.Item position="right">
-                {(isCareersPage || isHomePage || isAboutPage || isPasswordResetPage || isPasswordResetFinalPage || isFaqPage) && (
+                {(isHomePage || isAboutPage || isPasswordResetPage || isPasswordResetFinalPage || isFaqPage) && (
                   <>
                     <NavLink to="/login">
                       <Button as="a" inverted={!fixed}>Log in</Button>
@@ -141,7 +140,6 @@ const MobileContainer = ({ children }) => {
   const isDashboardPage = location.pathname === '/dashboard';
   const isLoginPage = location.pathname === '/login';
   const isSignUpPage = location.pathname === '/signup';
-  const isCareersPage = location.pathname === '/careers';
   const isPasswordResetPage = location.pathname === '//passwordreset'
   const isFaqPage = location.pathname === '/faq';
 
@@ -163,13 +161,13 @@ const MobileContainer = ({ children }) => {
           <Menu.Item as={NavLink} to="/about" activeClassName="active">
             About
           </Menu.Item>
-          <Menu.Item as={NavLink} to="/careers" activeClassName="active">
+          <Menu.Item as='a' href="https://fringe-base-ad9.notion.site/TrypSync-Careers-22c549c6b5a549d18fcc0c3cd26ebd7d?pvs=25" target="_blank" rel="noopener noreferrer">
             Careers
           </Menu.Item>
           <Menu.Item as={NavLink} to="/faq" activeClassName="active">
             FAQ
           </Menu.Item>
-          {(isCareersPage || isHomePage || isAboutPage || isFaqPage || isPasswordResetPage) && (
+          {(isHomePage || isAboutPage || isFaqPage || isPasswordResetPage) && (
             <>
               <Menu.Item as={NavLink} to="/login">Log in</Menu.Item>
               <Menu.Item as={NavLink} to="/signup">Sign Up</Menu.Item>

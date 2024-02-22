@@ -102,7 +102,7 @@ const SocialFollow = () => (
     </a>
 
     {/* Instagram Button */}
-    <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" style={{ marginRight: 10 }}>
+    <a href="https://www.instagram.com/trypsync" target="_blank" rel="noopener noreferrer" style={{ marginRight: 10 }}>
       <Button icon circular color='instagram'>
         <Icon name='instagram' />
       </Button>
@@ -237,10 +237,10 @@ const Home = () => (
         <p style={{ fontSize: '1.33em' }}>
           As TrypSync expands to other colleges and universities throughout the United States, we are on the lookout for exceptional talent to join our versatile team. Interested areas of expertise include Web & Mobile Development, Social Media, Marketing and more.
         </p>
-        <a href="/careers">
-        <Button as='a' size='large'>
-          Jobs & Internships
-        </Button>
+        <a href="https://fringe-base-ad9.notion.site/TrypSync-Careers-22c549c6b5a549d18fcc0c3cd26ebd7d?pvs=25">
+          <Button as='a' size='large'>
+            Jobs & Internships
+          </Button>
         </a>
 
         <Divider

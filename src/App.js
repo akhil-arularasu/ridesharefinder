@@ -12,7 +12,6 @@ import Account from './pages/Account'
 import Navbar from './pages/Navbar'; // Adjust the import path as needed
 import PasswordReset from './pages/PasswordReset'
 import PasswordResetFinal from './pages/PasswordResetFinal'
-import Careers from './pages/Careers'
 
 
 function LowerCaseRedirect() {
@@ -45,7 +44,6 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/account" element={<Account />} />
-      <Route path="/careers" element={<Careers />} />
       <Route path="/passwordreset" element={<PasswordReset />} />
       <Route path="/faq" element={<Faq />} />
       <Route path="/reset_password/:token" element={<PasswordResetFinal />} />
