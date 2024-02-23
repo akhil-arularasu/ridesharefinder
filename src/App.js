@@ -12,7 +12,10 @@ import Account from './pages/Account'
 import Navbar from './pages/Navbar'; // Adjust the import path as needed
 import PasswordReset from './pages/PasswordReset'
 import PasswordResetFinal from './pages/PasswordResetFinal'
+import ReactGA from 'react-ga';
 
+const TRACKING_ID = process.env.REACT_APP_GA_TRACKING_ID; // Use the environment variable
+ReactGA.initialize(TRACKING_ID);
 
 function LowerCaseRedirect() {
   const location = useLocation();
@@ -31,9 +34,20 @@ function LowerCaseRedirect() {
   return null;
 }
 
+function PageTracker() {
+  const location = useLocation();
+
+  React.useEffect(() => {
+    ReactGA.pageview(location.pathname + location.search);
+  }, [location]);
+
+  return null;
+}
+
 function App() {
    return <div>
     <BrowserRouter>
+    <PageTracker /> {/* This component now takes care of tracking */}
     <LowerCaseRedirect /> {/* Include LowerCaseRedirect here */}
     <Navbar />
     <Routes>
