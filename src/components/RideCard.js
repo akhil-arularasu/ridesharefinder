@@ -63,7 +63,7 @@ const convertTo12HourFormat = (time) => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          rideId: ride.ride_id,
+          ride_id: ride.ride_id,
           seatsRemaining: parseInt(seatsRemaining, 10), // Ensure conversion to integer
         }),
       })
@@ -99,20 +99,20 @@ const convertTo12HourFormat = (time) => {
       });
     };
     
-  const handleExpandClick = (rideId) => {
+  const handleExpandClick = (ride_id) => {
       if (!expanded)
       {
-        console.log("fetch the details now", rideId);
-        fetchRideDetails(rideId)
+        console.log("fetch the details now", ride_id);
+        fetchRideDetails(ride_id)
         setExpanded(!expanded);
       }
       else
         setExpanded(!expanded);
   };
 
-  const fetchRideDetails = (rideId) => {
+  const fetchRideDetails = (ride_id) => {
     const userToken = localStorage.getItem('token');
-    fetch(process.env.REACT_APP_SERVER + `/api/rideDetails?rideId=${rideId}`, {
+    fetch(process.env.REACT_APP_SERVER + `/api/rideDetails?ride_id=${ride_id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -216,7 +216,7 @@ const convertTo12HourFormat = (time) => {
         )}
       <ExpandMore
           expand={expanded}
-          onClick={(rideId) => handleExpandClick(ride.ride_id)}
+          onClick={(ride_id) => handleExpandClick(ride.ride_id)}
           aria-expanded={expanded}
           aria-label="show more"
         >

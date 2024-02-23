@@ -7,27 +7,27 @@ import { useNavigate } from 'react-router-dom';
 function Rides ({rides, setRefreshKey, myRides}) {
   console.log('Rides props:', rides); // Check the received rides array
 
-  const checkRideIsMyRide = (rideId) => {
-    // Use Array.prototype.some to check if any object in myRides has the given rideId
-    console.log("check is my rideid", rideId)
+  const checkRideIsMyRide = (ride_id) => {
+    // Use Array.prototype.some to check if any object in myRides has the given ride_id
+    console.log("check is my ride_id", ride_id)
     console.log(" my rides", myRides)
-    const isMyRide =  myRides.some(ride => ride.ride_id === rideId);
+    const isMyRide =  myRides.some(ride => ride.ride_id === ride_id);
     console.log("myride - ", isMyRide)
     return isMyRide;
   };
 
   const navigate = useNavigate();
 
-  const handleLeaveClick = (rideId) => {
+  const handleLeaveClick = (ride_id) => {
     const token = localStorage.getItem('token');
-    console.log('Sending data:', { rideId });
+    console.log('Sending data:', { ride_id });
     fetch(process.env.REACT_APP_SERVER + '/api/leave', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({ rideId })
+      body: JSON.stringify({ ride_id })
     })
     .then(response => {
       if (!response.ok) {
@@ -40,7 +40,7 @@ function Rides ({rides, setRefreshKey, myRides}) {
       return response.json();
     })
     .then(() => {
-      console.log('Leaving ride ID:', rideId);
+      console.log('Leaving ride ID:', ride_id);
       setRefreshKey(prevRefreshKey => prevRefreshKey + 1);
     })
     .catch(error => {
@@ -48,7 +48,7 @@ function Rides ({rides, setRefreshKey, myRides}) {
     });
   };
   
-  function handleJoinClick(rideId) {
+  function handleJoinClick(ride_id) {
     const userToken = localStorage.getItem('token');
     fetch(process.env.REACT_APP_SERVER + '/api/join', {
       method: 'POST',
@@ -56,7 +56,7 @@ function Rides ({rides, setRefreshKey, myRides}) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${userToken}`
       },
-      body: JSON.stringify({ ride_id: rideId })
+      body: JSON.stringify({ ride_id: ride_id })
     })
     .then(response => {
       if (!response.ok) {
@@ -69,7 +69,7 @@ function Rides ({rides, setRefreshKey, myRides}) {
       return response.json();
     })
     .then(() => {
-      console.log('Joining ride ID:', rideId);
+      console.log('Joining ride ID:', ride_id);
       setRefreshKey(prevRefreshKey => prevRefreshKey + 1);
     })
     .catch(error => {
