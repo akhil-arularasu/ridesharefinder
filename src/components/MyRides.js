@@ -1,7 +1,7 @@
 import React,{useState, useEffect} from 'react'
 import Rides from "./Rides"
 import SearchableDropdown from './SearchableDropdown';
-import { Button, Container, Grid, Select, Label, Icon, ButtonGroup, ButtonOr, Input } from 'semantic-ui-react';
+import { Button, Container, Grid, Select, Label, Icon, Message, ButtonGroup, ButtonOr, Input } from 'semantic-ui-react';
 
 
 function MyRides({ refreshKey, setRefreshKey, rides }) {
@@ -9,7 +9,7 @@ function MyRides({ refreshKey, setRefreshKey, rides }) {
   const [locationOptions, setLocationOptions] = useState([]);
   const [fromLocation, setFromLocation] = useState(null);
   const [toLocation, setToLocation] = useState(null);
-
+  const [error, setError] = useState(''); // Add an error state
 
   useEffect(() => {
     const userToken = localStorage.getItem('token');
@@ -63,7 +63,6 @@ const handleToLocationChange = (selectedLabel) => {
     setIsEditing(true);
   };
 
-
   const stopEditingHandler = () => {
     setIsEditing(false);
   };
@@ -109,6 +108,7 @@ const handleToLocationChange = (selectedLabel) => {
 
 
  const handleAddFormSubmit = (event) => {
+
   event.preventDefault();
   const newRide = {
     fromLocationId: fromLocation.id,
@@ -119,7 +119,8 @@ const handleToLocationChange = (selectedLabel) => {
   };
   console.log('Sending data to the server:', newRide);
   const userToken = localStorage.getItem('token'); // Retrieve the token
- 
+  setError('');
+
   // Send the newRide data to the server
   fetch(process.env.REACT_APP_SERVER + '/api/create', {
     method: 'POST',
@@ -131,17 +132,22 @@ const handleToLocationChange = (selectedLabel) => {
   })
   .then(response => {
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      return response.json().then(data => {
+        throw new Error(data.error || 'Network response was not ok');
+      });
     }
     return response.json();
-  })
+    })
   .then(data => {
     // Here you can handle the response data
-    console.log('Success:', data);
+    console.log('Returned:', data);
+      if (data.error)
+        throw new Error(data.error);
       setRefreshKey(prevRefreshKey => prevRefreshKey + 1)
   })
   .catch((error) => {
-    console.error('Error:', error);
+    console.log('Error:', error.message);
+    setError(error.message); // Set the error message from the response
   })
   .finally(() => {
     // This block runs regardless of the outcome of the fetch request
@@ -170,13 +176,12 @@ useEffect(() => {
 
   return (
     <Container fluid>
-    <Label as='a' color='blue' ribbon>
-      My Tryps
-    </Label>
+    <Label as='a' color='blue' ribbon>My Tryps</Label>
+    {error && <Message error content={error} />} 
    {rides.length === 0 ? (
         <div> You don't have any scheduled rides.</div>
       ) : (
-      <Rides rides={rides} setRefreshKey={setRefreshKey} myRides={rides} />
+      <Rides rides={rides} setRefreshKey={setRefreshKey} myRides={rides} setError={setError}/>
       )}
 
       {!isEditing && (

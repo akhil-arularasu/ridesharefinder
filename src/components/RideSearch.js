@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Rides from './Rides';
 import SearchableDropdown from './SearchableDropdown';
 import "./SearchableDropdown.css"
-import { Grid, Icon, Container, Label } from 'semantic-ui-react';
+import { Grid, Icon, Message, Container, Label } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -51,6 +51,7 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
 
   const [rides, setRides] = useState([{}]);
   const navigate = useNavigate();
+  const [error, setError] = useState(''); // Add an error state
   const [searchParams, setSearchParams] = useState({
     fromLocationId: "2",
     fromLocationName: "Emory Atlanta Campus",
@@ -85,6 +86,7 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
       const updatedRides = rides.map(ride => ({
         ...ride
       }));
+      setError('');
       setRides(updatedRides);
     })
     .catch((error) => {
@@ -235,6 +237,7 @@ const handleToLocationChange = (selectedOption) => {
     <Label as='a' color='blue' ribbon>
     Search Tryps
     </Label>
+    {error && <Message error content={error} />} 
     <Grid stackable>
     <Grid.Row columns={5}>
     <Grid.Column>        
@@ -317,7 +320,7 @@ const handleToLocationChange = (selectedOption) => {
       {rides.length === 0 ? (
             <div> No rides found for the given search criteria.</div>
         ) : (
-      <Rides rides={rides} setRefreshKey={setRefreshKey} myRides={myRides}/>
+      <Rides rides={rides} setRefreshKey={setRefreshKey} myRides={myRides} setError={setError}/>
       )}
       </Container> 
   )}

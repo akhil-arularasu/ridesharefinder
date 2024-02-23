@@ -102,7 +102,6 @@ const convertTo12HourFormat = (time) => {
   const handleExpandClick = (ride_id) => {
       if (!expanded)
       {
-        console.log("fetch the details now", ride_id);
         fetchRideDetails(ride_id)
         setExpanded(!expanded);
       }

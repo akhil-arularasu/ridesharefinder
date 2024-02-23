@@ -4,7 +4,8 @@ import RideCard from "./RideCard";
 import { useNavigate } from 'react-router-dom';
 
 
-function Rides ({rides, setRefreshKey, myRides}) {
+function Rides ({rides, setRefreshKey, myRides, setError}) {
+
   console.log('Rides props:', rides); // Check the received rides array
 
   const checkRideIsMyRide = (ride_id) => {
@@ -68,12 +69,15 @@ function Rides ({rides, setRefreshKey, myRides}) {
       }
       return response.json();
     })
-    .then(() => {
+    .then((data) => {
+      if (data.error)
+         throw new Error(data.error)
       console.log('Joining ride ID:', ride_id);
       setRefreshKey(prevRefreshKey => prevRefreshKey + 1);
     })
     .catch(error => {
       console.error('Error:', error);
+      setError(error.message)
     });
   };
   
