@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -46,6 +46,17 @@ const convertTo12HourFormat = (time) => {
     const [editMode, setEditMode] = useState(false); // State to toggle edit mode
     const navigate = useNavigate();
     
+    // Update seatsRemaining whenever the ride prop changes
+    useEffect(() => {
+      setSeatsRemaining(ride.seatsRemaining);
+    }, [ride.seatsRemaining]);
+
+    useEffect(() => {
+      if (expanded) {
+        fetchRideDetails(ride.ride_id);
+      }
+    }, [ride.ride_id, expanded]); // Re-fetch ride details when ride_id or expanded state changes    
+
     const handleSaveSeats = (e) => {
       e.preventDefault();
       

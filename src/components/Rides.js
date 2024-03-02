@@ -11,7 +11,6 @@ function Rides ({rides, setRefreshKey, myRides, setError}) {
   const checkRideIsMyRide = (ride_id) => {
     // Use Array.prototype.some to check if any object in myRides has the given ride_id
     console.log("check is my ride_id", ride_id)
-    console.log(" my rides", myRides)
     const isMyRide =  myRides.some(ride => ride.ride_id === ride_id);
     console.log("myride - ", isMyRide)
     return isMyRide;

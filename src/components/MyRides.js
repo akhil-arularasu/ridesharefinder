@@ -36,7 +36,7 @@ function MyRides({ refreshKey, setRefreshKey, rides }) {
     toLocationId: "",
     rideDate: "",
     rideTime:"",
-    seatsLeft:""
+    seatsRemaining:""
   })
 
 
@@ -157,7 +157,7 @@ const handleToLocationChange = (selectedLabel) => {
       toLocationId: "",
       rideDate: "",
       rideTime: "",
-      seatsLeft: ""
+      seatsRemaining: ""
     });
  
     // If you're using a flag to show/hide the form (like isEditing),

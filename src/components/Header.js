@@ -1,5 +1,5 @@
 export default function Header() {
     return (
-        <h1>Header: RideShareFinder LLC</h1>
+        <h1>Header: TrypSync</h1>
     )
 }
