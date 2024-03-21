@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import TestimonialsCarousel from './TestimonialsCarousel'
 import ScrollMouse from './scrollMouse'; // Import ScrollMouse component
 import LoomVideoModal from './LoomVideoModal.js'; // Adjust the path as needed
+import UniversitiesMap from './UniversitiesMap.js'; // Adjust the path as needed
 
 import {
   Button,
@@ -252,10 +253,29 @@ const Home = () => (
           <a href='#'>Student Testimonials</a>
         </Divider>
 
-        <Header as='h3' style={{ fontSize: '2em' }}>
+        <Header as='h3' style={{ fontSize: '1.5em' }}>
           What They're Saying About Us
         </Header>       
         <TestimonialsCarousel />
+
+        <Divider
+          as='h4'
+          className='header'
+          horizontal
+          style={{ margin: '2em 0em', textTransform: 'uppercase' }}
+        >
+          <a href='#'>The TrypSync Network</a>
+        </Divider>
+        <Header as='h3' style={{ fontSize: '1em' }}>
+        TrypSync offers a broad support network to a diverse range of colleges and universities. TrypSync is not directly affiliatied with any of the institutions we serve. 
+        <br></br>
+        <br></br>
+        Want to partner with TrypSync at your school? Contact us at team@trypsync.com
+        </Header>       
+        <br></br>
+        <UniversitiesMap />
+
+
       </Container>
 
     
