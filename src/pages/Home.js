@@ -253,7 +253,7 @@ const Home = () => (
         </Divider>
 
         <Header as='h3' style={{ fontSize: '2em' }}>
-          What They're Saying About Us:
+          What They're Saying About Us
         </Header>       
         <TestimonialsCarousel />
       </Container>

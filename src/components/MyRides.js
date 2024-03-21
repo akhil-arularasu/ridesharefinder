@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import Rides from "./Rides"
 import SearchableDropdown from './SearchableDropdown';
 import { Button, Container, Grid, Select, Label, Icon, Message, ButtonGroup, ButtonOr, Input } from 'semantic-ui-react';

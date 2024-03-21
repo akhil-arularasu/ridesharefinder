@@ -4,7 +4,7 @@ import './RegistrationForm.css'; // Adjust the path based on your project struct
 import { FormField } from 'semantic-ui-react'
 import { InView } from 'react-intersection-observer'
 import Alert from '@mui/material/Alert'; // Import Alert from Material-UI
-import { Grid, Form, Checkbox, Divider, Message } from "semantic-ui-react"; // Import Semantic UI React components
+import { Grid, Button, Modal, Header, Icon, HeaderContent, Form, Checkbox, Divider, Message } from "semantic-ui-react"; // Import Semantic UI React components
 
 
 function RegisterForm() {
@@ -130,7 +130,7 @@ function RegisterForm() {
   };
 
   return (
-    <div className="container">
+    <div className="registration-form-container">
       {submissionError && <Alert severity="error">{submissionError}</Alert>}
       {Object.keys(formErrors).length === 0 && isSubmit ? (
         <Message success>
@@ -139,6 +139,31 @@ function RegisterForm() {
         </Message>
       ) : (
         <pre></pre>
+      )}
+      {/* Show modal only after successful submission and when there are no errors */}
+      {Object.keys(formErrors).length === 0 && isSubmit && (
+        <Modal
+          open={true}
+          onClose={() => setIsSubmit(false)} // Reset isSubmit to hide modal
+          size='mini'
+          centered={true}
+          dimmer='blurring'
+        >
+          <Header icon>
+            <Icon name='archive'/>
+            Email Confirmation
+          </Header>
+          <Modal.Content style={{textAlign: 'center'}}>
+            <p>
+              You will receive an email with an account confirmation link within the next few minutes. If you did not receive an email, check your <b>Spam Folder</b>!
+            </p>
+          </Modal.Content>
+          <Modal.Actions style={{textAlign: 'center'}}>
+            <Button color='green' inverted onClick={() => setIsSubmit(false)}>
+              <Icon name='checkmark' /> I understand
+            </Button>
+          </Modal.Actions>
+        </Modal>
       )}
 
       <div className="registration-form-container">
