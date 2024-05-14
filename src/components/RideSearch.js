@@ -1,47 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Rides from './Rides';
 import SearchableDropdown from './SearchableDropdown';
-import "./SearchableDropdown.css"
+import "./SearchableDropdown.css";
 import { Grid, Icon, Message, Container, Label } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
-
-
-function convertTo24HourFormat(time) {
-  // Split the time and AM/PM part
-  const [timePart, modifier] = time.split(' ');
-  let [hours, minutes] = timePart.split(':').map(Number);
-
-  // Convert to 24-hour format
-  if (hours === 12) {
-    hours = modifier === 'AM' ? 0 : 12;
-  } else if (modifier === 'PM') {
-    hours += 12;
-  }
-
-  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-}
-
-function timeToSliderValue(time) {
-  let [timePart, modifier] = time.split(' ');
-  let [hours, minutes] = timePart.split(':').map(Number);
-  hours = (modifier === 'PM' && hours !== 12) ? hours + 12 : hours;
-  hours = (modifier === 'AM' && hours === 12) ? 0 : hours;
-
-  return hours * 60 + minutes;
-}
-
-function sliderValueToTime(value) {
-  let totalMinutes = value;
-  totalMinutes = Math.max(0, totalMinutes);
-  totalMinutes = Math.min(24 * 60 - 1, totalMinutes);
-
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-  const ampm = hours >= 12 ? 'PM' : 'AM';
-  const formattedHours = hours % 12 || 12;
-
-  return `${formattedHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${ampm}`;
-}
+import Range from 'multi-range-slider-react';
 
 function RideSearch({refreshKey, setRefreshKey, myRides}) {
   const getCurrentDate = () => {
@@ -49,7 +12,15 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
     return today.toISOString().split('T')[0];
   };
 
-  const [rides, setRides] = useState([{}]);
+  // Convert time string to minutes
+  const timeToMinutes = (time) => {
+    const [hours, minutes, period] = time.split(/[:\s]/);
+    let totalMinutes = parseInt(hours) * 60 + parseInt(minutes);
+    if (period === 'PM' && hours !== '12') totalMinutes += 12 * 60;
+    return totalMinutes;
+  };
+
+  const [rides, setRides] = useState([]); // Initialize as an empty array
   const navigate = useNavigate();
   const [error, setError] = useState(''); // Add an error state
   const [searchParams, setSearchParams] = useState({
@@ -58,22 +29,27 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
     toLocationName: "ATL Hartsfield-Jackson Airport",
     toLocationId: "3",
     rideDate: getCurrentDate(),
-    startTime: "00:00",
-    endTime: "23:59" // You can keep this as the end of the day if that makes sense for your application
+    startTime: timeToMinutes("12:00 AM"),
+    endTime: timeToMinutes("11:59 PM")
   });
 
   useEffect(() => {
     const userToken = localStorage.getItem('token'); // Retrieve the token
+    
     const { fromLocationId, toLocationId, rideDate, startTime, endTime } = searchParams;
-  
+
+    // Convert startTime and endTime from minutes to "HH:MM" format
+    const startTimeInHHMM = minutesToTime(startTime);
+    const endTimeInHHMM = minutesToTime(endTime);  
+
     fetch(process.env.REACT_APP_SERVER +
-      `/api/search?fromLocationId=${fromLocationId}&toLocationId=${toLocationId}&rideDate=${rideDate}&startTime=${startTime}&endTime=${endTime}`, {
+      `/api/search?fromLocationId=${fromLocationId}&toLocationId=${toLocationId}&rideDate=${rideDate}&startTime=${startTimeInHHMM}&endTime=${endTimeInHHMM}`, {
         headers: {
           'Authorization': `Bearer ${userToken}`,
         }
       }
     )
-    .then(response => {
+      .then(response => {
       if (response.status === 401) {
         // If unauthorized, redirect to the login page
         navigate('/login');
@@ -81,45 +57,39 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
       }
       return response.json();
     })
-    .then((rides) => {
-      // Process the rides data
-      const updatedRides = rides.map(ride => ({
-        ...ride
-      }));
-      setError('');
-      setRides(updatedRides);
+    .then((data) => {
+      // Check if data is an array before mapping
+      if (Array.isArray(data)) {
+        const updatedRides = data.map(ride => ({
+          ...ride
+        }));
+        setRides(updatedRides);
+        setError('');
+      } else {
+        throw new Error('Invalid data format');
+      }
     })
     .catch((error) => {
       console.error('Error:', error);
-      // Handle other errors
+      setError('Failed to fetch rides. Please try again later.');
     });
   }, [searchParams, refreshKey, navigate]); // Add navigate to the dependency array
-    
-  const handleTimeSliderChange = (e) => {
-    const { name, value } = e.target;
-    const newValue = Number(value);
-    let newStartTime = timeToSliderValue(searchParams.startTime);
-    let newEndTime = timeToSliderValue(searchParams.endTime);
-  
-    if (name === 'startTime' && newValue >= newEndTime) {
-      newStartTime = newEndTime - 1;
-    } else if (name === 'endTime' && newValue <= newStartTime) {
-      newEndTime = newStartTime + 1;
-    } else {
-      if (name === 'startTime') {
-        newStartTime = newValue;
-      } else {
-        newEndTime = newValue;
-      }
+
+  const handleTimeSliderChange = (values) => {
+    console.log('Slider values:', values); // Debugging the slider values
+
+    const { minValue, maxValue } = values;
+
+    // Update the state only if there is a change
+    if (minValue !== searchParams.startTime || maxValue !== searchParams.endTime) {
+      setSearchParams((prevParams) => ({
+        ...prevParams,
+        startTime: minValue,
+        endTime: maxValue,
+      }));
     }
-  
-    setSearchParams((prevParams) => ({
-      ...prevParams,
-      startTime: convertTo24HourFormat(sliderValueToTime(newStartTime)),
-      endTime: convertTo24HourFormat(sliderValueToTime(newEndTime)),
-    }));
-  };  
-  
+  };
+
   const maxSliderValue = 24 * 60 - 1; // 1439, representing 23:59
 
   // Handler for when search parameters change
@@ -154,30 +124,30 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
       }
       return response.json();
     })
-      .then(data => {
-        const formattedOptions = data.map(location => ({
-          id: location.location_id, // Replace 'id' with the actual identifier property from your API
-          label: location.location_name, // Replace 'name' with the actual property name from your API
-          isCampus: location.isCampus
-        }));
-        setLocationOptions(formattedOptions);
-      })
-      .catch(error => console.error('Error fetching locations:', error));
+    .then(data => {
+      const formattedOptions = data.map(location => ({
+        id: location.location_id, // Replace 'id' with the actual identifier property from your API
+        label: location.location_name, // Replace 'name' with the actual property name from your API
+        isCampus: location.isCampus
+      }));
+      setLocationOptions(formattedOptions);
+    })
+    .catch(error => console.error('Error fetching locations:', error));
   }, [navigate]);
 
   const findIdByName = (locationName) => {
     const location = locationOptions.find(option => option.label === locationName);
     return location ? location.id : null;
-};
+  };
 
   const [fromLocationSelected, setFromLocationSelected] = useState(false);
 
   // Define a custom change handler
   const handleValueChange = (selectedOption) => {
-  console.log('Selected option:', selectedOption);
+    console.log('Selected option:', selectedOption);
     
-  const fromlocId = findIdByName(selectedOption)
-  console.log('Location ID:', fromlocId);
+    const fromlocId = findIdByName(selectedOption);
+    console.log('Location ID:', fromlocId);
 
     setSearchParams(prevParams => ({
       ...prevParams,
@@ -186,32 +156,29 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
 
     // Update the state with the new value
     setFromValue(selectedOption);
-    setToValue(null)
+    setToValue(null);
 
     setFromLocationSelected(!!selectedOption);
   };
 
-const handleToLocationChange = (selectedOption) => {
+  const handleToLocationChange = (selectedOption) => {
     console.log('Selected option for To Location:', selectedOption);
 
-    // Assuming you have a state or a way to check if 'From Location' is selected
-    // For example, using a state variable `fromLocationSelected`
     if (!fromLocationSelected) {
-        // Display an alert or set an error state
-        alert("Please select a 'From Location' first.");
-        return; // Exit the function to prevent further execution
+      alert("Please select a 'From Location' first.");
+      return;
     }
 
     const tolocId = findIdByName(selectedOption);
     console.log('To Location ID:', tolocId);
 
     setSearchParams(prevParams => ({
-        ...prevParams,
-        toLocationId: tolocId
+      ...prevParams,
+      toLocationId: tolocId
     }));
     
     setToValue(selectedOption);
-};
+  };
 
   const getFromLocation = () => {
     return locationOptions.find(option => option.id === searchParams.fromLocationId);
@@ -222,107 +189,126 @@ const handleToLocationChange = (selectedOption) => {
     const isFromLocationCampus = fromLocation ? fromLocation.isCampus : false;
 
     return locationOptions.filter(option => {
-      // Exclude the selected 'From Location'
       if (option.id === searchParams.fromLocationId) return false;
-  
-      // If 'From Location' is a campus, show only non-campus locations for 'To Location'
-      // If 'From Location' is not a campus, show only campus locations for 'To Location'
       return isFromLocationCampus ? !option.isCampus : option.isCampus;
     });
   };
     
-  return (
+  const formatTime = (time) => {
+    if (typeof time !== 'string' || !time.includes(':')) {
+      console.error('Invalid time format. Expected a string in the format "HH:MM".');
+      return time;
+    }
+  
+    const [hours, minutes] = time.split(':');
+    let formattedTime = '';
+    let period = '';
+  
+    if (parseInt(hours) < 12) {
+      formattedTime = `${hours}:${minutes}`;
+      period = 'AM';
+    } else if (parseInt(hours) === 12) {
+      formattedTime = `${hours}:${minutes}`;
+      period = 'PM';
+    } else {
+      formattedTime = `${parseInt(hours) - 12}:${minutes}`;
+      period = 'PM';
+    }
+  
+    return `${formattedTime} ${period}`;
+  };
+
+  // Convert minutes to time string in HH:mm format
+  const minutesToTime = (minutes) => {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
     
+    // If the time is 12:00, change it to 00:00
+    if (hours === 12 && mins === 0) {
+      return '00:00';
+    }
+
+    return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
+  };
+
+  return (
     <Container fluid>
-    <Label as='a' color='blue' ribbon>
-    Search Tryps
-    </Label>
-    {error && <Message error content={error} />} 
-    <Grid stackable>
-    <Grid.Row columns={5}>
-    <Grid.Column>        
+      <Label as='a' color='blue' ribbon>
+      Search Tryps
+      </Label>
+      {error && <Message error content={error} />} 
+      <Grid stackable>
+      <Grid.Row columns={5}>
+      <Grid.Column>        
       <Label htmlFor="fromLocationDropdown">
-      <>
-      Location <span style={{ marginRight: '1em' }}></span><Icon name="location arrow" />
-      </>
+      Start Location <span style={{ marginRight: '1em' }}></span><Icon name="location arrow" />
       </Label>
       <div className="RideSearch">
       <SearchableDropdown
-        options={locationOptions}
-        label="label"
-        id="fromLocationDropdown"
-        selectedVal={fromValue}
-        handleChange={handleValueChange} // Use the custom handler
+      options={locationOptions}
+      label="label"
+      id="fromLocationDropdown"
+      selectedVal={fromValue}
+      handleChange={handleValueChange} 
       />
-    </div>
-    </Grid.Column>        
+      </div>
+      </Grid.Column>        
       <Grid.Column>        
-    {/* Dropdown for To Location */}
-    <Label htmlFor="toLocationDropdown">
-    <>
+      <Label htmlFor="toLocationDropdown">
       Destination <span style={{ marginRight: '1em' }}></span><Icon name="map marker alternate" />
-    </>
-    </Label>
+      </Label>
       <div className="RideSearch">
-        <SearchableDropdown
-          options={getToLocationOptions()}
-          label="label"
-          id="toLocationDropdown"
-          selectedVal={toValue} // Update this if managing separate state for ToLocation
-          handleChange={handleToLocationChange} // Use the custom handler for To Location
-          disabled={!fromValue} // Disable if fromValue is null or empty
-        />
-        {!fromValue && <p>Please select 'From Location' first.</p>}
-         
-        Want a location added? <a href="https://forms.gle/CwUt69t7fJHqK2PJ6" target="_blank">Click Here</a>
+      <SearchableDropdown
+      options={getToLocationOptions()}
+      label="label"
+      id="toLocationDropdown"
+      selectedVal={toValue}
+      handleChange={handleToLocationChange} 
+      disabled={!fromValue} 
+      />
+      {!fromValue && <p>Please select 'From Location' first.</p>}
+{/* Want a location added? <a href="https://forms.gle/CwUt69t7fJHqK2PJ6" target="_blank">Click Here</a> */}
       </div>
       </Grid.Column>
-        </Grid.Row>
-        <Grid.Row columns={5}>
-          <Grid.Column>
-        {/* Row for Date and Time Range Selectors */}
-            <Label htmlFor="rideDate">Ride Date </Label>
-            <input
-              id="rideDate"
-              type="date"
-              name="rideDate"
-              value={searchParams.rideDate}
-              onChange={handleInputChange}
-            />
-          </Grid.Column>            
-          <Grid.Column>  
-            <Label htmlFor="startTime">Start Time: {searchParams.startTime}</Label>
-            <input
-              id="startTime"
-              type="range"
-              name="startTime"
-              min="0"
-              max={maxSliderValue}
-              value={timeToSliderValue(searchParams.startTime)}
-              onChange={handleTimeSliderChange}
-            />
-          </Grid.Column>
-          <Grid.Column>
-            <Label htmlFor="endTime">End Time: {searchParams.endTime}</Label>
-            <input
-              id="endTime"
-              type="range"
-              name="endTime"
-              min="0"
-              max={maxSliderValue}
-              value={timeToSliderValue(searchParams.endTime)}
-              onChange={handleTimeSliderChange}
-            />
-            </Grid.Column>
-            </Grid.Row>
+      </Grid.Row>
+      <Grid.Row columns={5}>
+      <Grid.Column>
+      <Label htmlFor="rideDate">Ride Date </Label>
+      <input
+      id="rideDate"
+      type="date"
+      name="rideDate"
+      value={searchParams.rideDate}
+      onChange={handleInputChange}
+      className="hide-values"
+      />
+      </Grid.Column>            
+      <Grid.Column>  
+      <Label htmlFor="departureWindow">Departure Window </Label> {formatTime(minutesToTime(searchParams.startTime))} - {formatTime(minutesToTime(searchParams.endTime))}
+      <Range
+      id="departureWindow"
+      min={0}
+      max={1439}
+      step={1}
+      values={[searchParams.startTime, searchParams.endTime]}
+      onChange={handleTimeSliderChange}
+      style={{ border: 'none', boxShadow: 'none', padding: '15px 10px' }}
+      label='false'
+      ruler='false'
+      barInnerColor='#2185d0'
+
+      />
+      </Grid.Column>
+      </Grid.Row>
       </Grid>
       <br/> 
       {rides.length === 0 ? (
-            <div> No rides found for the given search criteria.</div>
-        ) : (
+      <div> No rides found for the given search criteria.</div>
+      ) : (
       <Rides rides={rides} setRefreshKey={setRefreshKey} myRides={myRides} setError={setError}/>
       )}
-      </Container> 
-  )}
+    </Container> 
+    );
+}
 
 export default RideSearch;

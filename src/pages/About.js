@@ -199,7 +199,7 @@ const About = () => (
               What is TrypSync?
             </Header>
             <p style={{ fontSize: '1.33em' }}>
-            TrypSync is a web service specifically designed to facilitate campus-based ridesharing within college communities. Students can either 'Create' or 'Join' Ride Groups(Tryps) to rideshare from or to their desired destinations, promoting safe carpooling among students.         </p>
+            TrypSync is a web service specifically designed to facilitate campus-based ridesharing within college communities. Students can either 'Create' or 'Join' Ride Groups (Tryps) to rideshare from or to their desired destinations, promoting safe carpooling among students.         </p>
           </Grid.Column>
           <Grid.Column floated='right' width={6}>
               <Image size='medium' src='/RSF-Logo-full.png' />

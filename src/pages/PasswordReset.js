@@ -72,7 +72,7 @@ const PasswordReset = () => {
               </Header>
               <Modal.Content style={{textAlign: 'center'}}>
                 <p>
-                  You will receive an email with a password reset link within the next few minutes. If you did not receive an email, check your <b>Spam Folder</b>!
+                  You will receive an email with a password reset link within the next few minutes. If you did not receive an email, check your <b>Spam Folder</b> and mark it as 'Not Spam' for the future!
                 </p>
               </Modal.Content>
               <Modal.Actions style={{textAlign: 'center'}}>

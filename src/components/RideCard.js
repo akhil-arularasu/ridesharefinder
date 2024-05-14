@@ -1,18 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-//import { red } from '@mui/material/colors';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Button, Grid, Icon } from 'semantic-ui-react';
 import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
-
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -26,98 +24,74 @@ const ExpandMore = styled((props) => {
 }));
 
 const convertTo12HourFormat = (time) => {
-    if (!time) return ''; // Return an empty string if time is not provided
-  
-    let [hours, minutes] = time.split(':').map(Number);
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    
-    hours = hours % 12;
-    hours = hours || 12; // the hour '0' should be '12'
-  
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${ampm}`;
-  };
-  
+  if (!time) return ''; // Return an empty string if time is not provided
+  let [hours, minutes] = time.split(':').map(Number);
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours || 12; // the hour '0' should be '12'
+  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+};
 
-  function RideCard({ ride, handleLeaveClick, handleJoinClick, isMyRide }) {
-    const [expanded, setExpanded] = useState(false);
-    const [otherRiders, setOtherRiders] = useState([]);
-    const [hostDetails, setHostDetails] = useState(null);
-    const [seatsRemaining, setSeatsRemaining] = useState(ride.seatsRemaining); // Local state to manage seats remaining input
-    const [editMode, setEditMode] = useState(false); // State to toggle edit mode
-    const navigate = useNavigate();
-    
-    // Update seatsRemaining whenever the ride prop changes
-    useEffect(() => {
-      setSeatsRemaining(ride.seatsRemaining);
-    }, [ride.seatsRemaining]);
+function RideCard({ ride, handleLeaveClick, handleJoinClick, isMyRide }) {
+  const [expanded, setExpanded] = useState(false);
+  const [otherRiders, setOtherRiders] = useState([]);
+  const [hostDetails, setHostDetails] = useState(null);
+  const [seatsRemaining, setSeatsRemaining] = useState(ride.seatsRemaining); // Local state to manage seats remaining input
+  const [editMode, setEditMode] = useState(false); // State to toggle edit mode
+  const navigate = useNavigate();
 
-    useEffect(() => {
-      if (expanded) {
-        fetchRideDetails(ride.ride_id);
-      }
-    }, [ride.ride_id, expanded]); // Re-fetch ride details when ride_id or expanded state changes    
+  // Update seatsRemaining whenever the ride prop changes
+  useEffect(() => {
+    setSeatsRemaining(ride.seatsRemaining);
+  }, [ride.seatsRemaining]);
 
-    const handleSaveSeats = (e) => {
-      e.preventDefault();
-      
-      const userToken = localStorage.getItem('token');
-      const updatedSeats = parseInt(seatsRemaining, 10); // Parse it once and use this variable
+  useEffect(() => {
+    if (expanded) {
+      fetchRideDetails(ride.ride_id);
+    }
+  }, [ride.ride_id, expanded]); // Re-fetch ride details when ride_id or expanded state changes    
 
-    
-      console.log("ride_id:", ride.ride_id);
-      console.log("seatsRemaining before parseInt:", updatedSeats);
-      
-      fetch(process.env.REACT_APP_SERVER + '/api/updateSeats', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${userToken}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          ride_id: ride.ride_id,
-          seatsRemaining: parseInt(seatsRemaining, 10), // Ensure conversion to integer
-        }),
-      })
-      .then(response => {
-        if (!response.ok) {
-          if (response.status === 401) {
-            // Handle unauthorized access
-            navigate('/login');
-            return;
-          }
-          // Handle other HTTP errors
-          throw new Error(`HTTP error! status: ${response.status}`);
+  const handleSaveSeats = (e) => {
+    e.preventDefault();
+    const userToken = localStorage.getItem('token');
+    const updatedSeats = parseInt(seatsRemaining, 10); // Parse it once and use this variable
+
+    fetch(process.env.REACT_APP_SERVER + '/api/updateSeats', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${userToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        ride_id: ride.ride_id,
+        seatsRemaining: updatedSeats, // Ensure conversion to integer
+      }),
+    })
+    .then(response => {
+      if (!response.ok) {
+        if (response.status === 401) {
+          navigate('/login');
+          return;
         }
-        return response.json();
-      })
-      .then(data => {
-        setSeatsRemaining(updatedSeats);
-        console.log('Success:', data);
-
-        // Update component state here if necessary
-        // For instance, you might want to update a state variable that tracks the number of seats
-        // Or you could trigger a re-fetch or update of the ride's details to reflect the new seats remaining
-    
-        // Example: setRideDetails((prevDetails) => ({ ...prevDetails, seatsRemaining: parseInt(seatsRemaining, 10) }));
-        // This is just an example. Adjust based on your actual state management logic.
-      })
-      .catch(error => {
-        console.error('Error updating seats:', error.message || error);
-        alert(`Error updating seats: ${error.message || 'Please try again.'}`);
-      })      
-      .finally(() => {
-        setEditMode(false); // Exit edit mode
-      });
-    };
-    
-  const handleExpandClick = (ride_id) => {
-      if (!expanded)
-      {
-        fetchRideDetails(ride_id)
-        setExpanded(!expanded);
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-      else
-        setExpanded(!expanded);
+      return response.json();
+    })
+    .then(data => {
+      setSeatsRemaining(updatedSeats);
+      console.log('Success:', data);
+    })
+    .catch(error => {
+      console.error('Error updating seats:', error.message || error);
+      alert(`Error updating seats: ${error.message || 'Please try again.'}`);
+    })      
+    .finally(() => {
+      setEditMode(false); // Exit edit mode
+    });
+  };
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
   };
 
   const fetchRideDetails = (ride_id) => {
@@ -132,11 +106,9 @@ const convertTo12HourFormat = (time) => {
     .then(response => {
       if (!response.ok) {
         if (response.status === 401) {
-          // Handle unauthorized access
           navigate('/login');
           return;
         }
-        // Handle other HTTP errors
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       return response.json();
@@ -144,40 +116,37 @@ const convertTo12HourFormat = (time) => {
     .then(data => {
       if (data.rides && data.rides.length > 0) {
         setHostDetails(data.rides[0]); // Assuming the first entry is the host
-        // Process other riders
         const otherRidersData = data.rides.slice(1); // Get all entries except the first
         setOtherRiders(otherRidersData); // Update state with other riders' details
       }
     })
     .catch(error => {
       console.error('Error fetching ride details:', error);
-      // Optionally handle the error more specifically
-      // For example, show an error message to the user
     });
-  };  
+  };
 
   return (
     <Card raised>
       <Grid stackable>
-      <Grid.Column>      
-      <Typography>
-      <Icon name="location arrow" />
-            { ride.fromLocationName}
+        <Grid.Column>
+          <Typography>
+            <Icon name="location arrow" />
+            {ride.fromLocationName}
           </Typography>
-      <Typography>
-      <Icon name="map marker alternate" />
-          { ride.toLocationName}
-      </Typography>
-      <Typography>
-          <Icon name="calendar alternate outline" />
-          {ride.rideDate}
-        </Typography>
-        <Typography>
-          <Icon name="clock outline" />
-          {convertTo12HourFormat(ride.rideTime)}
-        </Typography>
-        <Typography>
-          <Icon name="users" /> {/* Assuming you're using a compatible Icon component */}
+          <Typography>
+            <Icon name="map marker alternate" />
+            {ride.toLocationName}
+          </Typography>
+          <Typography>
+            <Icon name="calendar alternate outline" />
+            {ride.rideDate}
+          </Typography>
+          <Typography>
+            <Icon name="clock outline" />
+            {convertTo12HourFormat(ride.rideTime)}
+          </Typography>
+          <Typography>
+            <Icon name="users" /> {/* Assuming you're using a compatible Icon component */}
             Seats Left:
             {editMode ? (
               <TextField
@@ -204,29 +173,29 @@ const convertTo12HourFormat = (time) => {
                 Save
               </Button>
             )}
-        </Typography>
-      </Grid.Column>  
+          </Typography>
+        </Grid.Column>
       </Grid>
       <CardActions disableSpacing>
         {isMyRide ? (
-            <Button secondary type="button"
+          <Button secondary type="button"
             onClick={() => handleLeaveClick(ride.ride_id)}
             aria-label={`Leaving ride from ${ride.fromLocationName} to ${ride.toLocationName}`}
-            >
+          >
             Leave
-            </Button>
+          </Button>
         ) : (
-            <Button primary type="button"
+          <Button primary type="button"
             onClick={() => handleJoinClick(ride.ride_id)}
             aria-label={`Joining ride from ${ride.fromLocationName} to ${ride.toLocationName}`}
             disabled={ride.seatsRemaining === 0} // Disable button if no seats are left
-            >
+          >
             Join
-            </Button>
+          </Button>
         )}
-      <ExpandMore
+        <ExpandMore
           expand={expanded}
-          onClick={(ride_id) => handleExpandClick(ride.ride_id)}
+          onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
         >
@@ -235,33 +204,36 @@ const convertTo12HourFormat = (time) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-            {hostDetails ? (
-              <Typography>
-                <Box>
+          {hostDetails ? (
+            <Typography>
+              <Box>
                 <Icon name="user" /> Host: {hostDetails.name}
-                </Box>
+              </Box>
+              {isMyRide && (
                 <Box>
-                <Icon name="phone" /> {hostDetails.telNumber}
+                  <Icon name="phone" /> {hostDetails.telNumber}
                 </Box>
-              </Typography>
-            ) : (
-              <div>Loading...</div>
-            )}
-            {otherRiders.map((rider, index) => (
+              )}
+            </Typography>
+          ) : (
+            <div>Loading...</div>
+          )}
+          {otherRiders.map((rider, index) => (
+            <div key={index}>
               <Typography>
-              <div key={index}>
-              <div>
-                <Icon name="user" />{index + 1}: {rider.name}
-              </div>
-              <div>
-                <Icon name="phone" />{index + 1}: {rider.telNumber}
-              </div>
-              </div>
+                <Icon name="user" /> {index + 1}: {rider.name}
               </Typography>
-            ))}
+              {isMyRide && (
+                <Typography>
+                  <Icon name="phone" /> {index + 1}: {rider.telNumber}
+                </Typography>
+              )}
+            </div>
+          ))}
         </CardContent>
       </Collapse>
     </Card>
   );
 }
+
 export default RideCard;

@@ -3,9 +3,8 @@ import { Grid } from "semantic-ui-react";
 import RideCard from "./RideCard";
 import { useNavigate } from 'react-router-dom';
 
-
 function Rides ({rides, setRefreshKey, myRides, setError}) {
-
+  
   console.log('Rides props:', rides); // Check the received rides array
 
   const checkRideIsMyRide = (ride_id) => {

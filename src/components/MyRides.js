@@ -197,7 +197,7 @@ useEffect(() => {
       <form onSubmit={handleAddFormSubmit}>
       <Grid columns={5} stackable >
       <Grid.Column>        
-      <Label htmlFor="fromLocationDropdown">Location
+      <Label htmlFor="fromLocationDropdown">Start Location
       <>
       <span style={{ marginRight: '1em' }}></span><Icon name="location arrow" />
       </>
@@ -226,9 +226,7 @@ useEffect(() => {
         disabled={!fromLocation} // Disable if fromLocation is not selected
       />
       {!fromLocation && <p>Please select 'From Location' first.</p>}
-
-      Want a location added? <a href="https://forms.gle/CwUt69t7fJHqK2PJ6" target="_blank">Click Here</a>
-      </Grid.Column>      
+{/* Want a location added? <a href="https://forms.gle/CwUt69t7fJHqK2PJ6" target="_blank">Click Here</a> */}      </Grid.Column>      
       <Grid.Row columns={7} stackable>
       <Grid.Column >
       <Label htmlFor="RideDate" padded>
@@ -244,7 +242,7 @@ useEffect(() => {
       </Grid.Column>            
       <Grid.Column>  
         <Label htmlFor="rideTime">
-        Ride Time
+        Tryp Departure Time
         </Label>
         &nbsp;
         <input 
