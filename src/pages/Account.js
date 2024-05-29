@@ -3,11 +3,10 @@ import validator from 'validator';
 import './AccountForm.css';
 import { FormField } from 'semantic-ui-react';
 import { InView } from 'react-intersection-observer';
-import { Dropdown, Grid, Segment } from 'semantic-ui-react'; // Import Dropdown from Semantic UI React
+import { Dropdown } from 'semantic-ui-react'; // Import Dropdown from Semantic UI React
 import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-import VerticalAd from '../components/VerticalAd'; // Correct import path
 
 function AccountForm() {
   const initialValues = { name: "", collegeId: "", telNumber: "", collegeName: "" };
@@ -140,72 +139,58 @@ function AccountForm() {
       .catch(error => console.error('Error fetching colleges:', error));
       }, []);
 
-      return (
-        <InView>
-          <div className="container">
-            <Grid columns={3} divided>
-              <Grid.Row>
-                <Grid.Column width={3}>
-                  <VerticalAd />
-                </Grid.Column>
-                <Grid.Column width={10}>
-                  <div className="account-form-container">
-                    <form onSubmit={handleSubmit}>
-                      <h1>Account</h1>
-                      <div className="ui divider"></div>
-                      <div className="ui form">
-                        <div className="field">
-                          <label>Name: </label>
-                          <input
-                            type="text"
-                            name="name"
-                            placeholder="Full Name"
-                            value={formValues.name}
-                            onChange={handleChange}
-                            required
-                          />
-                        </div>
-                        <div className="field">
-                          <label>Telephone Number: </label>
-                          <input
-                            type="tel"
-                            name="telNumber"
-                            placeholder="Telephone #"
-                            value={formValues.telNumber}
-                            onChange={handleChange}
-                            pattern="^\d{10}$"  // Example pattern for a 10-digit phone number
-                            title="Phone number should be 10 digits"
-                            required
-                          />
-                          {formErrors.telNumber && (
-                            <div className="ui pointing red basic label">
-                              {formErrors.telNumber}
-                            </div>
-                          )}
-                        </div>
-                        <div className="field">
-                          <label>Campus: </label>
-                          <Dropdown
-                            placeholder="Select Campus"
-                            fluid
-                            selection
-                            options={collegeOptions}
-                            name="collegeId"
-                            value={formValues.collegeId}
-                            onChange={handleDropdownChange}
-                          />
-                        </div>
-                        <button className="fluid ui button blue">Update</button>
-                      </div>
-                    </form>
-                  </div>
-                </Grid.Column>
-                <Grid.Column width={3}>
-                  <VerticalAd />
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </div>
+  return (
+    <InView>
+      <div className="container">
+        <div className="account-form-container">
+          <form onSubmit={handleSubmit}>
+            <h1>Account</h1>
+            <div className="ui divider"></div>
+            <div className="ui form">
+              <div className="field">
+                <label>Name: </label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Full Name"
+                  value={formValues.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="field">
+                <label>Telephone Number: </label>
+                <input
+                    type="tel"
+                    name="telNumber"
+                    placeholder="Telephone #"
+                    value={formValues.telNumber}
+                    onChange={handleChange}
+                    pattern="^\d{10}$"  // Example pattern for a 10-digit phone number
+                    title="Phone number should be 10 digits"
+                    required
+                />
+                {formErrors.telNumber && <div className="ui pointing red basic label">
+                  {formErrors.telNumber}
+                </div>}
+                </div>
+                <div className="field">
+                    <label>Campus: </label>
+                <Dropdown
+                    placeholder="Select Campus"
+                    fluid
+                    selection
+                    options={collegeOptions}
+                    name="collegeId"
+                    value={formValues.collegeId}
+                    onChange={handleDropdownChange}
+                />
+                </div>
+            <button className="fluid ui button blue">Update</button>
+            </div>
+          </form>
+        </div>
+      </div>
       <Snackbar open={alertOpen} autoHideDuration={6000} onClose={() => setAlertOpen(false)}>
       <Alert onClose={() => setAlertOpen(false)} severity={alertSeverity} sx={{ width: '100%' }}>
         {alertMessage}

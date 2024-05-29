@@ -86,6 +86,11 @@ const DesktopContainer = ({ children }) => {
                         Sign Up
                       </Button>
                     </NavLink>
+                    <NavLink to="https://calendly.com/helloakhil/30min" target="_blank">
+                      <Button as="a" inverted={!fixed} style={{ marginLeft: '0.5em' }}>
+                        Free Coffee
+                      </Button>
+                    </NavLink>
                   </>
                 )}
                 {(isAccountPage || isDashboardPage) && (
@@ -103,17 +108,36 @@ const DesktopContainer = ({ children }) => {
                     <Button as="a" inverted={!fixed} onClick={logout} style={{ marginLeft: '0.5em' }}>
                       Log Out
                     </Button>
+                    <NavLink to="https://calendly.com/helloakhil/30min" target="_blank">
+                      <Button as="a" inverted={!fixed} style={{ marginLeft: '0.5em' }}>
+                        Free Coffee
+                      </Button>
+                    </NavLink>
                   </>
                 )}
               {isLoginPage && (
+                <>
                 <NavLink to="/signup">
                   <Button as="a" inverted={!fixed}>Sign Up</Button>
                 </NavLink>
+                    <NavLink to="https://calendly.com/helloakhil/30min" target="_blank">
+                    <Button as="a" inverted={!fixed} style={{ marginLeft: '0.5em' }}>
+                      Free Coffee
+                    </Button>
+                  </NavLink>
+                </>              
               )}
               {isSignUpPage && (
+                <>
                 <NavLink to="/login">
                   <Button as="a" inverted={!fixed}>Log In</Button>
                 </NavLink>
+                <NavLink to="https://calendly.com/helloakhil/30min" target="_blank">
+                  <Button as="a" inverted={!fixed} style={{ marginLeft: '0.5em' }}>
+                    Free Coffee
+                  </Button>
+                </NavLink>
+              </>
               )}
               </Menu.Item>
             </Container>

@@ -204,17 +204,16 @@ const Home = () => (
       <Grid container stackable verticalAlign='middle'>
         <Grid.Row>
           <Grid.Column width={8}>
-            <Header as='h3' style={{ fontSize: '2em' }}>
-              RideSharing has never been easier.
+            <Header as='h3' style={{ fontSize: '2.33em' }}>
+              Campus-Airport ridesharing has never been easier.
             </Header>
             <p style={{ fontSize: '1.33em' }}>
-            Here at TrypSync, our mission is to leverage the power of technology to connect college students efficiently, making ridesharing easy, safe, and accessible.
-            </p>
-            <Header as='h3' style={{ fontSize: '2em' }}>
-              The One-Stop-Shop for Campus-Based RideSharing.
+            Here at TrypSync, our mission is to leverage the power of technology to connect college students efficiently, making ridesharing easy, safe, and accessible. We're committed to reducing the environmental impact of travel and building community among students.            </p>
+            <Header as='h3' style={{ fontSize: '2.33em' }}>
+              Get Started Today.
             </Header>
             <p style={{ fontSize: '1.33em' }}>
-            We're committed to reducing the environmental impact of commuting and fostering a sense of community among students.            </p>
+            TrypSync is 100% free to use. All you need is a valid @edu email address from any of the schools in our <a href="#trypsync-network">network</a>. Once you <a href="/signup">sign up</a>, check your inbox to confirm your account and get started!            </p>
           </Grid.Column>
           <Grid.Column floated='right' width={6}>
             <Image size='medium' src='/RSF-Logo-full.png' />
@@ -258,7 +257,8 @@ const Home = () => (
         </Header>       
         <TestimonialsCarousel />
 
-        <Divider
+        <Divider 
+          id="trypsync-network"
           as='h4'
           className='header'
           horizontal
