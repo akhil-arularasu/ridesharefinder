@@ -138,7 +138,7 @@ function AccountForm() {
       })
       .catch(error => console.error('Error fetching colleges:', error));
       }, []);
-
+    
   return (
     <InView>
       <div className="container">
@@ -196,7 +196,7 @@ function AccountForm() {
         {alertMessage}
       </Alert>
     </Snackbar>
-    </InView>
+</InView>
   );
 }
 

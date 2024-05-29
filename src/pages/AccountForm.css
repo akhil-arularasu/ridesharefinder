@@ -28,3 +28,9 @@
     padding: 10px 20px; /* Larger buttons */
     font-size: 1.1rem; /* Larger font size for button text */
 }
+  
+  .banner-container {
+    width: 300px; /* Adjust width as needed */
+    /* Other styling for the banner container */
+  }
+  
