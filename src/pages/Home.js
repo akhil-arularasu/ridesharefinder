@@ -266,7 +266,6 @@ const Home = () => (
         >
           <a href='#'>The TrypSync Network</a>
         </Divider>
-
         <Header as='h3' style={{ fontSize: '1em' }}>
         TrypSync offers a broad support network to a diverse range of colleges and universities. TrypSync is not directly affiliatied with any of the institutions we serve. 
         <br></br>

@@ -29,8 +29,8 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
     toLocationName: "ATL Hartsfield-Jackson Airport",
     toLocationId: "3",
     rideDate: getCurrentDate(),
-    startTime: timeToMinutes("12:00 AM"),
-    endTime: timeToMinutes("11:59 PM")
+    startTime: 0,
+    endTime: 1439
   });
 
   useEffect(() => {
@@ -78,7 +78,7 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
   const handleTimeSliderChange = (values) => {
     console.log('Slider values:', values); // Debugging the slider values
 
-    const { minValue, maxValue } = values;
+    const { minValue, maxValue} = values;
 
     // Update the state only if there is a change
     if (minValue !== searchParams.startTime || maxValue !== searchParams.endTime) {
@@ -290,7 +290,8 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
       min={0}
       max={1439}
       step={1}
-      values={[searchParams.startTime, searchParams.endTime]}
+      minValue={searchParams.startTime}
+      maxValue={searchParams.endTime}
       onChange={handleTimeSliderChange}
       style={{ border: 'none', boxShadow: 'none', padding: '15px 10px' }}
       label='false'
