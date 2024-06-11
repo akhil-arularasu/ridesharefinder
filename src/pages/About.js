@@ -9,6 +9,10 @@ import { Link } from 'react-router-dom';
 import AkhilCard from './AkhilCard'; // Adjust the import path
 import AreebCard from './AreebCard'; // Adjust the import path
 import AlanCard from './AlanCard'; // Adjust the import path
+import SantosCard from './SantosCard'; // Adjust the import path
+import ZoeCard from './ZoeCard'; // Adjust the import path
+import ChloeCard from './ChloeCard'; // Adjust the import path
+
 import ScrollMouse from './scrollMouse'; // Import ScrollMouse component
 
 import {
@@ -327,6 +331,22 @@ const About = () => (
               <AlanCard />
             </div>
           </Grid.Column>
+          <Grid.Column>
+            <div style={{ maxWidth: '250px', margin: 'auto' }}>
+              <SantosCard />
+            </div>
+          </Grid.Column>
+          <Grid.Column>
+            <div style={{ maxWidth: '250px', margin: 'auto' }}>
+              <ZoeCard />
+            </div>
+          </Grid.Column>
+          <Grid.Column>
+            <div style={{ maxWidth: '250px', margin: 'auto' }}>
+              <ChloeCard />
+            </div>
+          </Grid.Column>
+
         </Grid>
         </div>
       </Container>

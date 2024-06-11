@@ -18,7 +18,7 @@ const AreebCard = () => (
         <span className='date'>Since Aug 2023</span>
       </CardMeta>
       <CardDescription>
-        Finance Lead
+        Finance
       </CardDescription>
     </CardContent>
   </Card>

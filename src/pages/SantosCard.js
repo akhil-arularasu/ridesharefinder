@@ -9,19 +9,19 @@ import {
   Image,
 } from 'semantic-ui-react'
 
-const AkhilCard = () => (
+const SantosCard = () => (
   <Card>
-    <Image src='/Akhil-Headshot-Small.jpg' wrapped ui={false} />
+    <Image src='/Santos-Headshot-Small.jpg' wrapped ui={false} />
     <CardContent>
-      <CardHeader>Akhil Arularasu</CardHeader>
+      <CardHeader>Santos Torres</CardHeader>
       <CardMeta>
-        <span className='date'>Since Jan 2023</span>
+        <span className='date'>Since April 2024</span>
       </CardMeta>
       <CardDescription>
-        Founder & Full Stack Development
+        UI/UX Design Team
       </CardDescription>
     </CardContent>
   </Card>
 )
 
-export default AkhilCard
+export default SantosCard

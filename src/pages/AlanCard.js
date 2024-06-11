@@ -18,7 +18,7 @@ const AlanCard = () => (
         <span className='date'>Since Aug 2023</span>
       </CardMeta>
       <CardDescription>
-        Operations Lead
+        Operations
       </CardDescription>
     </CardContent>
   </Card>
