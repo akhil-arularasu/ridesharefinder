@@ -14,7 +14,7 @@
     "@material-ui/icons": "^4.11.3",
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@mui/icons-material": "^5.15.3",
-    "@mui/material": "^5.15.2",
+    "@mui/material": "^5.15.20",
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
