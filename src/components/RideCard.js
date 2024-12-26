@@ -32,12 +32,13 @@ const convertTo12HourFormat = (time) => {
   return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${ampm}`;
 };
 
-function RideCard({ ride, handleLeaveClick, handleJoinClick, isMyRide }) {
+function RideCard({ ride, handleLeaveClick, handleJoinClick, isMyRide}) {
   const [expanded, setExpanded] = useState(false);
   const [otherRiders, setOtherRiders] = useState([]);
   const [hostDetails, setHostDetails] = useState(null);
   const [seatsRemaining, setSeatsRemaining] = useState(ride.seatsRemaining); // Local state to manage seats remaining input
   const [editMode, setEditMode] = useState(false); // State to toggle edit mode
+  const [loading, setLoading] = useState(true); // State to manage loading
   const navigate = useNavigate();
 
   // Update seatsRemaining whenever the ride prop changes
@@ -96,7 +97,7 @@ function RideCard({ ride, handleLeaveClick, handleJoinClick, isMyRide }) {
 
   const fetchRideDetails = (ride_id) => {
     const userToken = localStorage.getItem('token');
-    fetch(process.env.REACT_APP_SERVER + `/api/rideDetails?ride_id=${ride_id}`, {
+    fetch(process.env.REACT_APP_SERVER + `/api/locRideDetails?ride_id=${ride_id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -118,11 +119,33 @@ function RideCard({ ride, handleLeaveClick, handleJoinClick, isMyRide }) {
         setHostDetails(data.rides[0]); // Assuming the first entry is the host
         const otherRidersData = data.rides.slice(1); // Get all entries except the first
         setOtherRiders(otherRidersData); // Update state with other riders' details
+        console.log('hostDetails:', hostDetails); // Log the host details
+        console.log('otherRiders:', data.rides.slice(1).map(rider => rider.name)); // Log the other riders' details
       }
+      setLoading(false); // Set loading to false after data is fetched
     })
     .catch(error => {
       console.error('Error fetching ride details:', error);
+      setLoading(false); // Set loading to false even if there's an error
     });
+  };
+
+  useEffect(() => {
+    if (ride && ride.ride_id) {
+      fetchRideDetails(ride.ride_id);
+    }
+  }, [ride]);
+
+  useEffect(() => {
+    console.log('Ride object:', ride); // Log the ride object to verify its structure
+  }, [ride]);
+
+  // Map properties to use standardized names
+  const startLocationName = ride.startLocationName || ride.fromLocationName;
+  const endLocationName = ride.endLocationName || ride.toLocationName;  
+
+  const handleJoin = (rideId) => {
+    handleJoinClick(rideId);
   };
 
   return (
@@ -131,11 +154,11 @@ function RideCard({ ride, handleLeaveClick, handleJoinClick, isMyRide }) {
         <Grid.Column>
           <Typography>
             <Icon name="location arrow" />
-            {ride.fromLocationName}
+            {startLocationName}
           </Typography>
           <Typography>
             <Icon name="map marker alternate" />
-            {ride.toLocationName}
+            {endLocationName}
           </Typography>
           <Typography>
             <Icon name="calendar alternate outline" />
@@ -179,15 +202,15 @@ function RideCard({ ride, handleLeaveClick, handleJoinClick, isMyRide }) {
       <CardActions disableSpacing>
         {isMyRide ? (
           <Button secondary type="button"
-            onClick={() => handleLeaveClick(ride.ride_id)}
-            aria-label={`Leaving ride from ${ride.fromLocationName} to ${ride.toLocationName}`}
+            onClick={() => handleLeaveClick(ride.id)}
+            aria-label={`Leaving ride from ${startLocationName} to ${endLocationName}`}
           >
             Leave
           </Button>
         ) : (
           <Button primary type="button"
-            onClick={() => handleJoinClick(ride.ride_id)}
-            aria-label={`Joining ride from ${ride.fromLocationName} to ${ride.toLocationName}`}
+            onClick={() => handleJoin(ride.id)}
+            aria-label={`Joining ride from ${startLocationName} to ${endLocationName}`}
             disabled={ride.seatsRemaining === 0} // Disable button if no seats are left
           >
             Join
@@ -203,33 +226,37 @@ function RideCard({ ride, handleLeaveClick, handleJoinClick, isMyRide }) {
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          {hostDetails ? (
-            <Typography>
-              <Box>
-                <Icon name="user" /> Host: {hostDetails.name}
-              </Box>
-              {isMyRide && (
-                <Box>
-                  <Icon name="phone" /> {hostDetails.telNumber}
-                </Box>
-              )}
-            </Typography>
-          ) : (
+      <CardContent>
+          {loading ? (
             <div>Loading...</div>
-          )}
-          {otherRiders.map((rider, index) => (
-            <div key={index}>
-              <Typography>
-                <Icon name="user" /> {index + 1}: {rider.name}
-              </Typography>
-              {isMyRide && (
+          ) : (
+            <>
+              {hostDetails && (
                 <Typography>
-                  <Icon name="phone" /> {index + 1}: {rider.telNumber}
+                  <Box>
+                    <Icon name="user" /> Host: {hostDetails.name}
+                  </Box>
+                  {isMyRide && (
+                    <Box>
+                      <Icon name="phone" /> {hostDetails.telNumber}
+                    </Box>
+                  )}
                 </Typography>
               )}
-            </div>
-          ))}
+              {otherRiders.map((rider, index) => (
+                <div key={index}>
+                  <Typography>
+                    <Icon name="user" /> {index + 1}: {rider.name}
+                  </Typography>
+                  {isMyRide && (
+                    <Typography>
+                      <Icon name="phone" /> {index + 1}: {rider.telNumber}
+                    </Typography>
+                  )}
+                </div>
+              ))}
+            </>
+          )}
         </CardContent>
       </Collapse>
     </Card>

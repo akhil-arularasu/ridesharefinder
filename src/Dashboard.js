@@ -4,6 +4,8 @@ import RideSearch from "./components/RideSearch"
 import { InView } from 'react-intersection-observer'
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import { SegmentGroup, Segment, Container,Grid, GridColumn } from 'semantic-ui-react';
+import LocationForm from './components/LocationForm';
+import LocationAutocomplete from './components/LocationAutocomplete';
 
 
 function Dashboard() {
@@ -20,7 +22,7 @@ function Dashboard() {
       return; // Exit the useEffect hook early
     }
 
-    fetch(process.env.REACT_APP_SERVER + '/api/myRideSearch', {
+    fetch(process.env.REACT_APP_SERVER + '/api/myLocRideSearch', {
       headers: {
         'Authorization': `Bearer ${userToken}`,
       }

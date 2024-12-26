@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Rides from "./Rides"
 import SearchableDropdown from './SearchableDropdown';
 import { Button, Container, Grid, Select, Label, Icon, Message, ButtonGroup, ButtonOr, Input } from 'semantic-ui-react';
+import RideCard from './RideCard';
 
 
 function MyRides({ refreshKey, setRefreshKey, rides }) {
@@ -23,7 +24,9 @@ function MyRides({ refreshKey, setRefreshKey, rides }) {
         const formattedOptions = data.map(location => ({
           id: location.location_id,
           label: location.location_name,
-          isCampus: location.isCampus
+          isCampus: location.isCampus,
+          latitude: location.latitude,
+          longitude: location.longitude
         }));
         setLocationOptions(formattedOptions);
       })
@@ -45,8 +48,12 @@ const handleFromLocationChange = (selectedLabel) => {
   if (fromLocationObj) {
     setAddFormData(prevFormData => ({
       ...prevFormData,
-      fromLocationId: fromLocationObj.id
+      fromLocationId: fromLocationObj.id,
+      fromLocationLabel: fromLocationObj.label,
+      fromLocationLatitude: fromLocationObj.latitude,
+      fromLocationLongitude: fromLocationObj.longitude
     }));
+    console.log('From Location:', fromLocationObj);
     setFromLocation(fromLocationObj);
     setToLocation(null); // Reset toLocation when fromLocation changes
   }
@@ -56,6 +63,7 @@ const handleFromLocationChange = (selectedLabel) => {
 const handleToLocationChange = (selectedLabel) => {
   const toLocationObj = locationOptions.find(option => option.label === selectedLabel);
   if (toLocationObj) {
+    console.log('To Location:', toLocationObj);
     setToLocation(toLocationObj);
   }
 };
@@ -116,13 +124,19 @@ const handleToLocationChange = (selectedLabel) => {
     rideDate: addFormData.rideDate,
     rideTime: addFormData.rideTime,
     seatsRemaining: addFormData.seatsRemaining,
+    startLocationName: fromLocation.label,
+    endLocationName: toLocation.label,
+    startLatitude: fromLocation.latitude,
+    startLongitude: fromLocation.longitude,
+    endLatitude: toLocation.latitude,
+    endLongitude: toLocation.longitude
   };
   console.log('Sending data to the server:', newRide);
   const userToken = localStorage.getItem('token'); // Retrieve the token
   setError('');
 
   // Send the newRide data to the server
-  fetch(process.env.REACT_APP_SERVER + '/api/create', {
+  fetch(process.env.REACT_APP_SERVER + '/api/createRide', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${userToken}`, // Include the token in headers
@@ -157,7 +171,13 @@ const handleToLocationChange = (selectedLabel) => {
       toLocationId: "",
       rideDate: "",
       rideTime: "",
-      seatsRemaining: ""
+      seatsRemaining: "",
+      startLocationName: "",
+      endLocationName: "",
+      startLatitude: "",
+      startLongitude: "",
+      endLatitude: "",
+      endLongitude: ""
     });
  
     // If you're using a flag to show/hide the form (like isEditing),
