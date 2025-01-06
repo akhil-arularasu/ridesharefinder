@@ -11,6 +11,7 @@ import { Button, Grid, Icon } from 'semantic-ui-react';
 import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -148,17 +149,26 @@ function RideCard({ ride, handleLeaveClick, handleJoinClick, isMyRide}) {
     handleJoinClick(rideId);
   };
 
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + '...';
+    }
+    return text;
+  };
+
   return (
     <Card raised>
       <Grid stackable>
         <Grid.Column>
           <Typography>
             <Icon name="location arrow" />
-            {startLocationName}
+            <Tooltip title={ride.startLocationName} arrow>
+            <span>{truncateText(startLocationName, 41)}</span>
+            </Tooltip>
           </Typography>
           <Typography>
             <Icon name="map marker alternate" />
-            {endLocationName}
+            {truncateText(endLocationName, 41)}
           </Typography>
           <Typography>
             <Icon name="calendar alternate outline" />
@@ -202,17 +212,19 @@ function RideCard({ ride, handleLeaveClick, handleJoinClick, isMyRide}) {
       <CardActions disableSpacing>
         {isMyRide ? (
           <Button secondary type="button"
-            onClick={() => handleLeaveClick(ride.id)}
+            onClick={() => handleLeaveClick(ride.ride_id)}
             aria-label={`Leaving ride from ${startLocationName} to ${endLocationName}`}
           >
             Leave
           </Button>
         ) : (
           <Button primary type="button"
-            onClick={() => handleJoin(ride.id)}
+            onClick={() => handleJoin(ride.ride_id)}
             aria-label={`Joining ride from ${startLocationName} to ${endLocationName}`}
-            disabled={ride.seatsRemaining === 0} // Disable button if no seats are left
-          >
+            disabled={
+              ride.seatsRemaining === 0 || new Date(ride.rideDate) < new Date()
+            } // Disable if no seats left or date is in the past
+            >
             Join
           </Button>
         )}

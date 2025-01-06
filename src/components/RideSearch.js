@@ -9,6 +9,7 @@ import LocationAutocomplete from './LocationAutocomplete'; // Import the compone
 
 
 function RideSearch({refreshKey, setRefreshKey, myRides}) {
+  console.log('my', myRides) // its empty here as well
   const getCurrentDate = () => {
     const today = new Date();
     return today.toISOString().split('T')[0];
@@ -43,7 +44,7 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
     const endTimeInHHMM = minutesToTime(endTime);  
 
     if (startLocation && endLocation) {
-      console.log('Making API request with the following parameters:', {
+      console.log('Making API request with the following pars:', {
         rideDate,
         startTimeInHHMM,
         endTimeInHHMM,
@@ -205,15 +206,20 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
             />
           </Grid.Column>            
           <Grid.Column>  
-            <Label htmlFor="departureWindow">Departure {formatTime(minutesToTime(searchParams.startTime))} - {formatTime(minutesToTime(searchParams.endTime))}</Label>
-            <Range
+          <Label htmlFor="departureWindow">Departure Window </Label> {formatTime(minutesToTime(searchParams.startTime))} - {formatTime(minutesToTime(searchParams.endTime))}
+          <Range
               id="departureWindow"
               min={0}
               max={1439}
               step={1}
-              values={[searchParams.startTime, searchParams.endTime]}
+              minValue={searchParams.startTime}
+              maxValue={searchParams.endTime}
               onChange={handleTimeSliderChange}
-            />
+              style={{ border: 'none', boxShadow: 'none', padding: '15px 10px' }}
+              label='false'
+              ruler='false'
+              barInnerColor='#2185d0'
+              />
           </Grid.Column>
         </Grid.Row>
       </Grid>

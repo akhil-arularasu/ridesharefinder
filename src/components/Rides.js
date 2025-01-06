@@ -4,13 +4,13 @@ import RideCard from "./RideCard";
 import { useNavigate } from 'react-router-dom';
 
 function Rides({ rides, setRefreshKey, myRides, setError }) {
-  
-  console.log('Rides props:', rides); // Check the received rides array
+  console.log("Parent Component - myRides: ", myRides); // problem myRides is coming in empty
+
 
   const checkRideIsMyRide = (ride_id) => {
     // Use Array.prototype.some to check if any object in myRides has the given ride_id
     console.log("check is my ride_id", ride_id);
-    const isMyRide = myRides.some(ride => ride.ride_id === ride_id);
+    const isMyRide = myRides.some(ride => ride.ride_id === ride_id); // problem is that myRides is emtpy
     console.log("myride - ", isMyRide);
     return isMyRide;
   };
@@ -19,7 +19,6 @@ function Rides({ rides, setRefreshKey, myRides, setError }) {
 
   const handleLeaveClick = (ride_id) => {
     const token = localStorage.getItem('token');
-    console.log('Sending data:', { ride_id });
     fetch(process.env.REACT_APP_SERVER + '/api/leave', {
       method: 'POST',
       headers: {
@@ -29,6 +28,7 @@ function Rides({ rides, setRefreshKey, myRides, setError }) {
       body: JSON.stringify({ ride_id })
     })
     .then(response => {
+      console.log('Response status:', response.status); // Debugging: log response status
       if (!response.ok) {
         if (response.status === 401) {
           navigate('/login');
@@ -38,15 +38,20 @@ function Rides({ rides, setRefreshKey, myRides, setError }) {
       }
       return response.json();
     })
-    .then(() => {
-      console.log('Leaving ride ID:', ride_id);
+    .then((data) => {
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      if (!data.ride_id) {
+        throw new Error("ride_id is missing in the response");
+      }
       setRefreshKey(prevRefreshKey => prevRefreshKey + 1);
     })
     .catch(error => {
       console.error('Error:', error);
     });
   };
-  
+
   const handleJoinClick = (ride_id) => {
     const userToken = localStorage.getItem('token');
     fetch(process.env.REACT_APP_SERVER + '/api/join', {
@@ -70,7 +75,7 @@ function Rides({ rides, setRefreshKey, myRides, setError }) {
     .then((data) => {
       if (data.error)
          throw new Error(data.error);
-      console.log('Joining ride ID:', ride_id);
+      console.log('Joined ride ID from backend:', data.ride_id); // Print the ride_id from the backend
       setRefreshKey(prevRefreshKey => prevRefreshKey + 1);
     })
     .catch(error => {
@@ -82,7 +87,7 @@ function Rides({ rides, setRefreshKey, myRides, setError }) {
   return (
     <form>
       <Grid stackable>
-        <Grid.Row columns={5}>
+        <Grid.Row columns={4}>
           {rides.length === 0 ? (
             <div> No rides found.</div>
           ) : (
@@ -93,7 +98,7 @@ function Rides({ rides, setRefreshKey, myRides, setError }) {
                     ride={ride}
                     handleLeaveClick={handleLeaveClick}
                     handleJoinClick={handleJoinClick}
-                    isMyRide={checkRideIsMyRide(ride.id)} // Use ride.id instead of ride.ride_id
+                    isMyRide={checkRideIsMyRide(ride.ride_id)} // Use ride.id instead of ride.ride_id
                   />
                 </Grid.Column>
               </Grid.Row>

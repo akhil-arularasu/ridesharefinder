@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
 import { Combobox, ComboboxInput, ComboboxPopover, ComboboxList, ComboboxOption } from '@reach/combobox';
 import '@reach/combobox/styles.css';
@@ -23,7 +23,10 @@ const LocationAutocomplete = ({ label, onSelect }) => {
     try {
       const results = await getGeocode({ address });
       const { lat, lng } = await getLatLng(results[0]);
-      onSelect({ address, lat, lng });
+      const locationName = address; // Use the selected address as the name
+
+      // Send back only name, latitude, and longitude
+      onSelect({ locationName, lat, lng });
     } catch (error) {
       console.error("Error: ", error);
     }

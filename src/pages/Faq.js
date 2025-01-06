@@ -26,7 +26,7 @@ const [faqs, setFaqs] = useState([
         },
         {
             question: "How do I ride with TrypSync?",
-            answer: "The first step is to enter your search information (location, destination, ride date, ride times) in the 'Search Tryps' section to see if any other student(s) have already created a Tryp that you can join. If not, click 'Create New Tryp' and enter your Tryp information. If your Tryp creation was successful, you should be able to see it in the 'My Tryps' section. If someone joins your Tryp, you will be notified through text message.",
+            answer: "The first step is to enter your search information (location, destination, ride date, ride times) in the 'Search Tryps' section to see if any other student(s) have already created a Tryp with a start and end location within a two mile radius that you can join. If not, click 'Create New Tryp' and enter your Tryp information. If your Tryp creation was successful, you should be able to see it in the 'My Tryps' section. If someone joins your Tryp, you will be notified through text message.",
             open: false
         },
         {

@@ -34,13 +34,14 @@ function Dashboard() {
       return response.json();
     })
     .then(data => {
+      console.log('API Response Dat:', data); // Log the returned data
       setMyRides(data || []);
     })
     .catch(error => {
       console.error('Error fetching data:', error);
     });
   }, [refreshKey, navigate]); // Add 'history' to the dependency array
-  
+
   return <>
     <SegmentGroup>
       <Segment>
@@ -49,7 +50,6 @@ function Dashboard() {
       <Segment>
       <RideSearch refreshKey = {refreshKey} setRefreshKey={setRefreshKey} myRides={myRides}/>
       </Segment>
-
     </SegmentGroup>
     </>;
 }
