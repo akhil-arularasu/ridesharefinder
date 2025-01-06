@@ -171,7 +171,7 @@ function MyRides({ refreshKey, setRefreshKey, rides }) {
                   </>
                 </Label>
                 <LocationAutocomplete onSelect={handleEndLocationSelect} />
-                {!fromLocation && <p>Please select 'From Location' first.</p>}
+                {!fromLocation}
               </Grid.Column>
               <Grid.Row columns={7} stackable>
                 <Grid.Column>
