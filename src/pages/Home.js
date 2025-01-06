@@ -205,7 +205,7 @@ const Home = () => (
         <Grid.Row>
           <Grid.Column width={8}>
             <Header as='h3' style={{ fontSize: '2.33em' }}>
-              Campus-Airport ridesharing has never been easier.
+              College Ridesharing has never been easier.
             </Header>
             <p style={{ fontSize: '1.33em' }}>
             Here at TrypSync, our mission is to leverage the power of technology to connect college students efficiently, making ridesharing easy, safe, and accessible. We're committed to reducing the environmental impact of travel and building community among students.            </p>

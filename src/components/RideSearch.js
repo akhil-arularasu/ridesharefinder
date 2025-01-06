@@ -5,8 +5,11 @@ import "./SearchableDropdown.css";
 import { Grid, Icon, Message, Container, Label } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import Range from 'multi-range-slider-react';
+import LocationAutocomplete from './LocationAutocomplete'; // Import the component
+
 
 function RideSearch({refreshKey, setRefreshKey, myRides}) {
+  console.log('my', myRides) // its empty here as well
   const getCurrentDate = () => {
     const today = new Date();
     return today.toISOString().split('T')[0];
@@ -24,57 +27,70 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
   const navigate = useNavigate();
   const [error, setError] = useState(''); // Add an error state
   const [searchParams, setSearchParams] = useState({
-    fromLocationId: "2",
-    fromLocationName: "Emory Atlanta Campus",
-    toLocationName: "ATL Hartsfield-Jackson Airport",
-    toLocationId: "3",
     rideDate: getCurrentDate(),
     startTime: 0,
-    endTime: 1439
+    endTime: 1439,
+    startLocation: null,
+    endLocation: null
   });
 
   useEffect(() => {
     const userToken = localStorage.getItem('token'); // Retrieve the token
     
-    const { fromLocationId, toLocationId, rideDate, startTime, endTime } = searchParams;
+    const { rideDate, startTime, endTime, startLocation, endLocation } = searchParams;
 
     // Convert startTime and endTime from minutes to "HH:MM" format
     const startTimeInHHMM = minutesToTime(startTime);
     const endTimeInHHMM = minutesToTime(endTime);  
 
-    fetch(process.env.REACT_APP_SERVER +
-      `/api/search?fromLocationId=${fromLocationId}&toLocationId=${toLocationId}&rideDate=${rideDate}&startTime=${startTimeInHHMM}&endTime=${endTimeInHHMM}`, {
-        headers: {
-          'Authorization': `Bearer ${userToken}`,
+    if (startLocation && endLocation) {
+      console.log('Making API request with the following pars:', {
+        rideDate,
+        startTimeInHHMM,
+        endTimeInHHMM,
+        startLatitude: startLocation.lat,
+        startLongitude: startLocation.lng,
+        endLatitude: endLocation.lat,
+        endLongitude: endLocation.lng
+      });
+  
+      fetch(process.env.REACT_APP_SERVER +
+        `/api/searchRides?rideDate=${rideDate}&startTime=${startTimeInHHMM}&endTime=${endTimeInHHMM}&startLatitude=${startLocation.lat}&startLongitude=${startLocation.lng}&endLatitude=${endLocation.lat}&endLongitude=${endLocation.lng}`, {
+          headers: {
+            'Authorization': `Bearer ${userToken}`,
+          }
         }
-      }
-    )
-      .then(response => {
-      if (response.status === 401) {
-        // If unauthorized, redirect to the login page
-        navigate('/login');
-        return;
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // Check if data is an array before mapping
-      if (Array.isArray(data)) {
-        const updatedRides = data.map(ride => ({
-          ...ride
-        }));
-        setRides(updatedRides);
-        setError('');
-      } else {
-        throw new Error('Invalid data format');
-      }
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-      setError('Failed to fetch rides. Please try again later.');
-    });
-  }, [searchParams, refreshKey, navigate]); // Add navigate to the dependency array
-
+      )
+        .then(response => {
+          if (response.status === 401) {
+            // If unauthorized, redirect to the login page
+            navigate('/login');
+            return;
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log('API response data:', data);
+          if (data.rides && Array.isArray(data.rides)) {
+            const updatedRides = data.rides.map(ride => ({
+              ...ride
+            }));
+            setRides(updatedRides);
+            setError('');
+          } else if (data.message) {
+            setRides([]);
+            setError(data.message);
+          } else {
+            throw new Error('Invalid data format');
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          setError('Failed to fetch rides. Please try again later.');
+        });
+    }
+  }, [searchParams, refreshKey, navigate]); // Add searchParams to the dependency array
+ 
   const handleTimeSliderChange = (values) => {
     console.log('Slider values:', values); // Debugging the slider values
 
@@ -102,98 +118,20 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
     console.log('search', searchParams)
   };
 
-  const [locationOptions, setLocationOptions] = useState([]);
-  const [fromValue, setFromValue] = useState(null);
-  const [toValue, setToValue] = useState(null);
-
-  useEffect(() => {
-    const userToken = localStorage.getItem('token'); // Retrieve the token
-    fetch(process.env.REACT_APP_SERVER + '/api/locations', {
-      headers: {
-        'Authorization': `Bearer ${userToken}`,
-      }
-    })
-    .then(response => {
-      if (response.status === 401) {
-        // If unauthorized, redirect to the home page
-        navigate('/login');
-        return;
-      }
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      const formattedOptions = data.map(location => ({
-        id: location.location_id, // Replace 'id' with the actual identifier property from your API
-        label: location.location_name, // Replace 'name' with the actual property name from your API
-        isCampus: location.isCampus
-      }));
-      setLocationOptions(formattedOptions);
-    })
-    .catch(error => console.error('Error fetching locations:', error));
-  }, [navigate]);
-
-  const findIdByName = (locationName) => {
-    const location = locationOptions.find(option => option.label === locationName);
-    return location ? location.id : null;
-  };
-
-  const [fromLocationSelected, setFromLocationSelected] = useState(false);
-
-  // Define a custom change handler
-  const handleValueChange = (selectedOption) => {
-    console.log('Selected option:', selectedOption);
-    
-    const fromlocId = findIdByName(selectedOption);
-    console.log('Location ID:', fromlocId);
-
-    setSearchParams(prevParams => ({
+  const handleStartLocationSelect = (location) => {
+    setSearchParams((prevParams) => ({
       ...prevParams,
-      fromLocationId: fromlocId,
+      startLocation: location
     }));
-
-    // Update the state with the new value
-    setFromValue(selectedOption);
-    setToValue(null);
-
-    setFromLocationSelected(!!selectedOption);
   };
 
-  const handleToLocationChange = (selectedOption) => {
-    console.log('Selected option for To Location:', selectedOption);
-
-    if (!fromLocationSelected) {
-      alert("Please select a 'From Location' first.");
-      return;
-    }
-
-    const tolocId = findIdByName(selectedOption);
-    console.log('To Location ID:', tolocId);
-
-    setSearchParams(prevParams => ({
+  const handleEndLocationSelect = (location) => {
+    setSearchParams((prevParams) => ({
       ...prevParams,
-      toLocationId: tolocId
+      endLocation: location
     }));
-    
-    setToValue(selectedOption);
   };
 
-  const getFromLocation = () => {
-    return locationOptions.find(option => option.id === searchParams.fromLocationId);
-  };
-  
-  const getToLocationOptions = () => {
-    const fromLocation = getFromLocation();
-    const isFromLocationCampus = fromLocation ? fromLocation.isCampus : false;
-
-    return locationOptions.filter(option => {
-      if (option.id === searchParams.fromLocationId) return false;
-      return isFromLocationCampus ? !option.isCampus : option.isCampus;
-    });
-  };
-    
   const formatTime = (time) => {
     if (typeof time !== 'string' || !time.includes(':')) {
       console.error('Invalid time format. Expected a string in the format "HH:MM".');
@@ -238,78 +176,61 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
       </Label>
       {error && <Message error content={error} />} 
       <Grid stackable>
-      <Grid.Row columns={5}>
-      <Grid.Column>        
-      <Label htmlFor="fromLocationDropdown">
-      Start Location <span style={{ marginRight: '1em' }}></span><Icon name="location arrow" />
-      </Label>
-      <div className="RideSearch">
-      <SearchableDropdown
-      options={locationOptions}
-      label="label"
-      id="fromLocationDropdown"
-      selectedVal={fromValue}
-      handleChange={handleValueChange} 
-      />
-      </div>
-      </Grid.Column>        
-      <Grid.Column>        
-      <Label htmlFor="toLocationDropdown">
-      Destination <span style={{ marginRight: '1em' }}></span><Icon name="map marker alternate" />
-      </Label>
-      <div className="RideSearch">
-      <SearchableDropdown
-      options={getToLocationOptions()}
-      label="label"
-      id="toLocationDropdown"
-      selectedVal={toValue}
-      handleChange={handleToLocationChange} 
-      disabled={!fromValue} 
-      />
-      {!fromValue && <p>Please select 'From Location' first.</p>}
-{/* Want a location added? <a href="https://forms.gle/CwUt69t7fJHqK2PJ6" target="_blank">Click Here</a> */}
-      </div>
-      </Grid.Column>
-      </Grid.Row>
-      <Grid.Row columns={5}>
-      <Grid.Column>
-      <Label htmlFor="rideDate">Ride Date </Label>
-      <input
-      id="rideDate"
-      type="date"
-      name="rideDate"
-      value={searchParams.rideDate}
-      onChange={handleInputChange}
-      className="hide-values"
-      />
-      </Grid.Column>            
-      <Grid.Column>  
-      <Label htmlFor="departureWindow">Departure Window </Label> {formatTime(minutesToTime(searchParams.startTime))} - {formatTime(minutesToTime(searchParams.endTime))}
-      <Range
-      id="departureWindow"
-      min={0}
-      max={1439}
-      step={1}
-      minValue={searchParams.startTime}
-      maxValue={searchParams.endTime}
-      onChange={handleTimeSliderChange}
-      style={{ border: 'none', boxShadow: 'none', padding: '15px 10px' }}
-      label='false'
-      ruler='false'
-      barInnerColor='#2185d0'
-
-      />
-      </Grid.Column>
-      </Grid.Row>
+        <Grid.Row columns={5}>
+          <Grid.Column>        
+            <Label htmlFor="fromLocationDropdown">
+              Start Location <span style={{ marginRight: '1em' }}></span><Icon name="location arrow" />
+            </Label>
+            <div className="RideSearch">
+              <LocationAutocomplete onSelect={handleStartLocationSelect} />
+            </div>
+          </Grid.Column>        
+          <Grid.Column>        
+            <Label htmlFor="toLocationDropdown">
+              Destination <span style={{ marginRight: '1em' }}></span><Icon name="map marker alternate" />
+            </Label>
+            <div className="RideSearch">
+              <LocationAutocomplete onSelect={handleEndLocationSelect} />
+            </div>
+          </Grid.Column>
+        </Grid.Row>
+        <Grid.Row columns={5}>
+          <Grid.Column>
+            <Label htmlFor="rideDate">Ride Date </Label>
+            <input
+              id="rideDate"
+              type="date"
+              name="rideDate"
+              value={searchParams.rideDate}
+              onChange={handleInputChange}
+            />
+          </Grid.Column>            
+          <Grid.Column>  
+          <Label htmlFor="departureWindow">Departure Window </Label> {formatTime(minutesToTime(searchParams.startTime))} - {formatTime(minutesToTime(searchParams.endTime))}
+          <Range
+              id="departureWindow"
+              min={0}
+              max={1439}
+              step={1}
+              minValue={searchParams.startTime}
+              maxValue={searchParams.endTime}
+              onChange={handleTimeSliderChange}
+              style={{ border: 'none', boxShadow: 'none', padding: '15px 10px' }}
+              label='false'
+              ruler='false'
+              barInnerColor='#2185d0'
+              />
+          </Grid.Column>
+        </Grid.Row>
       </Grid>
       <br/> 
       {rides.length === 0 ? (
-      <div> No rides found for the given search criteria.</div>
+        <div> No rides found for the given search criteria.</div>
       ) : (
-      <Rides rides={rides} setRefreshKey={setRefreshKey} myRides={myRides} setError={setError}/>
+        <Rides rides={rides} setRefreshKey={setRefreshKey} myRides={myRides} setError={setError}/>
       )}
     </Container> 
-    );
+  );
 }
 
 export default RideSearch;

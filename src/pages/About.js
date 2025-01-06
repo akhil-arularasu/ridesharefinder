@@ -6,12 +6,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import LogoCarousel from './LogoCarousel'; // Adjust the path as needed
 import { Link } from 'react-router-dom';
-import AkhilCard from './AkhilCard'; // Adjust the import path
-import AreebCard from './AreebCard'; // Adjust the import path
-import AlanCard from './AlanCard'; // Adjust the import path
-import SantosCard from './SantosCard'; // Adjust the import path
-import ZoeCard from './ZoeCard'; // Adjust the import path
-import ChloeCard from './ChloeCard'; // Adjust the import path
+import TeamMemberCard from './TeamMemberCard';
 
 import ScrollMouse from './scrollMouse'; // Import ScrollMouse component
 
@@ -303,54 +298,76 @@ const About = () => (
 </Container>
 </Segment>
 
-    {/* Segment for Cards */}
-    <Segment style={{ padding: '2em 0em' }} vertical>
-      <Container>
+<Segment style={{ padding: '2em 0em' }} vertical>
+    <Container>
       <Divider
-      as='h4'
-      className='header'
-      horizontal
-      style={{ margin: '3em 0em', textTransform: 'uppercase' }}
-    >
-      <a href='#'>Meet the Team</a>
-    </Divider>
-    <div style={{ textAlign: 'center' }}>
+        as='h4'
+        className='header'
+        horizontal
+        style={{ margin: '3em 0em', textTransform: 'uppercase' }}
+      >
+        <a href='#'>Meet the Team</a>
+      </Divider>
+      <div style={{ textAlign: 'center' }}>
         <Grid stackable columns={3}>
-        <Grid.Column>
-            <div style={{ maxWidth: '250px', margin: 'auto' }}>
-              <AkhilCard />
-            </div>
-          </Grid.Column>
-          <Grid.Column>
-            <div style={{ maxWidth: '250px', margin: 'auto' }}>
-              <AreebCard />
-            </div>
-          </Grid.Column>
-          <Grid.Column>
-            <div style={{ maxWidth: '250px', margin: 'auto' }}>
-              <AlanCard />
-            </div>
-          </Grid.Column>
-          <Grid.Column>
-            <div style={{ maxWidth: '250px', margin: 'auto' }}>
-              <SantosCard />
-            </div>
-          </Grid.Column>
-          <Grid.Column>
-            <div style={{ maxWidth: '250px', margin: 'auto' }}>
-              <ZoeCard />
-            </div>
-          </Grid.Column>
-          <Grid.Column>
-            <div style={{ maxWidth: '250px', margin: 'auto' }}>
-              <ChloeCard />
-            </div>
-          </Grid.Column>
-
+          <Grid.Row>
+            <Grid.Column>
+              <div style={{ maxWidth: '250px', margin: 'auto' }}>
+                <TeamMemberCard 
+                  imageSrc="/Akhil-Headshot-Small.jpg" 
+                  name="Akhil Arularasu" 
+                  since="Jan 2023" 
+                  description="Founder & Full Stack Development" 
+                />
+              </div>
+            </Grid.Column>
+            <Grid.Column>
+              <div style={{ maxWidth: '250px', margin: 'auto' }}>
+                <TeamMemberCard 
+                  imageSrc="/Alan-Headshot-Small.jpg" 
+                  name="Alan Shnir" 
+                  since="Aug 2023" 
+                  description="Operations" 
+                />
+              </div>
+            </Grid.Column>
+            <Grid.Column>
+              <div style={{ maxWidth: '250px', margin: 'auto' }}>
+                <TeamMemberCard 
+                  imageSrc="/Santos-Headshot-Small.jpg" 
+                  name="Santos Torres" 
+                  since="April 2024" 
+                  description="UI/UX Design Team" 
+                />
+              </div>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row>
+            <Grid.Column>
+              <div style={{ maxWidth: '250px', margin: 'auto' }}>
+                <TeamMemberCard 
+                  imageSrc="/Zoe-Headshot-Small.jpg" 
+                  name="Zoe Bair" 
+                  since="April 2024" 
+                  description="UI/UX Design Team" 
+                />
+              </div>
+            </Grid.Column>
+            <Grid.Column>
+              <div style={{ maxWidth: '250px', margin: 'auto' }}>
+                <TeamMemberCard 
+                  imageSrc="/Chloe-Headshot-Small.jpg" 
+                  name="Chloe Au-Yeung" 
+                  since="June 2024" 
+                  description="UI/UX Design Team" 
+                />
+              </div>
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
-        </div>
-      </Container>
-    </Segment>
+      </div>
+    </Container>
+  </Segment>
 
     <Segment inverted vertical style={{ padding: '3em 0em' }}>
       <Container>

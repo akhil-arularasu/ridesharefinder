@@ -4,6 +4,8 @@ import RideSearch from "./components/RideSearch"
 import { InView } from 'react-intersection-observer'
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import { SegmentGroup, Segment, Container,Grid, GridColumn } from 'semantic-ui-react';
+import LocationForm from './components/LocationForm';
+import LocationAutocomplete from './components/LocationAutocomplete';
 
 
 function Dashboard() {
@@ -20,7 +22,7 @@ function Dashboard() {
       return; // Exit the useEffect hook early
     }
 
-    fetch(process.env.REACT_APP_SERVER + '/api/myRideSearch', {
+    fetch(process.env.REACT_APP_SERVER + '/api/myLocRideSearch', {
       headers: {
         'Authorization': `Bearer ${userToken}`,
       }
@@ -32,13 +34,14 @@ function Dashboard() {
       return response.json();
     })
     .then(data => {
+      console.log('API Response Dat:', data); // Log the returned data
       setMyRides(data || []);
     })
     .catch(error => {
       console.error('Error fetching data:', error);
     });
   }, [refreshKey, navigate]); // Add 'history' to the dependency array
-  
+
   return <>
     <SegmentGroup>
       <Segment>
@@ -47,7 +50,6 @@ function Dashboard() {
       <Segment>
       <RideSearch refreshKey = {refreshKey} setRefreshKey={setRefreshKey} myRides={myRides}/>
       </Segment>
-
     </SegmentGroup>
     </>;
 }
