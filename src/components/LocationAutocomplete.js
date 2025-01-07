@@ -41,6 +41,7 @@ const LocationAutocomplete = ({ label, onSelect }) => {
           onChange={handleInput}
           disabled={!ready}
           placeholder="Start typing an address"
+          style={{ width: '90%', padding: '1px', fontSize: '16px' }} // Add this line
         />
         <ComboboxPopover>
           {status === 'OK' && (

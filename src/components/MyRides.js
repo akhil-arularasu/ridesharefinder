@@ -156,7 +156,7 @@ function MyRides({ refreshKey, setRefreshKey, rides }) {
           </Label>
           <form onSubmit={handleAddFormSubmit}>
             <Grid columns={5} stackable>
-              <Grid.Column>
+              <Grid.Column width={4}>
                 <Label htmlFor="fromLocationDropdown">Start Location
                   <>
                     <span style={{ marginRight: '1em' }}></span><Icon name="location arrow" />
@@ -164,7 +164,7 @@ function MyRides({ refreshKey, setRefreshKey, rides }) {
                 </Label>
               <LocationAutocomplete onSelect={handleStartLocationSelect} />
               </Grid.Column>
-              <Grid.Column>
+              <Grid.Column width={4}>
                 <Label htmlFor="toLocationDropdown">Destination
                   <>
                     <span style={{ marginRight: '1em' }}></span><Icon name="map marker alternate" />
@@ -189,7 +189,7 @@ function MyRides({ refreshKey, setRefreshKey, rides }) {
                 </Grid.Column>
                 <Grid.Column>
                   <Label htmlFor="rideTime">
-                    Tryp Departure Time
+                    Departure Time
                   </Label>
                   &nbsp;
                   <input

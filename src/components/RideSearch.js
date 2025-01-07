@@ -177,15 +177,15 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
       {error && <Message error content={error} />} 
       <Grid stackable>
         <Grid.Row columns={5}>
-          <Grid.Column>        
-            <Label htmlFor="fromLocationDropdown">
+          <Grid.Column width={4}>        
+            <Label htmlFor="fromLocationDropdown" >
               Start Location <span style={{ marginRight: '1em' }}></span><Icon name="location arrow" />
             </Label>
             <div className="RideSearch">
               <LocationAutocomplete onSelect={handleStartLocationSelect} />
             </div>
           </Grid.Column>        
-          <Grid.Column>        
+          <Grid.Column width={4}>        
             <Label htmlFor="toLocationDropdown">
               Destination <span style={{ marginRight: '1em' }}></span><Icon name="map marker alternate" />
             </Label>
