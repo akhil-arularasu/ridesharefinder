@@ -1,11 +1,8 @@
 import React,{useState, useEffect} from 'react'
 import MyRides from "./components/MyRides"
 import RideSearch from "./components/RideSearch"
-import { InView } from 'react-intersection-observer'
 import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
-import { SegmentGroup, Segment, Container,Grid, GridColumn } from 'semantic-ui-react';
-import LocationForm from './components/LocationForm';
-import LocationAutocomplete from './components/LocationAutocomplete';
+import { SegmentGroup, Segment } from 'semantic-ui-react';
 
 
 function Dashboard() {

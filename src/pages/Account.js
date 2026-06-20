@@ -1,23 +1,14 @@
 import React, { useState, useEffect } from "react";
 import validator from 'validator';
 import './AccountForm.css';
-import { FormField } from 'semantic-ui-react';
-import { InView } from 'react-intersection-observer';
 import { Dropdown } from 'semantic-ui-react'; // Import Dropdown from Semantic UI React
 import { useNavigate } from 'react-router-dom';
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 
 function AccountForm() {
   const initialValues = { name: "", collegeId: "", telNumber: "", collegeName: "" };
-  const [showAlert, setShowAlert] = useState(false)
-  const [alertOpen, setAlertOpen] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [alertSeverity, setAlertSeverity] = useState('success');
   const [formValues, setFormValues] = useState(initialValues);
   const [collegeOptions, setCollegeOptions] = useState([]);
   const [formErrors, setFormErrors] = useState({});
-  const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
 
   const validatePhoneNumber = (number) => {
@@ -94,16 +85,10 @@ function AccountForm() {
     .then(response => response.json())
     .then(data => {
       if (data.message) {
-        setAlertMessage("Account info updated successfully");
-        setAlertSeverity("success");
-        setAlertOpen(true);
       }
     })
     .catch(error => {
       console.error('Error updating account:', error);
-      setAlertMessage("Error updating account");
-      setAlertSeverity("error");
-      setAlertOpen(true);
     });
       };
 
@@ -137,66 +122,59 @@ function AccountForm() {
           setCollegeOptions(options);
       })
       .catch(error => console.error('Error fetching colleges:', error));
-      }, []);
+      }, [navigate]);
     
   return (
-    <InView>
-      <div className="container">
-        <div className="account-form-container">
-          <form onSubmit={handleSubmit}>
-            <h1>Account</h1>
-            <div className="ui divider"></div>
-            <div className="ui form">
-              <div className="field">
-                <label>Name: </label>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Full Name"
-                  value={formValues.name}
+    <div className="container">
+      <div className="account-form-container">
+        <form onSubmit={handleSubmit}>
+          <h1>Account</h1>
+          <div className="ui divider"></div>
+          <div className="ui form">
+            <div className="field">
+              <label>Name: </label>
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                value={formValues.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="field">
+              <label>Telephone Number: </label>
+              <input
+                  type="tel"
+                  name="telNumber"
+                  placeholder="Telephone #"
+                  value={formValues.telNumber}
                   onChange={handleChange}
+                  pattern="^\d{10}$"  // Example pattern for a 10-digit phone number
+                  title="Phone number should be 10 digits"
                   required
-                />
+              />
+              {formErrors.telNumber && <div className="ui pointing red basic label">
+                {formErrors.telNumber}
+              </div>}
               </div>
               <div className="field">
-                <label>Telephone Number: </label>
-                <input
-                    type="tel"
-                    name="telNumber"
-                    placeholder="Telephone #"
-                    value={formValues.telNumber}
-                    onChange={handleChange}
-                    pattern="^\d{10}$"  // Example pattern for a 10-digit phone number
-                    title="Phone number should be 10 digits"
-                    required
-                />
-                {formErrors.telNumber && <div className="ui pointing red basic label">
-                  {formErrors.telNumber}
-                </div>}
-                </div>
-                <div className="field">
-                    <label>Campus: </label>
-                <Dropdown
-                    placeholder="Select Campus"
-                    fluid
-                    selection
-                    options={collegeOptions}
-                    name="collegeId"
-                    value={formValues.collegeId}
-                    onChange={handleDropdownChange}
-                />
-                </div>
-            <button className="fluid ui button blue">Update</button>
-            </div>
-          </form>
-        </div>
+                  <label>Campus: </label>
+              <Dropdown
+                  placeholder="Select Campus"
+                  fluid
+                  selection
+                  options={collegeOptions}
+                  name="collegeId"
+                  value={formValues.collegeId}
+                  onChange={handleDropdownChange}
+              />
+              </div>
+          <button className="fluid ui button blue">Update</button>
+          </div>
+        </form>
       </div>
-      <Snackbar open={alertOpen} autoHideDuration={6000} onClose={() => setAlertOpen(false)}>
-      <Alert onClose={() => setAlertOpen(false)} severity={alertSeverity} sx={{ width: '100%' }}>
-        {alertMessage}
-      </Alert>
-    </Snackbar>
-</InView>
+    </div>
   );
 }
 

@@ -1,5 +1,4 @@
-import React,{useState, useEffect} from 'react'
-import MyRides from "./components/MyRides"
+import React, { useEffect } from 'react'
 import Dashboard from "./Dashboard"
 import {useLocation, useNavigate, BrowserRouter, Routes, Navigate, Route} from 'react-router-dom'
 import Home from './pages/Home'

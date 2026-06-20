@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React from 'react';
 import { Grid } from "semantic-ui-react";
 import RideCard from "./RideCard";
 import { useNavigate } from 'react-router-dom';

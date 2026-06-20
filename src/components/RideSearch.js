@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Rides from './Rides';
-import SearchableDropdown from './SearchableDropdown';
 import "./SearchableDropdown.css";
 import { Grid, Icon, Message, Container, Label } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
@@ -13,14 +12,6 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
   const getCurrentDate = () => {
     const today = new Date();
     return today.toISOString().split('T')[0];
-  };
-
-  // Convert time string to minutes
-  const timeToMinutes = (time) => {
-    const [hours, minutes, period] = time.split(/[:\s]/);
-    let totalMinutes = parseInt(hours) * 60 + parseInt(minutes);
-    if (period === 'PM' && hours !== '12') totalMinutes += 12 * 60;
-    return totalMinutes;
   };
 
   const [rides, setRides] = useState([]); // Initialize as an empty array
@@ -105,8 +96,6 @@ function RideSearch({refreshKey, setRefreshKey, myRides}) {
       }));
     }
   };
-
-  const maxSliderValue = 24 * 60 - 1; // 1439, representing 23:59
 
   // Handler for when search parameters change
   const handleInputChange = (e) => {

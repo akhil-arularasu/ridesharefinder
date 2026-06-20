@@ -4,7 +4,6 @@
 import { createMedia } from '@artsy/fresnel'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import LogoCarousel from './LogoCarousel'; // Adjust the path as needed
 import { Link } from 'react-router-dom';
 import TeamMemberCard from './TeamMemberCard';
 
@@ -228,7 +227,7 @@ const About = () => (
       horizontal
       style={{ margin: '3em 0em', textTransform: 'uppercase' }}
     >
-      <a href='#'>Why TrypSync</a>
+      <span>Why TrypSync</span>
     </Divider>
 
     <Header as='h3' style={{ fontSize: '2em', textAlign: 'center' }}>
@@ -265,7 +264,7 @@ const About = () => (
     horizontal
     style={{ margin: '3em 0em', textTransform: 'uppercase' }}
   >
-    <a href='#'>In the Media</a>
+    <span>In the Media</span>
   </Divider>
   
   <ul style={{ fontSize: '1.1em', textAlign: 'left' }}>
@@ -278,7 +277,7 @@ const About = () => (
     horizontal
     style={{ margin: '3em 0em', textTransform: 'uppercase' }}
   >
-    <a href='#'>Awards</a>
+    <span>Awards</span>
   </Divider>
   <ul style={{ fontSize: '1.1em', textAlign: 'left' }}>
     <li>2024 Global Student Entrepreneur Awards (GSEA) Competition Atlanta Chapter Runner Up - <em>Entreprenurs' Organization (EO) Atlanta Chapter</em>, February 2024</li>
@@ -290,7 +289,7 @@ const About = () => (
     horizontal
     style={{ margin: '3em 0em', textTransform: 'uppercase' }}
   >
-    <a href='#'>What's Next</a>
+    <span>What's Next</span>
   </Divider>
   <p style={{ fontSize: '1.33em', textAlign: 'center' }}>
     Improvement and Expansion. 🌎🚀
@@ -306,7 +305,7 @@ const About = () => (
         horizontal
         style={{ margin: '3em 0em', textTransform: 'uppercase' }}
       >
-        <a href='#'>Meet the Team</a>
+        <span>Meet the Team</span>
       </Divider>
       <div style={{ textAlign: 'center' }}>
         <Grid stackable columns={3}>

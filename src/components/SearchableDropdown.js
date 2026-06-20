@@ -15,7 +15,7 @@ const SearchableDropdown = ({
   useEffect(() => {
     document.addEventListener("click", toggle);
     return () => document.removeEventListener("click", toggle);
-  }, []);
+  }, [toggle]);
 
   const selectOption = (option) => {
     if (disabled) return; // Prevent selection if the dropdown is disabled

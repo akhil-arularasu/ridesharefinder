@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -42,6 +42,41 @@ function RideCard({ ride, handleLeaveClick, handleJoinClick, isMyRide}) {
   const [loading, setLoading] = useState(true); // State to manage loading
   const navigate = useNavigate();
 
+  const fetchRideDetails = useCallback((ride_id) => {
+    const userToken = localStorage.getItem('token');
+    fetch(process.env.REACT_APP_SERVER + `/api/locRideDetails?ride_id=${ride_id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + userToken,
+      },
+    })
+    .then(response => {
+      if (!response.ok) {
+        if (response.status === 401) {
+          navigate('/login');
+          return;
+        }
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.rides && data.rides.length > 0) {
+        setHostDetails(data.rides[0]); // Assuming the first entry is the host
+        const otherRidersData = data.rides.slice(1); // Get all entries except the first
+        setOtherRiders(otherRidersData); // Update state with other riders' details
+        console.log('hostDetails:', data.rides[0]); // Log the host details
+        console.log('otherRiders:', data.rides.slice(1).map(rider => rider.name)); // Log the other riders' details
+      }
+      setLoading(false); // Set loading to false after data is fetched
+    })
+    .catch(error => {
+      console.error('Error fetching ride details:', error);
+      setLoading(false); // Set loading to false even if there's an error
+    });
+  }, [navigate]);
+
   // Update seatsRemaining whenever the ride prop changes
   useEffect(() => {
     setSeatsRemaining(ride.seatsRemaining);
@@ -51,7 +86,7 @@ function RideCard({ ride, handleLeaveClick, handleJoinClick, isMyRide}) {
     if (expanded) {
       fetchRideDetails(ride.ride_id);
     }
-  }, [ride.ride_id, expanded]); // Re-fetch ride details when ride_id or expanded state changes    
+  }, [ride.ride_id, expanded, fetchRideDetails]); // Re-fetch ride details when ride_id or expanded state changes    
 
   const handleSaveSeats = (e) => {
     e.preventDefault();
@@ -96,46 +131,11 @@ function RideCard({ ride, handleLeaveClick, handleJoinClick, isMyRide}) {
     setExpanded(!expanded);
   };
 
-  const fetchRideDetails = (ride_id) => {
-    const userToken = localStorage.getItem('token');
-    fetch(process.env.REACT_APP_SERVER + `/api/locRideDetails?ride_id=${ride_id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + userToken,
-      },
-    })
-    .then(response => {
-      if (!response.ok) {
-        if (response.status === 401) {
-          navigate('/login');
-          return;
-        }
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      if (data.rides && data.rides.length > 0) {
-        setHostDetails(data.rides[0]); // Assuming the first entry is the host
-        const otherRidersData = data.rides.slice(1); // Get all entries except the first
-        setOtherRiders(otherRidersData); // Update state with other riders' details
-        console.log('hostDetails:', hostDetails); // Log the host details
-        console.log('otherRiders:', data.rides.slice(1).map(rider => rider.name)); // Log the other riders' details
-      }
-      setLoading(false); // Set loading to false after data is fetched
-    })
-    .catch(error => {
-      console.error('Error fetching ride details:', error);
-      setLoading(false); // Set loading to false even if there's an error
-    });
-  };
-
   useEffect(() => {
     if (ride && ride.ride_id) {
       fetchRideDetails(ride.ride_id);
     }
-  }, [ride]);
+  }, [ride, fetchRideDetails]);
 
   useEffect(() => {
     console.log('Ride object:', ride); // Log the ride object to verify its structure

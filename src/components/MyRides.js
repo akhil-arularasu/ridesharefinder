@@ -1,12 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import Rides from "./Rides"
-import { Button, Container, Grid, Select, Label, Icon, Message, ButtonGroup, ButtonOr, Input } from 'semantic-ui-react';
+import { Button, Container, Grid, Select, Label, Icon, Message, ButtonGroup, ButtonOr } from 'semantic-ui-react';
 import LocationAutocomplete from './LocationAutocomplete';
 
 function MyRides({ refreshKey, setRefreshKey, rides }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [fromLocation, setFromLocation] = useState(null);
-  const [toLocation, setToLocation] = useState(null);
   const [error, setError] = useState(''); // Add an error state
 
   const [addFormData, setAddFormData] = useState({
@@ -171,7 +169,6 @@ function MyRides({ refreshKey, setRefreshKey, rides }) {
                   </>
                 </Label>
                 <LocationAutocomplete onSelect={handleEndLocationSelect} />
-                {!fromLocation}
               </Grid.Column>
               <Grid.Row columns={7} stackable>
                 <Grid.Column>
