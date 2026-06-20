@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import validator from 'validator' 
 import './RegistrationForm.css'; // Adjust the path based on your project structure
-import { FormField } from 'semantic-ui-react'
-import { InView } from 'react-intersection-observer'
 import Alert from '@mui/material/Alert'; // Import Alert from Material-UI
-import { Grid, Button, Modal, Header, Icon, HeaderContent, Form, Checkbox, Divider, Message } from "semantic-ui-react"; // Import Semantic UI React components
+import { Grid, Button, Modal, Header, Icon, Form, Checkbox, Divider, Message } from "semantic-ui-react"; // Import Semantic UI React components
 
 
 function RegisterForm() {
@@ -38,12 +36,6 @@ function RegisterForm() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
-  };
-
-  const handleCollegeChange = (e) => {
-    const selectedCollegeName = e.target.value;
-    const selectedCollege = colleges.find(college => college.name === selectedCollegeName);
-    setFormValues({ ...formValues, collegeId: selectedCollege ? selectedCollege.id : "" });
   };
 
     const handleSubmit = async (e) => {
@@ -100,7 +92,7 @@ function RegisterForm() {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       console.log(formValues);
     }
-  }, [formErrors]);
+  }, [formErrors, formValues, isSubmit]);
   const validate = (values) => {
     const errors = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -119,7 +111,7 @@ function RegisterForm() {
     if (values.password !== values.repeatPassword) {
       errors.password = "Passwords must Match!";
     }
-    if (validatePhoneNumber(values.telephone) == false) {
+    if (validatePhoneNumber(values.telephone) === false) {
       errors.telephone = "Enter a valid US (10 digit) Phone number";
     }
     if (!agreeToTerms) {

@@ -4,8 +4,6 @@
 import { createMedia } from '@artsy/fresnel'
 import PropTypes from 'prop-types'
 import React, { Component, useState } from 'react'
-import { InView } from 'react-intersection-observer'
-import LogoCarousel from './LogoCarousel'; // Adjust the path as needed
 import { Link } from 'react-router-dom';
 import TestimonialsCarousel from './TestimonialsCarousel'
 import ScrollMouse from './scrollMouse'; // Import ScrollMouse component
@@ -24,7 +22,6 @@ import {
   Menu,
   Segment,
   Sidebar,
-  Modal
 } from 'semantic-ui-react'
 
 const { MediaContextProvider, Media } = createMedia({
@@ -249,7 +246,7 @@ const Home = () => (
           horizontal
           style={{ margin: '3em 0em', textTransform: 'uppercase' }}
         >
-          <a href='#'>Student Testimonials</a>
+          <span>Student Testimonials</span>
         </Divider>
 
         <Header as='h3' style={{ fontSize: '1.5em' }}>
@@ -264,7 +261,7 @@ const Home = () => (
           horizontal
           style={{ margin: '2em 0em', textTransform: 'uppercase' }}
         >
-          <a href='#'>The TrypSync Network</a>
+          <span>The TrypSync Network</span>
         </Divider>
         <Header as='h3' style={{ fontSize: '1em' }}>
         TrypSync offers a broad support network to a diverse range of colleges and universities. TrypSync is not directly affiliatied with any of the institutions we serve. 

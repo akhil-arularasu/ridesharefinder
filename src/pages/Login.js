@@ -1,14 +1,12 @@
 import React, {useState} from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment, Container } from 'semantic-ui-react'
 import { useNavigate } from 'react-router-dom';
-import { InView } from 'react-intersection-observer'
 import { Alert, AlertTitle } from '@material-ui/lab'; // Import Alert components
 
 const LoginForm = () => {
     const navigate = useNavigate();
     const [enteredUsername, setUsername] = useState('');
     const [enteredPassword, setPassword] = useState('');
-    const [isPending, setIsPending] = useState(false); // Define isPending state
     const [error, setError] = useState(''); // Add an error state
     const [alertType, setAlertType] = useState(''); // State to store the type of alert
 
@@ -16,7 +14,6 @@ const LoginForm = () => {
         e.preventDefault();
         setError('');
         setAlertType(''); // Clear previous alert type
-        setIsPending(true);
 
         const userInfo = { 
             email: enteredUsername,
@@ -29,7 +26,6 @@ const LoginForm = () => {
         .then(response => response.json())
         .then(data => {
             console.log("Current error message:", error); // Check if the error state is updated
-            setIsPending(false); // Set isPending to false after fetch completes
             if (data.access_token) {
                 localStorage.setItem('token', data.access_token); // Store the token
                 console.log('Login successful');
@@ -41,7 +37,6 @@ const LoginForm = () => {
             }
         })
         .catch(error => {
-          setIsPending(false);
           console.error('Error:', error);
           setError('Network error, please try again later');
           setAlertType('error'); // Set alert type to error
